@@ -274,6 +274,38 @@ The frontend form validates user input with:
 
 - `simulatorFormSchema.safeParse(...)`
 
+You can verify that the route handler validation works independently from the frontend form by sending invalid payloads manually.
+
+Example 1: invalid type for `honoraires`
+
+This checks that the route rejects a malformed request body even if the frontend would normally prevent it.
+
+```bash
+curl -X POST http://localhost:3000/api/simulate \
+  -H "Content-Type: application/json" \
+  -d '{"regime":"micro","honoraires":"abc","charges":0,"partsFiscales":1}'
+```
+
+Expected result:
+
+- HTTP status `400`
+- validation error payload from the route handler
+
+Example 2: missing required field
+
+This checks that the route does not accept incomplete payloads.
+
+```bash
+curl -X POST http://localhost:3000/api/simulate \
+  -H "Content-Type: application/json" \
+  -d '{"regime":"micro","honoraires":120000,"charges":0}'
+```
+
+Expected result:
+
+- HTTP status `400`
+- validation error payload from the route handler
+
 ### Response validation
 
 The backend validates its own output with:
