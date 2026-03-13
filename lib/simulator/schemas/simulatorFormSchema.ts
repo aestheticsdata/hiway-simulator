@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { fiscalRegimes } from "@/lib/simulator/constants/fiscalRegimes";
+import { fiscalRegimes } from "@lib/simulator/constants/fiscalRegimes";
 
 export const simulatorFormSchema = z.object({
   honoraires: z

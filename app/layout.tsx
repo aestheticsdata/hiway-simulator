@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-import { AppProviders } from "@/components/providers/AppProviders";
+import { cn } from "@lib/utils";
+import { AppProviders } from "@components/providers/AppProviders";
 
 export const metadata: Metadata = {
   title: "Hiway Simulator",

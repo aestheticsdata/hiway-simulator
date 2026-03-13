@@ -1,9 +1,9 @@
 import type {
   FiscalRegime,
-} from "@/lib/simulator/interfaces/FiscalRegime";
-import type { SimulationFormValues } from "@/lib/simulator/interfaces/SimulationFormValues";
-import type { SimulationPreview } from "@/lib/simulator/interfaces/SimulationPreview";
-import { simulationPreviewSchema } from "@/lib/simulator/schemas/simulationPreviewSchema";
+} from "@lib/simulator/interfaces/FiscalRegime";
+import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationFormValues";
+import type { SimulationPreview } from "@lib/simulator/interfaces/SimulationPreview";
+import { simulationPreviewSchema } from "@lib/simulator/schemas/simulationPreviewSchema";
 
 export const previewSimulation: SimulationPreview = simulationPreviewSchema.parse({
   bnc: 95000,

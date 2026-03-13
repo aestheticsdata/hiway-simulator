@@ -2,12 +2,12 @@ import {
   formatEuro,
   getBreakdownColor,
   simulatorPalette,
-} from "@/lib/simulator/mock-data";
+} from "@lib/simulator/mock-data";
 import type {
   ChartLegendItem,
   PieLabelProps,
-} from "@/components/simulator/charts/interfaces/ChartData";
-import type { SimulationPreview } from "@/lib/simulator/interfaces/SimulationPreview";
+} from "@components/simulator/charts/interfaces/ChartData";
+import type { SimulationPreview } from "@lib/simulator/interfaces/SimulationPreview";
 
 export function getBarChartData(preview: SimulationPreview) {
   return [

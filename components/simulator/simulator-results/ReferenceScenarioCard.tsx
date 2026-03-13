@@ -12,10 +12,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { MetricCard } from "@/components/simulator/MetricCard";
-import type { ReferenceScenarioCardProps } from "@/components/simulator/simulator-results/interfaces/ReferenceScenarioCardProps";
-import { formatEuro } from "@/lib/simulator/mock-data";
+} from "@components/ui/card";
+import { MetricCard } from "@components/simulator/MetricCard";
+import type { ReferenceScenarioCardProps } from "@components/simulator/simulator-results/interfaces/ReferenceScenarioCardProps";
+import { formatEuro } from "@lib/simulator/mock-data";
 
 export function ReferenceScenarioCard({
   preview,

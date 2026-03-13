@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import type { MetricCardProps } from "@/components/simulator/interfaces/MetricCardProps";
-import { cn } from "@/lib/utils";
+import { Card, CardContent } from "@components/ui/card";
+import type { MetricCardProps } from "@components/simulator/interfaces/MetricCardProps";
+import { cn } from "@lib/utils";
 
 export function MetricCard({
   label,

@@ -9,17 +9,17 @@ import {
 } from "lucide-react";
 import { Controller } from "react-hook-form";
 
-import { Input } from "@/components/ui/input";
-import type { FieldErrorProps } from "@/components/simulator/interfaces/FieldErrorProps";
-import { Label } from "@/components/ui/label";
-import type { SimulatorFormProps } from "@/components/simulator/interfaces/SimulatorFormProps";
+import { Input } from "@components/ui/input";
+import type { FieldErrorProps } from "@components/simulator/interfaces/FieldErrorProps";
+import { Label } from "@components/ui/label";
+import type { SimulatorFormProps } from "@components/simulator/interfaces/SimulatorFormProps";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@components/ui/select";
 
 function FieldError({ message }: FieldErrorProps) {
   if (!message) {

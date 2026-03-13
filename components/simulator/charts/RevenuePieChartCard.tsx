@@ -16,16 +16,16 @@ import {
   formatTooltipEuro,
   getPieChartData,
   renderChartPieLabel,
-} from "@/components/simulator/charts/chart-data";
-import type { RevenuePieChartCardProps } from "@/components/simulator/charts/interfaces/RevenuePieChartCardProps";
-import { PieChartLegend } from "@/components/simulator/charts/PieChartLegend";
+} from "@components/simulator/charts/chart-data";
+import type { RevenuePieChartCardProps } from "@components/simulator/charts/interfaces/RevenuePieChartCardProps";
+import { PieChartLegend } from "@components/simulator/charts/PieChartLegend";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@components/ui/card";
 
 export function RevenuePieChartCard({
   preview,

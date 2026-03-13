@@ -18,14 +18,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@components/ui/card";
 import {
   chartTooltipStyle,
   formatTooltipEuro,
   getBarChartData,
-} from "@/components/simulator/charts/chart-data";
-import type { RevenueBarChartCardProps } from "@/components/simulator/charts/interfaces/RevenueBarChartCardProps";
-import { formatEuro } from "@/lib/simulator/mock-data";
+} from "@components/simulator/charts/chart-data";
+import type { RevenueBarChartCardProps } from "@components/simulator/charts/interfaces/RevenueBarChartCardProps";
+import { formatEuro } from "@lib/simulator/mock-data";
 
 export function RevenueBarChartCard({
   preview,

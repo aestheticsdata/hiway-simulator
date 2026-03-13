@@ -6,12 +6,12 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import type { ChartsSectionProps } from "@/components/simulator/simulator-results/interfaces/ChartsSectionProps";
+} from "@components/ui/card";
+import type { ChartsSectionProps } from "@components/simulator/simulator-results/interfaces/ChartsSectionProps";
 
 const SimulatorChart = dynamic(
   () =>
-    import("@/components/simulator/charts/SimulatorChart").then(
+    import("@components/simulator/charts/SimulatorChart").then(
       (mod) => mod.SimulatorChart
     ),
   {

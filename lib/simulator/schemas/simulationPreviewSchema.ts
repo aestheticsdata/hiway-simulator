@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { cotisationBreakdownItemSchema } from "@/lib/simulator/schemas/cotisationBreakdownItemSchema";
+import { cotisationBreakdownItemSchema } from "@lib/simulator/schemas/cotisationBreakdownItemSchema";
 
 export const simulationPreviewSchema = z.object({
   bnc: z.number(),

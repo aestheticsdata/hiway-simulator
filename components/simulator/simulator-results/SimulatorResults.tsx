@@ -1,9 +1,9 @@
-import { ActiveInterfaceAlert } from "@/components/simulator/simulator-results/ActiveInterfaceAlert";
-import { CalculationBreakdownCard } from "@/components/simulator/simulator-results/CalculationBreakdownCard";
-import { ChartsSection } from "@/components/simulator/simulator-results/ChartsSection";
-import type { SimulatorResultsProps } from "@/components/simulator/simulator-results/interfaces/SimulatorResultsProps";
-import { ReferenceScenarioCard } from "@/components/simulator/simulator-results/ReferenceScenarioCard";
-import { ScenarioSummaryCard } from "@/components/simulator/simulator-results/ScenarioSummaryCard";
+import { ActiveInterfaceAlert } from "@components/simulator/simulator-results/ActiveInterfaceAlert";
+import { CalculationBreakdownCard } from "@components/simulator/simulator-results/CalculationBreakdownCard";
+import { ChartsSection } from "@components/simulator/simulator-results/ChartsSection";
+import type { SimulatorResultsProps } from "@components/simulator/simulator-results/interfaces/SimulatorResultsProps";
+import { ReferenceScenarioCard } from "@components/simulator/simulator-results/ReferenceScenarioCard";
+import { ScenarioSummaryCard } from "@components/simulator/simulator-results/ScenarioSummaryCard";
 
 export function SimulatorResults({
   formValues,

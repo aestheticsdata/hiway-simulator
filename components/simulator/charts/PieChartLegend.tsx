@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import type { PieChartLegendProps } from "@/components/simulator/charts/interfaces/PieChartLegendProps";
+import { cn } from "@lib/utils";
+import type { PieChartLegendProps } from "@components/simulator/charts/interfaces/PieChartLegendProps";
 
 export function PieChartLegend({ items }: PieChartLegendProps) {
   return (

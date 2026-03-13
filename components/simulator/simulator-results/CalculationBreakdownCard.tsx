@@ -6,14 +6,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+} from "@components/ui/card";
+import { Separator } from "@components/ui/separator";
 import {
   formatEuro,
   formatPercent,
-} from "@/lib/simulator/mock-data";
-import type { CalculationBreakdownCardProps } from "@/components/simulator/simulator-results/interfaces/CalculationBreakdownCardProps";
-import { cn } from "@/lib/utils";
+} from "@lib/simulator/mock-data";
+import type { CalculationBreakdownCardProps } from "@components/simulator/simulator-results/interfaces/CalculationBreakdownCardProps";
+import { cn } from "@lib/utils";
 
 export function CalculationBreakdownCard({
   preview,
