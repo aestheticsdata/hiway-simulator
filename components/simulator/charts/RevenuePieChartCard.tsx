@@ -28,9 +28,9 @@ import {
 } from "@components/ui/card";
 
 export function RevenuePieChartCard({
-  preview,
+  result,
 }: RevenuePieChartCardProps) {
-  const pieData = getPieChartData(preview);
+  const pieData = getPieChartData(result);
 
   return (
     <Card className="border-foreground/8 bg-card/90 shadow-sm">
@@ -40,7 +40,7 @@ export function RevenuePieChartCard({
           <span>Repartition des revenus</span>
         </CardTitle>
         <CardDescription>
-          Part relative de chaque poste sur le cas d&apos;exemple du brief.
+          Part relative de chaque poste sur la simulation actuellement chargee.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">

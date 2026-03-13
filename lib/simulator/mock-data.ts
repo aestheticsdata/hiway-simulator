@@ -1,41 +1,12 @@
-import type {
-  FiscalRegime,
-} from "@lib/simulator/interfaces/FiscalRegime";
+import { defaultFormValues } from "@lib/simulator/constants/defaultFormValues";
+import { referenceRates } from "@lib/simulator/constants/referenceRates";
+import { calculateSimulationResult } from "@lib/simulator/engine/calculateSimulationResult";
+import type { FiscalRegime } from "@lib/simulator/interfaces/FiscalRegime";
 import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationFormValues";
-import type { SimulationPreview } from "@lib/simulator/interfaces/SimulationPreview";
-import { simulationPreviewSchema } from "@lib/simulator/schemas/simulationPreviewSchema";
+import type { SimulationResult } from "@lib/simulator/interfaces/SimulationResult";
 
-export const previewSimulation: SimulationPreview = simulationPreviewSchema.parse({
-  bnc: 95000,
-  cotisations: [
-    {
-      id: "urssaf",
-      label: "URSSAF",
-      rate: 10,
-      amount: 9500,
-    },
-    {
-      id: "retraite",
-      label: "Retraite",
-      rate: 12,
-      amount: 11400,
-    },
-    {
-      id: "csg-crds",
-      label: "CSG-CRDS",
-      rate: 9.7,
-      amount: 9215,
-    },
-  ],
-  totalCotisations: 30115,
-  revenuImposable: 64885,
-  quotient: 32442.5,
-  impotParPart: 3018.98,
-  impotTotal: 6037.96,
-  revenuNetAnnuel: 58847.04,
-  revenuNetMensuel: 4903.92,
-  tauxGlobalPrelevements: 30.13,
-});
+export const referenceSimulationResult: SimulationResult =
+  calculateSimulationResult(defaultFormValues, referenceRates);
 
 export const simulatorPalette = {
   bnc: "#f4f5f7",

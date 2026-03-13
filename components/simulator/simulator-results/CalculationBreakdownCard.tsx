@@ -16,28 +16,28 @@ import type { CalculationBreakdownCardProps } from "@components/simulator/simula
 import { cn } from "@lib/utils";
 
 export function CalculationBreakdownCard({
-  preview,
+  result,
 }: CalculationBreakdownCardProps) {
   return (
     <Card className="border-foreground/8 bg-card/90 shadow-sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ReceiptText className="size-4 text-primary/80" />
-          <span>Detail du calcul attendu</span>
+          <span>Detail du calcul</span>
         </CardTitle>
         <CardDescription>
-          Structure finale du panneau de resultats, deja alignee avec le tableau
-          de verification du PDF.
+          Structure detaillee du <code>SimulationResult</code> renvoye par
+          l&apos;API.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-3">
           <div className="flex items-center justify-between gap-4">
             <span className="text-muted-foreground">BNC</span>
-            <span className="font-medium">{formatEuro(preview.bnc)}</span>
+            <span className="font-medium">{formatEuro(result.bnc)}</span>
           </div>
 
-          {preview.cotisations.map((cotisation) => (
+          {result.cotisations.map((cotisation) => (
             <div
               key={cotisation.id}
               className="flex items-center justify-between gap-4"
@@ -63,33 +63,31 @@ export function CalculationBreakdownCard({
           <div className="flex items-center justify-between gap-4">
             <span className="font-medium">Total cotisations</span>
             <span className="font-medium text-blue-500">
-              {formatEuro(preview.totalCotisations)}
+              {formatEuro(result.totalCotisations)}
             </span>
           </div>
 
           <div className="flex items-center justify-between gap-4">
             <span className="text-muted-foreground">Revenu imposable</span>
-            <span className="font-medium">
-              {formatEuro(preview.revenuImposable)}
-            </span>
+            <span className="font-medium">{formatEuro(result.revenuImposable)}</span>
           </div>
 
           <div className="flex items-center justify-between gap-4">
             <span className="text-muted-foreground">Quotient</span>
-            <span className="font-medium">{formatEuro(preview.quotient)}</span>
+            <span className="font-medium">{formatEuro(result.quotient)}</span>
           </div>
 
           <div className="flex items-center justify-between gap-4">
             <span className="text-muted-foreground">Impot par part</span>
             <span className="font-medium text-amber-500">
-              {formatEuro(preview.impotParPart)}
+              {formatEuro(result.impotParPart)}
             </span>
           </div>
 
           <div className="flex items-center justify-between gap-4">
             <span className="font-medium">Impot total</span>
             <span className="font-medium text-amber-500">
-              {formatEuro(preview.impotTotal)}
+              {formatEuro(result.impotTotal)}
             </span>
           </div>
 
@@ -98,7 +96,7 @@ export function CalculationBreakdownCard({
           <div className="flex items-center justify-between gap-4 rounded-2xl border border-amber-500/20 bg-amber-500/10 px-4 py-3">
             <span className="font-medium">Taux global de prelevements</span>
             <span className="text-lg font-semibold text-amber-500">
-              {formatPercent(preview.tauxGlobalPrelevements)}%
+              {formatPercent(result.tauxGlobalPrelevements)}%
             </span>
           </div>
         </div>

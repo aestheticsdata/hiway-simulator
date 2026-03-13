@@ -7,7 +7,7 @@ import { ScenarioSummaryCard } from "@components/simulator/simulator-results/Sce
 
 export function SimulatorResults({
   formValues,
-  preview,
+  result,
 }: SimulatorResultsProps) {
   return (
     <div className="space-y-6">
@@ -15,11 +15,11 @@ export function SimulatorResults({
 
       <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
         <ScenarioSummaryCard formValues={formValues} />
-        <ReferenceScenarioCard preview={preview} />
+        <ReferenceScenarioCard result={result} />
       </div>
 
-      <CalculationBreakdownCard preview={preview} />
-      <ChartsSection preview={preview} />
+      <CalculationBreakdownCard result={result} />
+      <ChartsSection result={result} />
     </div>
   );
 }

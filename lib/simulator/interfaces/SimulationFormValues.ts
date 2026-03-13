@@ -1,5 +1,3 @@
-import { z } from "zod";
+import type { SimulationInput } from "@lib/simulator/interfaces/SimulationInput";
 
-import { simulatorFormSchema } from "@lib/simulator/schemas/simulatorFormSchema";
-
-export type SimulationFormValues = z.infer<typeof simulatorFormSchema>
+export type SimulationFormValues = SimulationInput;

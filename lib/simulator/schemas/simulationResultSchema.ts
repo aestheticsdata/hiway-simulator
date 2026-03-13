@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { cotisationBreakdownItemSchema } from "@lib/simulator/schemas/cotisationBreakdownItemSchema";
 
-export const simulationPreviewSchema = z.object({
+export const simulationResultSchema = z.object({
   bnc: z.number(),
   cotisations: z.array(cotisationBreakdownItemSchema),
   totalCotisations: z.number(),

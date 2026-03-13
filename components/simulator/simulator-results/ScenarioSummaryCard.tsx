@@ -37,8 +37,7 @@ export function ScenarioSummaryCard({
           <span>Scenario saisi</span>
         </CardTitle>
         <CardDescription>
-          Le formulaire est deja vivant. Les calculs seront remplaces par des
-          donnees API a l&apos;etape suivante.
+          Snapshot du payload actuellement envoye a <code>/api/simulate</code>.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4 sm:grid-cols-2">

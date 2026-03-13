@@ -28,9 +28,9 @@ import type { RevenueBarChartCardProps } from "@components/simulator/charts/inte
 import { formatEuro } from "@lib/simulator/mock-data";
 
 export function RevenueBarChartCard({
-  preview,
+  result,
 }: RevenueBarChartCardProps) {
-  const barData = getBarChartData(preview);
+  const barData = getBarChartData(result);
 
   return (
     <Card className="border-foreground/8 bg-card/90 shadow-sm">
@@ -40,8 +40,7 @@ export function RevenueBarChartCard({
           <span>Cascade des revenus</span>
         </CardTitle>
         <CardDescription>
-          Lecture rapide des postes du brief avec les couleurs issues du design
-          Figma.
+          Lecture rapide des postes calcules a partir du resultat courant.
         </CardDescription>
       </CardHeader>
       <CardContent>

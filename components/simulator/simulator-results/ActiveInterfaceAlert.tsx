@@ -3,11 +3,11 @@ import { Alert, AlertDescription, AlertTitle } from "@components/ui/alert";
 export function ActiveInterfaceAlert() {
   return (
     <Alert className="border-border/80 bg-background/80 shadow-sm">
-      <AlertTitle>Apercu d&apos;interface actif</AlertTitle>
+      <AlertTitle>Interface active</AlertTitle>
       <AlertDescription>
-        La colonne de droite reprend les chiffres de l&apos;exemple du brief.
-        L&apos;etape suivante branchera ces cartes et graphiques sur les vraies
-        routes API.
+        Le formulaire est maintenant branche sur <code>/api/rates</code> et{" "}
+        <code>/api/simulate</code>. Les cartes et graphiques consomment un
+        contrat <code>SimulationResult</code> partage entre front et API.
       </AlertDescription>
     </Alert>
   );

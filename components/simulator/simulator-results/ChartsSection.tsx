@@ -33,6 +33,6 @@ const SimulatorChart = dynamic(
   }
 );
 
-export function ChartsSection({ preview }: ChartsSectionProps) {
-  return <SimulatorChart preview={preview} />;
+export function ChartsSection({ result }: ChartsSectionProps) {
+  return <SimulatorChart result={result} />;
 }

@@ -4,11 +4,11 @@ import { RevenueBarChartCard } from "@components/simulator/charts/RevenueBarChar
 import type { SimulatorChartProps } from "@components/simulator/charts/interfaces/SimulatorChartProps";
 import { RevenuePieChartCard } from "@components/simulator/charts/RevenuePieChartCard";
 
-export function SimulatorChart({ preview }: SimulatorChartProps) {
+export function SimulatorChart({ result }: SimulatorChartProps) {
   return (
     <div className="space-y-6">
-      <RevenueBarChartCard preview={preview} />
-      <RevenuePieChartCard preview={preview} />
+      <RevenueBarChartCard result={result} />
+      <RevenuePieChartCard result={result} />
     </div>
   );
 }

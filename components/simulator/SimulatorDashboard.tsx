@@ -1,12 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useWatch } from "react-hook-form";
 
+import { useSimulationResultQuery, useRatesQuery } from "@lib/api/simulator/simulator.queries";
 import { Card, CardContent } from "@components/ui/card";
+import { useDebouncedValue } from "@components/simulator/hooks/useDebouncedValue";
 import { defaultFormValues } from "@lib/simulator/constants/defaultFormValues";
-import { previewSimulation } from "@lib/simulator/mock-data";
+import { referenceSimulationResult } from "@lib/simulator/mock-data";
 import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationFormValues";
 import { simulatorFormSchema } from "@lib/simulator/schemas/simulatorFormSchema";
 
@@ -23,10 +25,27 @@ export function SimulatorDashboard() {
   });
 
   const watchedValues = useWatch({ control: form.control });
-  const formValues = {
-    ...defaultFormValues,
-    ...watchedValues,
-  };
+  const formValues = useMemo(
+    () => ({
+      charges: watchedValues.charges ?? defaultFormValues.charges,
+      honoraires: watchedValues.honoraires ?? defaultFormValues.honoraires,
+      partsFiscales:
+        watchedValues.partsFiscales ?? defaultFormValues.partsFiscales,
+      regime: watchedValues.regime ?? defaultFormValues.regime,
+    }),
+    [
+      watchedValues.charges,
+      watchedValues.honoraires,
+      watchedValues.partsFiscales,
+      watchedValues.regime,
+    ]
+  );
+  const debouncedFormValues = useDebouncedValue(formValues, 350);
+  const ratesQuery = useRatesQuery();
+  const simulationResultQuery = useSimulationResultQuery(
+    debouncedFormValues,
+    ratesQuery.isSuccess && form.formState.isValid
+  );
 
   const handleWheel = useCallback((e: WheelEvent) => {
     const pane = scrollPaneRef.current;
@@ -62,7 +81,10 @@ export function SimulatorDashboard() {
         ref={scrollPaneRef}
         className="lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-2"
       >
-        <SimulatorResults formValues={formValues} preview={previewSimulation} />
+        <SimulatorResults
+          formValues={formValues}
+          result={simulationResultQuery.data ?? referenceSimulationResult}
+        />
       </div>
     </div>
   );

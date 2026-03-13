@@ -1,5 +1,5 @@
-import type { SimulationPreview } from "@lib/simulator/interfaces/SimulationPreview";
+import type { SimulationResult } from "@lib/simulator/interfaces/SimulationResult";
 
 export interface RevenuePieChartCardProps {
-  preview: SimulationPreview
+  result: SimulationResult;
 }

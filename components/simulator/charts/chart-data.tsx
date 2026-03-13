@@ -7,52 +7,52 @@ import type {
   ChartLegendItem,
   PieLabelProps,
 } from "@components/simulator/charts/interfaces/ChartData";
-import type { SimulationPreview } from "@lib/simulator/interfaces/SimulationPreview";
+import type { SimulationResult } from "@lib/simulator/interfaces/SimulationResult";
 
-export function getBarChartData(preview: SimulationPreview) {
+export function getBarChartData(result: SimulationResult) {
   return [
     {
       id: "bnc",
       label: "BNC",
-      value: preview.bnc,
+      value: result.bnc,
       fill: simulatorPalette.urssaf,
     },
     {
       id: "urssaf",
       label: "URSSAF",
-      value: preview.cotisations[0]?.amount ?? 0,
+      value: result.cotisations[0]?.amount ?? 0,
       fill: simulatorPalette.urssaf,
     },
     {
       id: "retraite",
       label: "Retraite",
-      value: preview.cotisations[1]?.amount ?? 0,
+      value: result.cotisations[1]?.amount ?? 0,
       fill: simulatorPalette.retraite,
     },
     {
       id: "csg-crds",
       label: "CSG-CRDS",
-      value: preview.cotisations[2]?.amount ?? 0,
+      value: result.cotisations[2]?.amount ?? 0,
       fill: simulatorPalette.csgCrds,
     },
     {
       id: "impot",
       label: "Impot",
-      value: preview.impotTotal,
+      value: result.impotTotal,
       fill: simulatorPalette.impot,
     },
     {
       id: "net",
       label: "Net",
-      value: preview.revenuNetAnnuel,
+      value: result.revenuNetAnnuel,
       fill: simulatorPalette.net,
     },
   ];
 }
 
-export function getPieChartData(preview: SimulationPreview) {
+export function getPieChartData(result: SimulationResult) {
   return [
-    ...preview.cotisations.map((cotisation) => ({
+    ...result.cotisations.map((cotisation) => ({
       id: cotisation.id,
       name: cotisation.label,
       value: cotisation.amount,
@@ -61,13 +61,13 @@ export function getPieChartData(preview: SimulationPreview) {
     {
       id: "impot",
       name: "Impot",
-      value: preview.impotTotal,
+      value: result.impotTotal,
       fill: simulatorPalette.impot,
     },
     {
       id: "net",
       name: "Revenu net",
-      value: preview.revenuNetAnnuel,
+      value: result.revenuNetAnnuel,
       fill: simulatorPalette.net,
     },
   ];
