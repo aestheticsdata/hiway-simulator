@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { SimulatorDashboard } from "@components/simulator/SimulatorDashboard";
 import { ThemeToggle } from "@components/simulator/ThemeToggle";
 
@@ -30,7 +32,9 @@ export default function Home() {
       </section>
 
       <section className="relative mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:min-h-0 lg:flex-1 lg:px-8 lg:py-10 2xl:max-w-384">
-        <SimulatorDashboard />
+        <Suspense fallback={null}>
+          <SimulatorDashboard />
+        </Suspense>
       </section>
     </main>
   );

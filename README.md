@@ -68,7 +68,7 @@ The page shell is rendered through the App Router:
 
 - `app/layout.tsx`: global layout and providers wiring.
 - `app/page.tsx`: page composition.
-- `components/providers/AppProviders.tsx`: `ThemeProvider` and `QueryClientProvider`.
+- `components/providers/AppProviders.tsx`: `NuqsAdapter`, `ThemeProvider`, and `QueryClientProvider`.
 
 ### Simulator UI
 
@@ -88,6 +88,94 @@ The simulator UI is split into focused components:
 - `components/simulator/charts/*`
   - renders Recharts components only;
   - does not own business logic.
+
+### URL-synced state with `nuqs`
+
+The simulator supports bookmarkable searches through `nuqs`.
+
+The implementation is intentionally based on:
+
+- **form as the source of truth**;
+- URL state mirrored from the form;
+- API requests derived from normalized form values.
+
+This app does **not** use the URL as the primary state container.
+
+That choice is deliberate because:
+
+- the form is already owned by `react-hook-form`;
+- Zod validation already lives at the form layer;
+- the UI has conditional behavior such as `charges` being reset in `micro`;
+- React Query queries already depend on the form state.
+
+The `nuqs` integration lives in:
+
+- `components/providers/AppProviders.tsx`
+- `components/simulator/SimulatorDashboard.tsx`
+- `lib/simulator/searchParams.ts`
+
+#### Search params used by the simulator
+
+The current URL contract mirrors the simulation input:
+
+- `regime`
+- `honoraires`
+- `charges`
+- `partsFiscales`
+
+#### Synchronization flow
+
+The synchronization flow is:
+
+1. `NuqsAdapter` enables App Router query state handling.
+2. `SimulatorDashboard` reads search params with `useQueryStates(...)`.
+3. Search params are normalized into a valid `SimulationInput`.
+4. The form is hydrated or reset from that normalized input.
+5. The user edits the form through `react-hook-form`.
+6. The current form values are normalized again.
+7. The normalized form values are debounced.
+8. The debounced values are mirrored back to the URL with `history: "replace"`.
+9. The debounced values also drive the React Query simulation request.
+
+#### Why normalization exists
+
+`nuqs` parsers are intentionally lightweight. They parse querystring values, but
+they are not the final business validator for the simulator.
+
+This app therefore introduces `lib/simulator/searchParams.ts` as a dedicated
+normalization layer.
+
+Its responsibilities are:
+
+- parse URL values through `nuqs`;
+- merge missing or invalid values with `defaultFormValues`;
+- enforce canonical business rules before the values hit the API;
+- keep URL state and form state comparable.
+
+Current examples:
+
+- if a query param is missing, a default value is used;
+- if a numeric query param is invalid, the app falls back to a valid value;
+- if `regime === "micro"`, `charges` is forced to `0`.
+
+#### Why the URL uses `replace` history
+
+The URL is updated with `history: "replace"` instead of `push`.
+
+This keeps the Back button usable and avoids generating a browser history entry
+for every keystroke.
+
+#### Why the API is not driven directly by raw query params
+
+The API request is intentionally driven by the normalized debounced form state,
+not by raw search params.
+
+This ensures that:
+
+- the API always receives a valid `SimulationInput`;
+- React Query keys stay aligned with validated business input;
+- charts and dashboard cards are derived from the same canonical result;
+- URL state remains a persistence mechanism, not the business source of truth.
 
 ### Chart adapters
 
@@ -264,6 +352,12 @@ Current hooks:
 - `useSimulationResultQuery(input, enabled)`
 
 Even though `/api/simulate` is a `POST`, it is treated as a query from the UI perspective because it reads a computed result and does not mutate persisted server state.
+
+TanStack Query also fits well with the `nuqs` strategy used in this project:
+
+- `nuqs` restores bookmarkable input state;
+- `react-hook-form` owns interactive editing;
+- React Query executes the resulting debounced simulation request.
 
 ## Error handling
 

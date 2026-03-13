@@ -2,37 +2,52 @@
 
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryStates } from "nuqs";
 import { useForm, useWatch } from "react-hook-form";
 
 import { useSimulationResultQuery, useRatesQuery } from "@lib/api/simulator/simulator.queries";
 import { Card, CardContent } from "@components/ui/card";
 import { useDebouncedValue } from "@components/simulator/hooks/useDebouncedValue";
-import { defaultFormValues } from "@lib/simulator/constants/defaultFormValues";
 import { referenceSimulationResult } from "@lib/simulator/mock-data";
 import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationFormValues";
 import { simulatorFormSchema } from "@lib/simulator/schemas/simulatorFormSchema";
+import {
+  areSimulationSearchParamsEqual,
+  areSimulationInputsEqual,
+  getSearchParamsFromSimulationInput,
+  getSimulationInputFromSearchParams,
+  normalizeSimulationInput,
+  simulatorSearchParamParsers,
+} from "@lib/simulator/searchParams";
 
 import { SimulatorForm } from "@components/simulator/SimulatorForm";
 import { SimulatorResults } from "@components/simulator/simulator-results/SimulatorResults";
 
 export function SimulatorDashboard() {
   const scrollPaneRef = useRef<HTMLDivElement>(null);
+  const [urlState, setUrlState] = useQueryStates(simulatorSearchParamParsers, {
+    history: "replace",
+  });
+  const urlFormValues = useMemo(
+    () => getSimulationInputFromSearchParams(urlState),
+    [urlState]
+  );
 
   const form = useForm<SimulationFormValues>({
     resolver: zodResolver(simulatorFormSchema),
     mode: "onChange",
-    defaultValues: defaultFormValues,
+    defaultValues: urlFormValues,
   });
 
   const watchedValues = useWatch({ control: form.control });
   const formValues = useMemo(
-    () => ({
-      charges: watchedValues.charges ?? defaultFormValues.charges,
-      honoraires: watchedValues.honoraires ?? defaultFormValues.honoraires,
-      partsFiscales:
-        watchedValues.partsFiscales ?? defaultFormValues.partsFiscales,
-      regime: watchedValues.regime ?? defaultFormValues.regime,
-    }),
+    () =>
+      normalizeSimulationInput({
+        charges: watchedValues.charges,
+        honoraires: watchedValues.honoraires,
+        partsFiscales: watchedValues.partsFiscales,
+        regime: watchedValues.regime,
+      }),
     [
       watchedValues.charges,
       watchedValues.honoraires,
@@ -41,11 +56,40 @@ export function SimulatorDashboard() {
     ]
   );
   const debouncedFormValues = useDebouncedValue(formValues, 350);
+  const canonicalSearchParams = useMemo(
+    () => getSearchParamsFromSimulationInput(debouncedFormValues),
+    [debouncedFormValues]
+  );
   const ratesQuery = useRatesQuery();
   const simulationResultQuery = useSimulationResultQuery(
     debouncedFormValues,
     ratesQuery.isSuccess && form.formState.isValid
   );
+
+  useEffect(() => {
+    if (areSimulationInputsEqual(form.getValues(), urlFormValues)) {
+      return;
+    }
+
+    form.reset(urlFormValues);
+  }, [form, urlFormValues]);
+
+  useEffect(() => {
+    if (!form.formState.isValid) {
+      return;
+    }
+
+    if (areSimulationSearchParamsEqual(canonicalSearchParams, urlState)) {
+      return;
+    }
+
+    void setUrlState(canonicalSearchParams);
+  }, [
+    canonicalSearchParams,
+    form.formState.isValid,
+    setUrlState,
+    urlState,
+  ]);
 
   const handleWheel = useCallback((e: WheelEvent) => {
     const pane = scrollPaneRef.current;
