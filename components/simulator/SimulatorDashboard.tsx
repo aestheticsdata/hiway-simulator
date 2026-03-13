@@ -8,7 +8,6 @@ import { useForm, useWatch } from "react-hook-form";
 import { useSimulationResultQuery, useRatesQuery } from "@lib/api/simulator/simulator.queries";
 import { Card, CardContent } from "@components/ui/card";
 import { useDebouncedValue } from "@components/simulator/hooks/useDebouncedValue";
-import { referenceSimulationResult } from "@lib/simulator/mock-data";
 import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationFormValues";
 import { simulatorFormSchema } from "@lib/simulator/schemas/simulatorFormSchema";
 import {
@@ -22,6 +21,7 @@ import {
 
 import { SimulatorForm } from "@components/simulator/SimulatorForm";
 import { SimulatorResults } from "@components/simulator/simulator-results/SimulatorResults";
+import { SimulatorResultsSkeleton } from "@components/simulator/simulator-results/SimulatorResultsSkeleton";
 
 export function SimulatorDashboard() {
   const scrollPaneRef = useRef<HTMLDivElement>(null);
@@ -65,6 +65,8 @@ export function SimulatorDashboard() {
     debouncedFormValues,
     ratesQuery.isSuccess && form.formState.isValid
   );
+  const shouldShowResultsSkeleton =
+    ratesQuery.isPending || !simulationResultQuery.data;
 
   useEffect(() => {
     if (areSimulationInputsEqual(form.getValues(), urlFormValues)) {
@@ -125,10 +127,14 @@ export function SimulatorDashboard() {
         ref={scrollPaneRef}
         className="lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-2"
       >
-        <SimulatorResults
-          formValues={formValues}
-          result={simulationResultQuery.data ?? referenceSimulationResult}
-        />
+        {shouldShowResultsSkeleton ? (
+          <SimulatorResultsSkeleton formValues={formValues} />
+        ) : (
+          <SimulatorResults
+            formValues={formValues}
+            result={simulationResultQuery.data}
+          />
+        )}
       </div>
     </div>
   );

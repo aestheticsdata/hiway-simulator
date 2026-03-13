@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  keepPreviousData,
-  useQuery,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { simulatorService } from "@lib/api/simulator/simulator.service";
 import type { SimulationInput } from "@lib/simulator/interfaces/SimulationInput";
@@ -19,6 +16,7 @@ export function useRatesQuery() {
   return useQuery({
     queryKey: simulatorQueryKeys.rates(),
     queryFn: ({ signal }) => simulatorService.loadRates({ signal }),
+    retry: 0,
     staleTime: 5 * 60_000,
     throwOnError: true,
   });
@@ -30,9 +28,9 @@ export function useSimulationResultQuery(
 ) {
   return useQuery({
     enabled,
-    placeholderData: keepPreviousData,
     queryKey: simulatorQueryKeys.simulationResult(input),
     queryFn: ({ signal }) => simulatorService.runSimulation(input, { signal }),
+    retry: 0,
     throwOnError: true,
   });
 }

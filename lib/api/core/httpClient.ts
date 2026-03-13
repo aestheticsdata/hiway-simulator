@@ -2,6 +2,7 @@ import axios from "axios";
 import { z, type ZodType } from "zod";
 
 import { ApiException } from "@lib/api/core/ApiException";
+import { getClientDebugApiHeaders } from "@lib/api/core/constants/debugApi";
 
 import type { ApiRequestOptions } from "@lib/api/core/interfaces/ApiRequestOptions";
 
@@ -16,6 +17,7 @@ function getDefaultHeaders(headers?: Record<string, string>) {
   return {
     Accept: "application/json",
     "Content-Type": "application/json",
+    ...getClientDebugApiHeaders(),
     ...headers,
   };
 }

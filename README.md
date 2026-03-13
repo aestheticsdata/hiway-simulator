@@ -344,7 +344,7 @@ It is used here for:
 - cache handling;
 - stale/refresh policies;
 - propagating query errors to the Next.js error boundary;
-- preserving previous simulation data while a new debounced request is in flight.
+- coordinating the debounced simulation request lifecycle.
 
 Current hooks:
 
@@ -373,6 +373,62 @@ Current flow:
 4. Next.js renders `app/error.tsx`.
 
 `app/error.tsx` also resets the TanStack Query error boundary before retrying.
+
+### Development-only API error debugging
+
+The app includes a small development-only mechanism to simulate API failures on demand.
+
+It is designed to test:
+
+- transport failures;
+- `500` responses from route handlers;
+- invalid API payloads caught by frontend `safeParse(...)`.
+
+The mechanism is intentionally kept outside the business URL state:
+
+- the bookmarkable `nuqs` search params stay clean;
+- debug behavior is opt-in and local to the current browser;
+- production behavior is unaffected.
+
+Implementation points:
+
+- localStorage key: `debug-api-error`
+- request header injected by the HTTP client: `x-debug-api-error`
+- constants file: `lib/api/core/constants/debugApi.ts`
+
+Supported debug modes:
+
+- `rates-500`
+- `simulate-500`
+- `simulate-invalid-schema`
+
+How to enable a mode in the browser console:
+
+```js
+localStorage.setItem("debug-api-error", "simulate-500");
+```
+
+```js
+localStorage.setItem("debug-api-error", "simulate-invalid-schema");
+```
+
+```js
+localStorage.setItem("debug-api-error", "rates-500");
+```
+
+How to disable it:
+
+```js
+localStorage.removeItem("debug-api-error");
+```
+
+What each mode does:
+
+- `rates-500`: forces `GET /api/rates` to return a `500` response
+- `simulate-500`: forces `POST /api/simulate` to return a `500` response
+- `simulate-invalid-schema`: returns an intentionally invalid successful payload so the frontend `safeParse(...)` path is exercised
+
+This mechanism is enabled only in development.
 
 ## Current simulation contract
 
@@ -405,11 +461,7 @@ Rates are currently sourced from:
 
 - `lib/simulator/constants/referenceRates.ts`
 
-The example fallback result used before the first successful request is sourced from:
-
-- `lib/simulator/mock-data.ts`
-
-The actual simulation logic is not duplicated in the UI. The right pane is driven by the API result, and the fallback result is only there to avoid an empty dashboard during the first request.
+The actual simulation logic is not duplicated in the UI. The right pane is driven by the API result, and the initial loading state is represented with skeleton components instead of fake financial data.
 
 ## Path aliases
 
