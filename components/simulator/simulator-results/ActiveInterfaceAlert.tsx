@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export function ActiveInterfaceAlert() {
   return (
@@ -10,5 +10,5 @@ export function ActiveInterfaceAlert() {
         routes API.
       </AlertDescription>
     </Alert>
-  )
+  );
 }

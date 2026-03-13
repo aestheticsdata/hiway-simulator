@@ -1,4 +1,4 @@
-import { ReceiptText } from "lucide-react"
+import { ReceiptText } from "lucide-react";
 
 import {
   Card,
@@ -6,18 +6,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import {
   formatEuro,
   formatPercent,
-} from "@/lib/simulator/mock-data"
-import type { SimulationPreview } from "@/lib/simulator/types"
-import { cn } from "@/lib/utils"
-
-type CalculationBreakdownCardProps = {
-  preview: SimulationPreview
-}
+} from "@/lib/simulator/mock-data";
+import type { CalculationBreakdownCardProps } from "@/components/simulator/simulator-results/interfaces/CalculationBreakdownCardProps";
+import { cn } from "@/lib/utils";
 
 export function CalculationBreakdownCard({
   preview,
@@ -108,5 +104,5 @@ export function CalculationBreakdownCard({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import { SimulatorDashboard } from "@/components/simulator/SimulatorDashboard"
-import { ThemeToggle } from "@/components/simulator/ThemeToggle"
+import { SimulatorDashboard } from "@/components/simulator/SimulatorDashboard";
+import { ThemeToggle } from "@/components/simulator/ThemeToggle";
 
 export default function Home() {
   return (
@@ -33,5 +33,5 @@ export default function Home() {
         <SimulatorDashboard />
       </section>
     </main>
-  )
+  );
 }

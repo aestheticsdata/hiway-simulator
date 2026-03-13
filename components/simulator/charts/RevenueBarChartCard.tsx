@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { BarChart3 } from "lucide-react"
+import { BarChart3 } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -10,7 +10,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts"
+} from "recharts";
 
 import {
   Card,
@@ -18,23 +18,19 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   chartTooltipStyle,
   formatTooltipEuro,
   getBarChartData,
-} from "@/components/simulator/charts/chart-data"
-import { formatEuro } from "@/lib/simulator/mock-data"
-import type { SimulationPreview } from "@/lib/simulator/types"
-
-type RevenueBarChartCardProps = {
-  preview: SimulationPreview
-}
+} from "@/components/simulator/charts/chart-data";
+import type { RevenueBarChartCardProps } from "@/components/simulator/charts/interfaces/RevenueBarChartCardProps";
+import { formatEuro } from "@/lib/simulator/mock-data";
 
 export function RevenueBarChartCard({
   preview,
 }: RevenueBarChartCardProps) {
-  const barData = getBarChartData(preview)
+  const barData = getBarChartData(preview);
 
   return (
     <Card className="border-foreground/8 bg-card/90 shadow-sm">
@@ -85,5 +81,5 @@ export function RevenueBarChartCard({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

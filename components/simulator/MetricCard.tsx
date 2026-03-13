@@ -1,15 +1,6 @@
-import type { LucideIcon } from "lucide-react"
-
-import { Card, CardContent } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
-
-type MetricCardProps = {
-  label: string
-  value: string
-  icon?: LucideIcon
-  className?: string
-  valueClassName?: string
-}
+import { Card, CardContent } from "@/components/ui/card";
+import type { MetricCardProps } from "@/components/simulator/interfaces/MetricCardProps";
+import { cn } from "@/lib/utils";
 
 export function MetricCard({
   label,
@@ -30,5 +21,5 @@ export function MetricCard({
         </p>
       </CardContent>
     </Card>
-  )
+  );
 }

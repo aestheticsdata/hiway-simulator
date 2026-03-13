@@ -1,9 +1,5 @@
-import { cn } from "@/lib/utils"
-import type { ChartLegendItem } from "@/components/simulator/charts/chart-data"
-
-type PieChartLegendProps = {
-  items: ChartLegendItem[]
-}
+import { cn } from "@/lib/utils";
+import type { PieChartLegendProps } from "@/components/simulator/charts/interfaces/PieChartLegendProps";
 
 export function PieChartLegend({ items }: PieChartLegendProps) {
   return (
@@ -15,5 +11,5 @@ export function PieChartLegend({ items }: PieChartLegendProps) {
         </div>
       ))}
     </div>
-  )
+  );
 }

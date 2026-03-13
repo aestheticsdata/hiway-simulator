@@ -5,13 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useWatch } from "react-hook-form";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { defaultFormValues } from "@/lib/simulator/constants/defaultFormValues";
 import { previewSimulation } from "@/lib/simulator/mock-data";
-import { defaultFormValues, simulatorFormSchema } from "@/lib/simulator/types";
+import type { SimulationFormValues } from "@/lib/simulator/interfaces/SimulationFormValues";
+import { simulatorFormSchema } from "@/lib/simulator/schemas/simulatorFormSchema";
 
 import { SimulatorForm } from "@/components/simulator/SimulatorForm";
 import { SimulatorResults } from "@/components/simulator/simulator-results/SimulatorResults";
-
-import type { SimulationFormValues } from "@/lib/simulator/types";
 
 export function SimulatorDashboard() {
   const scrollPaneRef = useRef<HTMLDivElement>(null);

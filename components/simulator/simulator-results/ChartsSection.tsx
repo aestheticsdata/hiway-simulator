@@ -1,4 +1,4 @@
-import dynamic from "next/dynamic"
+import dynamic from "next/dynamic";
 
 import {
   Card,
@@ -6,8 +6,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import type { SimulationPreview } from "@/lib/simulator/types"
+} from "@/components/ui/card";
+import type { ChartsSectionProps } from "@/components/simulator/simulator-results/interfaces/ChartsSectionProps";
 
 const SimulatorChart = dynamic(
   () =>
@@ -31,12 +31,8 @@ const SimulatorChart = dynamic(
       </Card>
     ),
   }
-)
-
-type ChartsSectionProps = {
-  preview: SimulationPreview
-}
+);
 
 export function ChartsSection({ preview }: ChartsSectionProps) {
-  return <SimulatorChart preview={preview} />
+  return <SimulatorChart preview={preview} />;
 }

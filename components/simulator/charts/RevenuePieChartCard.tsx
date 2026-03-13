@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { PieChart as PieChartIcon } from "lucide-react"
+import { PieChart as PieChartIcon } from "lucide-react";
 import {
   Cell,
   Legend,
@@ -8,7 +8,7 @@ import {
   PieChart,
   ResponsiveContainer,
   Tooltip,
-} from "recharts"
+} from "recharts";
 
 import {
   chartLegendItems,
@@ -16,25 +16,21 @@ import {
   formatTooltipEuro,
   getPieChartData,
   renderChartPieLabel,
-} from "@/components/simulator/charts/chart-data"
-import { PieChartLegend } from "@/components/simulator/charts/PieChartLegend"
+} from "@/components/simulator/charts/chart-data";
+import type { RevenuePieChartCardProps } from "@/components/simulator/charts/interfaces/RevenuePieChartCardProps";
+import { PieChartLegend } from "@/components/simulator/charts/PieChartLegend";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import type { SimulationPreview } from "@/lib/simulator/types"
-
-type RevenuePieChartCardProps = {
-  preview: SimulationPreview
-}
+} from "@/components/ui/card";
 
 export function RevenuePieChartCard({
   preview,
 }: RevenuePieChartCardProps) {
-  const pieData = getPieChartData(preview)
+  const pieData = getPieChartData(preview);
 
   return (
     <Card className="border-foreground/8 bg-card/90 shadow-sm">
@@ -84,5 +80,5 @@ export function RevenuePieChartCard({
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

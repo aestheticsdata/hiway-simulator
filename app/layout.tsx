@@ -6,7 +6,7 @@ import { AppProviders } from "@/components/providers/AppProviders";
 export const metadata: Metadata = {
   title: "Hiway Simulator",
   description: "Simulateur de revenu net pour medecin liberal.",
-}
+};
 
 export default function RootLayout({
   children,
@@ -23,5 +23,5 @@ export default function RootLayout({
         <AppProviders>{children}</AppProviders>
       </body>
     </html>
-  )
+  );
 }

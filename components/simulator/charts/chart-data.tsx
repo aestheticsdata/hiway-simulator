@@ -2,24 +2,12 @@ import {
   formatEuro,
   getBreakdownColor,
   simulatorPalette,
-} from "@/lib/simulator/mock-data"
-import type { SimulationPreview } from "@/lib/simulator/types"
-
-export type PieLabelProps = {
-  cx?: number
-  cy?: number
-  innerRadius?: number
-  outerRadius?: number
-  midAngle?: number
-  percent?: number
-  name?: string
-}
-
-export type ChartLegendItem = {
-  id: string
-  label: string
-  dotClassName: string
-}
+} from "@/lib/simulator/mock-data";
+import type {
+  ChartLegendItem,
+  PieLabelProps,
+} from "@/components/simulator/charts/interfaces/ChartData";
+import type { SimulationPreview } from "@/lib/simulator/interfaces/SimulationPreview";
 
 export function getBarChartData(preview: SimulationPreview) {
   return [
@@ -59,7 +47,7 @@ export function getBarChartData(preview: SimulationPreview) {
       value: preview.revenuNetAnnuel,
       fill: simulatorPalette.net,
     },
-  ]
+  ];
 }
 
 export function getPieChartData(preview: SimulationPreview) {
@@ -82,7 +70,7 @@ export function getPieChartData(preview: SimulationPreview) {
       value: preview.revenuNetAnnuel,
       fill: simulatorPalette.net,
     },
-  ]
+  ];
 }
 
 export const chartLegendItems: ChartLegendItem[] = [
@@ -111,7 +99,7 @@ export const chartLegendItems: ChartLegendItem[] = [
     label: "Revenu net",
     dotClassName: "bg-emerald-500",
   },
-]
+];
 
 export const chartTooltipStyle = {
   borderRadius: "1rem",
@@ -119,7 +107,7 @@ export const chartTooltipStyle = {
     "1px solid color-mix(in oklab, var(--color-border) 85%, transparent)",
   backgroundColor: "var(--color-card)",
   boxShadow: "0 20px 50px rgba(15, 23, 42, 0.08)",
-}
+};
 
 export function renderChartPieLabel({
   cx,
@@ -140,12 +128,12 @@ export function renderChartPieLabel({
     !name ||
     percent < 0.06
   ) {
-    return null
+    return null;
   }
 
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.62
-  const x = cx + radius * Math.cos((-midAngle * Math.PI) / 180)
-  const y = cy + radius * Math.sin((-midAngle * Math.PI) / 180)
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.62;
+  const x = cx + radius * Math.cos((-midAngle * Math.PI) / 180);
+  const y = cy + radius * Math.sin((-midAngle * Math.PI) / 180);
 
   return (
     <text
@@ -158,9 +146,9 @@ export function renderChartPieLabel({
     >
       {`${name} ${Math.round(percent * 100)}%`}
     </text>
-  )
+  );
 }
 
 export function formatTooltipEuro(value: unknown) {
-  return formatEuro(typeof value === "number" ? value : Number(value ?? 0))
+  return formatEuro(typeof value === "number" ? value : Number(value ?? 0));
 }

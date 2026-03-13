@@ -4,8 +4,8 @@ import {
   ReceiptText,
   Scale,
   Users,
-} from "lucide-react"
-import type { LucideIcon } from "lucide-react"
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 import {
   Card,
@@ -13,25 +13,21 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { getFormSummary } from "@/lib/simulator/mock-data"
-import type { SimulationFormValues } from "@/lib/simulator/types"
+} from "@/components/ui/card";
+import type { ScenarioSummaryCardProps } from "@/components/simulator/simulator-results/interfaces/ScenarioSummaryCardProps";
+import { getFormSummary } from "@/lib/simulator/mock-data";
 
 const summaryIcons: Record<string, LucideIcon> = {
   charges: ReceiptText,
   honoraires: BadgeEuro,
   parts: Users,
   regime: Scale,
-}
-
-type ScenarioSummaryCardProps = {
-  formValues: SimulationFormValues
-}
+};
 
 export function ScenarioSummaryCard({
   formValues,
 }: ScenarioSummaryCardProps) {
-  const summary = getFormSummary(formValues)
+  const summary = getFormSummary(formValues);
 
   return (
     <Card className="border-foreground/8 bg-card/90 shadow-sm">
@@ -47,7 +43,7 @@ export function ScenarioSummaryCard({
       </CardHeader>
       <CardContent className="grid gap-4 sm:grid-cols-2">
         {summary.map((item) => {
-          const Icon = summaryIcons[item.id]
+          const Icon = summaryIcons[item.id];
 
           return (
             <div
@@ -60,9 +56,9 @@ export function ScenarioSummaryCard({
               </p>
               <p className="mt-1 text-base font-medium">{item.value}</p>
             </div>
-          )
+          );
         })}
       </CardContent>
     </Card>
-  )
+  );
 }

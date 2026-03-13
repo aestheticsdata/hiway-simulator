@@ -4,7 +4,7 @@ import {
   HandCoins,
   Landmark,
   TrendingUp,
-} from "lucide-react"
+} from "lucide-react";
 
 import {
   Card,
@@ -12,14 +12,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { MetricCard } from "@/components/simulator/MetricCard"
-import { formatEuro } from "@/lib/simulator/mock-data"
-import type { SimulationPreview } from "@/lib/simulator/types"
-
-type ReferenceScenarioCardProps = {
-  preview: SimulationPreview
-}
+} from "@/components/ui/card";
+import { MetricCard } from "@/components/simulator/MetricCard";
+import type { ReferenceScenarioCardProps } from "@/components/simulator/simulator-results/interfaces/ReferenceScenarioCardProps";
+import { formatEuro } from "@/lib/simulator/mock-data";
 
 export function ReferenceScenarioCard({
   preview,
@@ -67,5 +63,5 @@ export function ReferenceScenarioCard({
         />
       </CardContent>
     </Card>
-  )
+  );
 }

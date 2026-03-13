@@ -1,56 +1,48 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
+import { useEffect } from "react";
 import {
   BadgeEuro,
   ReceiptText,
   Scale,
   Users,
-} from "lucide-react"
-import { Controller, type UseFormReturn } from "react-hook-form"
+} from "lucide-react";
+import { Controller } from "react-hook-form";
 
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input";
+import type { FieldErrorProps } from "@/components/simulator/interfaces/FieldErrorProps";
+import { Label } from "@/components/ui/label";
+import type { SimulatorFormProps } from "@/components/simulator/interfaces/SimulatorFormProps";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-
-import type { SimulationFormValues } from "@/lib/simulator/types"
-
-type SimulatorFormProps = {
-  form: UseFormReturn<SimulationFormValues>
-}
-
-type FieldErrorProps = {
-  message?: string
-}
+} from "@/components/ui/select";
 
 function FieldError({ message }: FieldErrorProps) {
   if (!message) {
-    return null
+    return null;
   }
 
-  return <p className="text-sm text-destructive">{message}</p>
+  return <p className="text-sm text-destructive">{message}</p>;
 }
 
 export function SimulatorForm({ form }: SimulatorFormProps) {
-  const regime = form.watch("regime")
+  const regime = form.watch("regime");
   const {
     control,
     formState: { errors },
     register,
     setValue,
-  } = form
+  } = form;
 
   useEffect(() => {
     if (regime === "micro") {
-      setValue("charges", 0, { shouldDirty: true, shouldValidate: true })
+      setValue("charges", 0, { shouldDirty: true, shouldValidate: true });
     }
-  }, [regime, setValue])
+  }, [regime, setValue]);
 
   return (
     <div className="space-y-8">
@@ -154,5 +146,5 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

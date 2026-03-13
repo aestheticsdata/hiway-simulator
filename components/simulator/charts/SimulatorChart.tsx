@@ -1,12 +1,8 @@
-"use client"
+"use client";
 
-import { RevenueBarChartCard } from "@/components/simulator/charts/RevenueBarChartCard"
-import { RevenuePieChartCard } from "@/components/simulator/charts/RevenuePieChartCard"
-import type { SimulationPreview } from "@/lib/simulator/types"
-
-type SimulatorChartProps = {
-  preview: SimulationPreview
-}
+import { RevenueBarChartCard } from "@/components/simulator/charts/RevenueBarChartCard";
+import type { SimulatorChartProps } from "@/components/simulator/charts/interfaces/SimulatorChartProps";
+import { RevenuePieChartCard } from "@/components/simulator/charts/RevenuePieChartCard";
 
 export function SimulatorChart({ preview }: SimulatorChartProps) {
   return (
@@ -14,5 +10,5 @@ export function SimulatorChart({ preview }: SimulatorChartProps) {
       <RevenueBarChartCard preview={preview} />
       <RevenuePieChartCard preview={preview} />
     </div>
-  )
+  );
 }
