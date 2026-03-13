@@ -9,7 +9,7 @@ import { previewSimulation } from "@/lib/simulator/mock-data";
 import { defaultFormValues, simulatorFormSchema } from "@/lib/simulator/types";
 
 import { SimulatorForm } from "@/components/simulator/SimulatorForm";
-import { SimulatorResults } from "@/components/simulator/SimulatorResults";
+import { SimulatorResults } from "@/components/simulator/simulator-results/SimulatorResults";
 
 import type { SimulationFormValues } from "@/lib/simulator/types";
 
