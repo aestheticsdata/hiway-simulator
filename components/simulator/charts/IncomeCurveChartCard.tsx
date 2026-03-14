@@ -35,6 +35,7 @@ import {
   chartTooltipStyle,
 } from "@components/simulator/charts/chart-data";
 import type { IncomeCurveChartCardProps } from "@components/simulator/charts/interfaces/IncomeCurveChartCardProps";
+import { simulatorChartTexts } from "@components/simulator/charts/texts";
 import { incomeCurveRangePresetOptions, simulatorPalette } from "@lib/simulator/presentation";
 import { formatEuro } from "@lib/simulator/formatters";
 import type { IncomeCurveRangePreset } from "@lib/simulator/constants/incomeCurveRangePresets";
@@ -49,6 +50,7 @@ export function IncomeCurveChartCard({
   rangePreset,
   regime,
 }: IncomeCurveChartCardProps) {
+  const texts = simulatorChartTexts.incomeCurveCard;
   const currentScenarioPoint = useMemo(
     () => curve?.points.find((point) => point.isCurrentScenario),
     [curve]
@@ -61,17 +63,14 @@ export function IncomeCurveChartCard({
           <div className="space-y-2">
             <CardTitle className="flex items-center gap-2">
               <ChartSpline className="size-4 text-primary/80" />
-              <span>Sensibilite du revenu</span>
+              <span>{texts.title}</span>
             </CardTitle>
-            <CardDescription>
-              Montre comment le revenu net annuel evolue lorsque les honoraires
-              varient, afin de situer le scenario actuel.
-            </CardDescription>
+            <CardDescription>{texts.description}</CardDescription>
           </div>
 
           <div className="w-full space-y-2 lg:w-64">
             <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary/70">
-              Plage d&apos;honoraires
+              {texts.rangeSelectorLabel}
             </p>
             <Select
               value={rangePreset}
@@ -80,7 +79,7 @@ export function IncomeCurveChartCard({
               }
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Selectionnez une plage" />
+                <SelectValue placeholder={texts.rangeSelectorPlaceholder} />
               </SelectTrigger>
               <SelectContent>
                 {incomeCurveRangePresetOptions.map((option) => (
@@ -92,11 +91,14 @@ export function IncomeCurveChartCard({
             </Select>
             <p className="text-xs text-muted-foreground">
               {curve
-                ? `De ${formatEuro(curve.minHonoraires, false)} a ${formatEuro(
+                ? `${texts.rangeBoundsPrefix} ${formatEuro(
+                    curve.minHonoraires,
+                    false
+                  )} ${texts.rangeBoundsSeparator} ${formatEuro(
                     curve.maxHonoraires,
                     false
                   )}`
-                : "Chargement de la plage..."}
+                : texts.rangeLoading}
             </p>
           </div>
         </div>
@@ -158,11 +160,11 @@ export function IncomeCurveChartCard({
                     contentStyle={chartTooltipStyle}
                     formatter={(value) => [
                       formatEuro(Number(value)),
-                      "Revenu net annuel",
+                      texts.annualNetIncomeTooltip,
                     ]}
                     itemStyle={chartTooltipItemStyle}
                     labelFormatter={(value) =>
-                      `Honoraires: ${formatEuro(Number(value), false)}`
+                      `${texts.feesTooltip}: ${formatEuro(Number(value), false)}`
                     }
                     labelStyle={chartTooltipLabelStyle}
                   />
@@ -200,14 +202,14 @@ export function IncomeCurveChartCard({
 
             <div className="flex flex-wrap items-center gap-2">
               <div className="rounded-full border border-border/70 bg-background/70 px-3 py-1.5 text-xs text-muted-foreground">
-                Scenario courant:{" "}
+                {texts.currentScenario}:{" "}
                 <span className="font-medium text-foreground">
                   {formatEuro(curve.currentHonoraires, false)}
                 </span>
               </div>
               {currentScenarioPoint ? (
                 <div className="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1.5 text-xs text-emerald-600 dark:text-emerald-400">
-                  Revenu net estime:{" "}
+                  {texts.estimatedNetIncome}:{" "}
                   <span className="font-medium">
                     {formatEuro(currentScenarioPoint.revenuNetAnnuel)}
                   </span>
@@ -215,13 +217,13 @@ export function IncomeCurveChartCard({
               ) : null}
               <div className="rounded-full border border-border/70 bg-background/70 px-3 py-1.5 text-xs text-muted-foreground">
                 {regime === "reel"
-                  ? "Charges professionnelles maintenues sur la projection"
-                  : "Abattement forfaitaire micro-BNC constant"}
+                  ? texts.realRegimeHint
+                  : texts.microRegimeHint}
               </div>
               {isUpdating ? (
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs text-primary">
                   <Activity className="size-3.5" />
-                  <span>Mise a jour de la projection...</span>
+                  <span>{texts.updating}</span>
                 </div>
               ) : null}
             </div>

@@ -3,6 +3,7 @@ import {
   simulatorPalette,
 } from "@lib/simulator/presentation";
 import { formatEuro } from "@lib/simulator/formatters";
+import { simulatorChartTexts } from "@components/simulator/charts/texts";
 import type {
   ChartLegendItem,
   PieLabelProps,
@@ -10,40 +11,42 @@ import type {
 import type { SimulationResult } from "@lib/simulator/interfaces/SimulationResult";
 
 export function getBarChartData(result: SimulationResult) {
+  const { breakdownLabels } = simulatorChartTexts;
+
   return [
     {
       id: "bnc",
-      label: "BNC",
+      label: breakdownLabels.preTaxProfit,
       value: result.bnc,
       fill: simulatorPalette.urssaf,
     },
     {
       id: "urssaf",
-      label: "URSSAF",
+      label: breakdownLabels.urssaf,
       value: result.cotisations[0]?.amount ?? 0,
       fill: simulatorPalette.urssaf,
     },
     {
       id: "retraite",
-      label: "Retraite",
+      label: breakdownLabels.pension,
       value: result.cotisations[1]?.amount ?? 0,
       fill: simulatorPalette.retraite,
     },
     {
       id: "csg-crds",
-      label: "CSG-CRDS",
+      label: breakdownLabels.csgCrds,
       value: result.cotisations[2]?.amount ?? 0,
       fill: simulatorPalette.csgCrds,
     },
     {
       id: "impot",
-      label: "Impot",
+      label: breakdownLabels.tax,
       value: result.impotTotal,
       fill: simulatorPalette.impot,
     },
     {
       id: "net",
-      label: "Net",
+      label: breakdownLabels.netShort,
       value: result.revenuNetAnnuel,
       fill: simulatorPalette.net,
     },
@@ -51,6 +54,8 @@ export function getBarChartData(result: SimulationResult) {
 }
 
 export function getPieChartData(result: SimulationResult) {
+  const { breakdownLabels } = simulatorChartTexts;
+
   return [
     ...result.cotisations.map((cotisation) => ({
       id: cotisation.id,
@@ -60,13 +65,13 @@ export function getPieChartData(result: SimulationResult) {
     })),
     {
       id: "impot",
-      name: "Impot",
+      name: breakdownLabels.tax,
       value: result.impotTotal,
       fill: simulatorPalette.impot,
     },
     {
       id: "net",
-      name: "Revenu net",
+      name: breakdownLabels.netIncome,
       value: result.revenuNetAnnuel,
       fill: simulatorPalette.net,
     },
@@ -76,27 +81,27 @@ export function getPieChartData(result: SimulationResult) {
 export const chartLegendItems: ChartLegendItem[] = [
   {
     id: "urssaf",
-    label: "URSSAF",
+    label: simulatorChartTexts.breakdownLabels.urssaf,
     dotClassName: "bg-blue-500",
   },
   {
     id: "retraite",
-    label: "Retraite",
+    label: simulatorChartTexts.breakdownLabels.pension,
     dotClassName: "bg-violet-500",
   },
   {
     id: "csg-crds",
-    label: "CSG-CRDS",
+    label: simulatorChartTexts.breakdownLabels.csgCrds,
     dotClassName: "bg-cyan-500",
   },
   {
     id: "impot",
-    label: "Impot",
+    label: simulatorChartTexts.breakdownLabels.tax,
     dotClassName: "bg-amber-500",
   },
   {
     id: "net",
-    label: "Revenu net",
+    label: simulatorChartTexts.breakdownLabels.netIncome,
     dotClassName: "bg-emerald-500",
   },
 ];

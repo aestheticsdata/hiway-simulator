@@ -27,6 +27,7 @@ import {
   getBarChartData,
 } from "@components/simulator/charts/chart-data";
 import type { RevenueBarChartCardProps } from "@components/simulator/charts/interfaces/RevenueBarChartCardProps";
+import { simulatorChartTexts } from "@components/simulator/charts/texts";
 import { formatEuro } from "@lib/simulator/formatters";
 
 export function RevenueBarChartCard({
@@ -39,12 +40,9 @@ export function RevenueBarChartCard({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BarChart3 className="size-4 text-primary/80" />
-          <span>Formation du revenu net</span>
+          <span>{simulatorChartTexts.revenueBarCard.title}</span>
         </CardTitle>
-        <CardDescription>
-          Visualise le passage des honoraires au revenu disponible, poste par
-          poste.
-        </CardDescription>
+        <CardDescription>{simulatorChartTexts.revenueBarCard.description}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="h-80 rounded-2xl border border-border/70 bg-background/70 px-3 py-4">

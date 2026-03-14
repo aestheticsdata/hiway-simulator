@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@components/ui/card";
 import type { ChartsSectionProps } from "@components/simulator/simulator-results/interfaces/ChartsSectionProps";
+import { simulatorResultsTexts } from "@components/simulator/simulator-results/texts";
 
 const SimulatorChart = dynamic(
   () =>
@@ -19,11 +20,8 @@ const SimulatorChart = dynamic(
     loading: () => (
       <Card className="border-foreground/8 bg-card/90 shadow-sm">
         <CardHeader>
-          <CardTitle>Visualisations en preparation</CardTitle>
-          <CardDescription>
-            Les graphiques s&apos;affichent des que les estimations sont
-            disponibles.
-          </CardDescription>
+          <CardTitle>{simulatorResultsTexts.chartsLoadingCard.title}</CardTitle>
+          <CardDescription>{simulatorResultsTexts.chartsLoadingCard.description}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="h-64 rounded-2xl border border-border/70 bg-muted/40" />

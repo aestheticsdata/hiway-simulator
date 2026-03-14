@@ -95,6 +95,71 @@ The simulator UI is split into focused components:
   - renders Recharts components only;
   - does not own business logic.
 
+### UI text catalogs
+
+Visible simulator copy is centralized in dedicated `texts.ts` modules instead
+of being scattered across JSX.
+
+This project currently uses four text entry points:
+
+- `components/simulator/texts.ts`
+  - copy for the left panel form;
+  - field labels, placeholders, helper text, and empty-state messaging.
+- `components/simulator/simulator-results/texts.ts`
+  - copy for the right-panel cards;
+  - section titles, descriptions, alert text, and skeleton labels.
+- `components/simulator/charts/texts.ts`
+  - copy for chart cards and chart-specific UI;
+  - legends, tooltip labels, badges, and curve range wording.
+- `lib/simulator/texts.ts`
+  - shared presentation and validation copy;
+  - regime labels, range preset labels, summary labels, and Zod error messages.
+
+The split is intentional:
+
+- component-local text stays close to the UI concern that renders it;
+- shared business-facing labels live under `lib/simulator` so they can be
+  reused by presentation helpers and schemas;
+- components stay focused on rendering and interpolation, not copy ownership.
+
+#### Key naming convention
+
+Text object keys should be written in English, even when the displayed text is
+French.
+
+Examples:
+
+- `annualNetIncome`
+- `taxRegime`
+- `incomeSensitivity`
+- `microExpensesFallback`
+
+Keep French only when the business term itself is inherently French and would
+become less clear if translated, such as `micro-BNC` or `quotient familial` in
+the displayed value.
+
+#### Where to add new copy
+
+When adding or changing simulator copy:
+
+1. If the text is only used by one UI area, add it to that area's
+   `components/.../texts.ts`.
+2. If the same wording is reused across presentation helpers, schemas, or
+   multiple UI surfaces, add it to `lib/simulator/texts.ts`.
+3. Import the text object into the component or helper instead of hardcoding
+   strings in JSX or schema definitions.
+
+Current examples:
+
+- `SimulatorForm.tsx` reads left-panel copy from `components/simulator/texts.ts`.
+- right-panel cards read copy from
+  `components/simulator/simulator-results/texts.ts`.
+- chart cards and chart adapters read copy from
+  `components/simulator/charts/texts.ts`.
+- `lib/simulator/presentation.ts` and
+  `lib/simulator/schemas/simulatorFormSchema.ts` reuse
+  `lib/simulator/texts.ts`.
+
 ### URL-synced state with `nuqs`
 
 The simulator supports bookmarkable searches through `nuqs`.
@@ -266,6 +331,7 @@ The shared frontend/backend contract layer lives under `lib/simulator`.
 
 - `lib/simulator/formatters.ts`
 - `lib/simulator/presentation.ts`
+- `lib/simulator/texts.ts`
 
 ## Server-only simulation modules
 

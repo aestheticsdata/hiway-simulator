@@ -28,6 +28,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@components/ui/card";
+import { simulatorChartTexts } from "@components/simulator/charts/texts";
 
 export function RevenuePieChartCard({
   result,
@@ -39,12 +40,9 @@ export function RevenuePieChartCard({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <PieChartIcon className="size-4 text-primary/80" />
-          <span>Poids de chaque poste</span>
+          <span>{simulatorChartTexts.revenuePieCard.title}</span>
         </CardTitle>
-        <CardDescription>
-          Compare la part des cotisations, de l&apos;impot et du revenu net dans
-          l&apos;equilibre global.
-        </CardDescription>
+        <CardDescription>{simulatorChartTexts.revenuePieCard.description}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="h-96 rounded-2xl border border-border/70 bg-background/70 px-3 py-4">

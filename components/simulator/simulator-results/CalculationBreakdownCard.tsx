@@ -13,29 +13,27 @@ import {
   formatPercent,
 } from "@lib/simulator/formatters";
 import type { CalculationBreakdownCardProps } from "@components/simulator/simulator-results/interfaces/CalculationBreakdownCardProps";
+import { simulatorResultsTexts } from "@components/simulator/simulator-results/texts";
 import { cn } from "@lib/utils";
 
 export function CalculationBreakdownCard({
   result,
 }: CalculationBreakdownCardProps) {
+  const { labels, ...texts } = simulatorResultsTexts.calculationBreakdownCard;
+
   return (
     <Card className="border-foreground/8 bg-card/90 shadow-sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ReceiptText className="size-4 text-primary/80" />
-          <span>Lecture des prelevements</span>
+          <span>{texts.title}</span>
         </CardTitle>
-        <CardDescription>
-          Detail des postes qui reduisent le revenu disponible, du benefice
-          estime jusqu&apos;au net apres impot.
-        </CardDescription>
+        <CardDescription>{texts.description}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-3">
           <div className="flex items-center justify-between gap-4">
-            <span className="text-muted-foreground">
-              Benefice avant prelevements
-            </span>
+            <span className="text-muted-foreground">{labels.preTaxProfit}</span>
             <span className="font-medium">{formatEuro(result.bnc)}</span>
           </div>
 
@@ -63,31 +61,31 @@ export function CalculationBreakdownCard({
           <Separator />
 
           <div className="flex items-center justify-between gap-4">
-            <span className="font-medium">Total cotisations</span>
+            <span className="font-medium">{labels.totalContributions}</span>
             <span className="font-medium text-blue-500">
               {formatEuro(result.totalCotisations)}
             </span>
           </div>
 
           <div className="flex items-center justify-between gap-4">
-            <span className="text-muted-foreground">Revenu imposable</span>
+            <span className="text-muted-foreground">{labels.taxableIncome}</span>
             <span className="font-medium">{formatEuro(result.revenuImposable)}</span>
           </div>
 
           <div className="flex items-center justify-between gap-4">
-            <span className="text-muted-foreground">Quotient familial</span>
+            <span className="text-muted-foreground">{labels.familyQuotient}</span>
             <span className="font-medium">{formatEuro(result.quotient)}</span>
           </div>
 
           <div className="flex items-center justify-between gap-4">
-            <span className="text-muted-foreground">Impot par part</span>
+            <span className="text-muted-foreground">{labels.taxPerShare}</span>
             <span className="font-medium text-amber-500">
               {formatEuro(result.impotParPart)}
             </span>
           </div>
 
           <div className="flex items-center justify-between gap-4">
-            <span className="font-medium">Impot total</span>
+            <span className="font-medium">{labels.totalTax}</span>
             <span className="font-medium text-amber-500">
               {formatEuro(result.impotTotal)}
             </span>
@@ -96,7 +94,7 @@ export function CalculationBreakdownCard({
           <Separator />
 
           <div className="flex items-center justify-between gap-4 rounded-2xl border border-amber-500/20 bg-amber-500/10 px-4 py-3">
-            <span className="font-medium">Taux global de prelevements</span>
+            <span className="font-medium">{labels.effectiveRate}</span>
             <span className="text-lg font-semibold text-amber-500">
               {formatPercent(result.tauxGlobalPrelevements)}%
             </span>

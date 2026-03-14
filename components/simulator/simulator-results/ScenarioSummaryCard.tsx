@@ -15,6 +15,7 @@ import {
   CardTitle,
 } from "@components/ui/card";
 import type { ScenarioSummaryCardProps } from "@components/simulator/simulator-results/interfaces/ScenarioSummaryCardProps";
+import { simulatorResultsTexts } from "@components/simulator/simulator-results/texts";
 import { getFormSummary } from "@lib/simulator/presentation";
 
 const summaryIcons: Record<string, LucideIcon> = {
@@ -34,11 +35,10 @@ export function ScenarioSummaryCard({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Calculator className="size-4 text-primary/80" />
-          <span>Hypotheses retenues</span>
+          <span>{simulatorResultsTexts.scenarioSummaryCard.title}</span>
         </CardTitle>
         <CardDescription>
-          Parametres pris en compte pour etablir l&apos;estimation du revenu et
-          des prelevements.
+          {simulatorResultsTexts.scenarioSummaryCard.description}
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4 sm:grid-cols-2">

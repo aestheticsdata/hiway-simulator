@@ -3,6 +3,11 @@ import {
   type IncomeCurveRangePreset,
 } from "@lib/simulator/constants/incomeCurveRangePresets";
 import { formatEuro, formatNumber } from "@lib/simulator/formatters";
+import {
+  incomeCurveRangePresetLabels,
+  simulatorPresentationTexts,
+  simulatorRegimeLabels,
+} from "@lib/simulator/texts";
 
 import type { FiscalRegime } from "@lib/simulator/interfaces/FiscalRegime";
 import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationFormValues";
@@ -19,48 +24,40 @@ export const simulatorPalette = {
 export const incomeCurveRangePresetOptions: Array<{
   label: string;
   value: IncomeCurveRangePreset;
-}> = [
-  {
-    label: "Autour de l'activite actuelle",
-    value: incomeCurveRangePresets[0],
-  },
-  {
-    label: "Projection jusqu'a 2x",
-    value: incomeCurveRangePresets[1],
-  },
-  {
-    label: "Projection jusqu'a 3x",
-    value: incomeCurveRangePresets[2],
-  },
-];
+}> = incomeCurveRangePresets.map((value) => ({
+  label: incomeCurveRangePresetLabels[value],
+  value,
+}));
 
 export function getRegimeLabel(regime: FiscalRegime) {
-  return regime === "micro" ? "Micro-BNC" : "Regime reel";
+  return simulatorRegimeLabels[regime];
 }
 
 export function getFormSummary(values: SimulationFormValues) {
+  const { formSummary } = simulatorPresentationTexts;
+
   return [
     {
       id: "regime",
-      label: "Cadre fiscal",
+      label: formSummary.taxRegime,
       value: getRegimeLabel(values.regime),
     },
     {
       id: "honoraires",
-      label: "Honoraires annuels",
+      label: formSummary.annualFees,
       value: formatEuro(values.honoraires, false),
     },
     {
       id: "charges",
-      label: "Charges professionnelles",
+      label: formSummary.businessExpenses,
       value:
         values.regime === "reel"
           ? formatEuro(values.charges, false)
-          : "Non retenues en micro-BNC",
+          : formSummary.microExpensesFallback,
     },
     {
       id: "parts",
-      label: "Parts fiscales",
+      label: formSummary.taxShares,
       value: formatNumber(values.partsFiscales),
     },
   ];

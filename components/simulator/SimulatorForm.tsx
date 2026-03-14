@@ -13,6 +13,7 @@ import { Input } from "@components/ui/input";
 import type { FieldErrorProps } from "@components/simulator/interfaces/FieldErrorProps";
 import { Label } from "@components/ui/label";
 import type { SimulatorFormProps } from "@components/simulator/interfaces/SimulatorFormProps";
+import { simulatorFormTexts } from "@components/simulator/texts";
 import {
   Select,
   SelectContent,
@@ -20,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@components/ui/select";
+import { simulatorRegimeLabels } from "@lib/simulator/texts";
 
 function FieldError({ message }: FieldErrorProps) {
   if (!message) {
@@ -31,6 +33,7 @@ function FieldError({ message }: FieldErrorProps) {
 
 export function SimulatorForm({ form }: SimulatorFormProps) {
   const regime = form.watch("regime");
+  const { fields } = simulatorFormTexts;
   const {
     control,
     formState: { errors },
@@ -48,11 +51,11 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
     <div className="space-y-8">
       <div className="space-y-3">
         <p className="text-sm font-medium uppercase tracking-[0.24em] text-primary/70">
-          Donnees de simulation
+          {simulatorFormTexts.eyebrow}
         </p>
         <div className="space-y-2">
           <h2 className="text-2xl font-semibold tracking-tight">
-            Simulateur de revenu net
+            {simulatorFormTexts.title}
           </h2>
         </div>
       </div>
@@ -61,7 +64,7 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
         <div className="space-y-2">
           <Label htmlFor="regime" className="flex items-center gap-2">
             <Scale className="size-4 text-primary/70" />
-            <span>Regime fiscal</span>
+            <span>{fields.taxRegime.label}</span>
           </Label>
           <Controller
             control={control}
@@ -69,25 +72,28 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange}>
                 <SelectTrigger id="regime" className="w-full">
-                  <SelectValue placeholder="Selectionnez un regime" />
+                  <SelectValue placeholder={fields.taxRegime.placeholder} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="micro">Micro-BNC</SelectItem>
-                  <SelectItem value="reel">Regime reel</SelectItem>
+                  <SelectItem value="micro">
+                    {simulatorRegimeLabels.micro}
+                  </SelectItem>
+                  <SelectItem value="reel">
+                    {simulatorRegimeLabels.reel}
+                  </SelectItem>
                 </SelectContent>
               </Select>
             )}
           />
           <p className="text-sm text-muted-foreground">
-            Le mode micro applique un abattement forfaitaire. Le reel deduit
-            les charges saisies.
+            {fields.taxRegime.help}
           </p>
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="honoraires" className="flex items-center gap-2">
             <BadgeEuro className="size-4 text-primary/70" />
-            <span>Honoraires annuels</span>
+            <span>{fields.annualFees.label}</span>
           </Label>
           <Input
             id="honoraires"
@@ -106,7 +112,7 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
           <div className="space-y-2">
             <Label htmlFor="charges" className="flex items-center gap-2">
               <ReceiptText className="size-4 text-primary/70" />
-              <span>Charges annuelles</span>
+              <span>{fields.annualExpenses.label}</span>
             </Label>
             <Input
               id="charges"
@@ -122,15 +128,14 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
           </div>
         ) : (
           <div className="rounded-2xl border border-dashed border-border/80 bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
-            Les charges ne sont pas saisies en micro-BNC. L&apos;abattement
-            forfaitaire de 34% servira de base de calcul a l&apos;etape metier.
+            {fields.annualExpenses.microHint}
           </div>
         )}
 
         <div className="space-y-2">
           <Label htmlFor="partsFiscales" className="flex items-center gap-2">
             <Users className="size-4 text-primary/70" />
-            <span>Parts fiscales</span>
+            <span>{fields.taxShares.label}</span>
           </Label>
           <Input
             id="partsFiscales"

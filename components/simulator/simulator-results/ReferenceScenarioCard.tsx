@@ -15,47 +15,47 @@ import {
 } from "@components/ui/card";
 import { MetricCard } from "@components/simulator/MetricCard";
 import type { ReferenceScenarioCardProps } from "@components/simulator/simulator-results/interfaces/ReferenceScenarioCardProps";
+import { simulatorResultsTexts } from "@components/simulator/simulator-results/texts";
 import { formatEuro } from "@lib/simulator/formatters";
 
 export function ReferenceScenarioCard({
   result,
 }: ReferenceScenarioCardProps) {
+  const { metrics, ...texts } = simulatorResultsTexts.referenceScenarioCard;
+
   return (
     <Card className="border-foreground/8 bg-card/90 shadow-sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileText className="size-4 text-primary/80" />
-          <span>Synthese financiere</span>
+          <span>{texts.title}</span>
         </CardTitle>
-        <CardDescription>
-          Vue d&apos;ensemble des montants a retenir pour mesurer le revenu
-          reellement disponible.
-        </CardDescription>
+        <CardDescription>{texts.description}</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4 sm:grid-cols-2">
         <MetricCard
-          label="Revenu net annuel"
+          label={metrics.annualNetIncome}
           value={formatEuro(result.revenuNetAnnuel)}
           icon={TrendingUp}
           className="border-emerald-500/30 bg-emerald-500/10 shadow-sm shadow-emerald-500/10"
           valueClassName="text-emerald-500"
         />
         <MetricCard
-          label="Revenu net mensuel"
+          label={metrics.monthlyNetIncome}
           value={formatEuro(result.revenuNetMensuel)}
           icon={BadgeEuro}
           className="border-emerald-500/30 bg-emerald-500/10 shadow-sm shadow-emerald-500/10"
           valueClassName="text-emerald-500"
         />
         <MetricCard
-          label="Cotisations sociales"
+          label={metrics.socialContributions}
           value={formatEuro(result.totalCotisations)}
           icon={HandCoins}
           className="border-blue-500/20 bg-blue-500/10"
           valueClassName="text-blue-500"
         />
         <MetricCard
-          label="Impot estime"
+          label={metrics.estimatedTax}
           value={formatEuro(result.impotTotal)}
           icon={Landmark}
           className="border-amber-500/20 bg-amber-500/10"
