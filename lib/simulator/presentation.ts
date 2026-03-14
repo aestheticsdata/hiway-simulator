@@ -1,3 +1,7 @@
+import {
+  incomeCurveRangePresets,
+  type IncomeCurveRangePreset,
+} from "@lib/simulator/constants/incomeCurveRangePresets";
 import { formatEuro, formatNumber } from "@lib/simulator/formatters";
 
 import type { FiscalRegime } from "@lib/simulator/interfaces/FiscalRegime";
@@ -11,6 +15,24 @@ export const simulatorPalette = {
   impot: "#f59e0b",
   net: "#10b981",
 } as const;
+
+export const incomeCurveRangePresetOptions: Array<{
+  label: string;
+  value: IncomeCurveRangePreset;
+}> = [
+  {
+    label: "Autour du scenario",
+    value: incomeCurveRangePresets[0],
+  },
+  {
+    label: "Jusqu'a 2x",
+    value: incomeCurveRangePresets[1],
+  },
+  {
+    label: "Jusqu'a 3x",
+    value: incomeCurveRangePresets[2],
+  },
+];
 
 export function getRegimeLabel(regime: FiscalRegime) {
   return regime === "micro" ? "Micro-BNC" : "Regime reel";

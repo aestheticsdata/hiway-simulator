@@ -1,13 +1,16 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 import { simulatorService } from "@lib/api/simulator/simulator.service";
+import type { IncomeCurveRequest } from "@lib/simulator/interfaces/IncomeCurveRequest";
 import type { SimulationInput } from "@lib/simulator/interfaces/SimulationInput";
 
 export const simulatorQueryKeys = {
   all: ["simulator"] as const,
   rates: () => [...simulatorQueryKeys.all, "rates"] as const,
+  simulationCurve: (input: IncomeCurveRequest) =>
+    [...simulatorQueryKeys.all, "simulation-curve", input] as const,
   simulationResult: (input: SimulationInput) =>
     [...simulatorQueryKeys.all, "simulation-result", input] as const,
 };
@@ -30,6 +33,21 @@ export function useSimulationResultQuery(
     enabled,
     queryKey: simulatorQueryKeys.simulationResult(input),
     queryFn: ({ signal }) => simulatorService.runSimulation(input, { signal }),
+    retry: 0,
+    throwOnError: true,
+  });
+}
+
+export function useSimulationCurveQuery(
+  input: IncomeCurveRequest,
+  enabled = true
+) {
+  return useQuery({
+    enabled,
+    placeholderData: keepPreviousData,
+    queryKey: simulatorQueryKeys.simulationCurve(input),
+    queryFn: ({ signal }) =>
+      simulatorService.runSimulationCurve(input, { signal }),
     retry: 0,
     throwOnError: true,
   });

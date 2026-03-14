@@ -7,7 +7,7 @@ This repository currently includes:
 - a responsive single-page dashboard UI;
 - typed App Router API routes;
 - a shared domain contract between frontend and backend;
-- a pure simulation engine;
+- a server-only simulation engine;
 - a frontend HTTP facade over Axios;
 - chart adapters derived from domain results;
 - error propagation to Next.js `error.tsx`.
@@ -60,9 +60,9 @@ React UI
 -> TanStack Query hooks
 -> simulator service facade
 -> typed Axios HTTP client
--> Next.js route handlers (/api/rates, /api/simulate)
+-> Next.js route handlers (/api/rates, /api/simulate, /api/simulate-curve)
 -> server-only simulation engine
--> SimulationResult
+-> SimulationResult / IncomeCurveResponse
 -> UI cards + chart adapters
 ```
 
@@ -203,6 +203,7 @@ The backend currently lives inside Next.js App Router route handlers:
 
 - `app/api/rates/route.ts`
 - `app/api/simulate/route.ts`
+- `app/api/simulate-curve/route.ts`
 
 At this stage, the app is still a single Next.js project, but the internal boundaries already mimic a cleaner front/backend split.
 
@@ -220,6 +221,14 @@ At this stage, the app is still a single Next.js project, but the internal bound
 - calls the server-only simulation engine;
 - validates the returned value against `simulationResultSchema`.
 
+`POST /api/simulate-curve`
+
+- parses the request body with `incomeCurveRequestSchema.safeParse(...)`;
+- returns `400` when the payload is invalid;
+- builds a revenue curve server-side from the current simulation input and selected range preset;
+- recalculates the full simulation for each sampled `honoraires` value instead of projecting from a constant global deduction rate;
+- validates the returned value against `incomeCurveResponseSchema`.
+
 ## Shared domain contracts
 
 The shared frontend/backend contract layer lives under `lib/simulator`.
@@ -231,6 +240,8 @@ The shared frontend/backend contract layer lives under `lib/simulator`.
 
 ### Interfaces
 
+- `lib/simulator/interfaces/IncomeCurveRequest.ts`
+- `lib/simulator/interfaces/IncomeCurveResponse.ts`
 - `lib/simulator/interfaces/SimulationInput.ts`
 - `lib/simulator/interfaces/SimulationFormValues.ts`
 - `lib/simulator/interfaces/SimulationResult.ts`
@@ -241,6 +252,9 @@ The shared frontend/backend contract layer lives under `lib/simulator`.
 
 ### Schemas
 
+- `lib/simulator/schemas/incomeCurvePointSchema.ts`
+- `lib/simulator/schemas/incomeCurveRequestSchema.ts`
+- `lib/simulator/schemas/incomeCurveResponseSchema.ts`
 - `lib/simulator/schemas/simulatorFormSchema.ts`
 - `lib/simulator/schemas/simulationResultSchema.ts`
 - `lib/simulator/schemas/ratesResponseSchema.ts`
@@ -259,6 +273,7 @@ The backend-only simulation layer lives under `lib/simulator/server`.
 
 - `lib/simulator/server/referenceRates.ts`
 - `lib/simulator/server/calculateSimulationResult.ts`
+- `lib/simulator/server/calculateIncomeCurve.ts`
 
 These modules are marked `server-only` so client components cannot import the
 simulation source of truth by mistake.
@@ -504,6 +519,12 @@ The actual simulation logic is not duplicated in the UI. The right pane is
 driven by the API result, and the initial loading state is represented with
 skeleton components instead of fake financial data.
 
+The income curve follows the same rule: each plotted point is produced by a
+full server-side recalculation through `calculateSimulationResult(...)` for a
+specific `honoraires` value. The chart line is visually interpolated by the
+charting library between sampled points, but the sampled values themselves are
+exact outputs of the business formulas.
+
 ## Path aliases
 
 The project uses TypeScript path aliases declared in `tsconfig.json`:
@@ -521,6 +542,7 @@ Already in place:
 - shared schemas and types for frontend and backend;
 - typed route handlers;
 - server-only calculation engine;
+- server-side income curve generation;
 - service facade over Axios;
 - React Query integration;
 - chart adapters from domain data;
