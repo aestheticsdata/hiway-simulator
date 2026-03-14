@@ -18,7 +18,7 @@ export function ResultsSummaryBanner({
     <section className="rounded-2xl border border-border/80 bg-background/80 px-4 py-3 shadow-sm">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
         <div className="min-w-0 space-y-1 lg:basis-2/3 lg:pr-4">
-          <h2 className="font-medium text-foreground">
+          <h2 id="simulation-results-heading" className="font-medium text-foreground">
             {simulatorResultsTexts.resultsBanner.title}
           </h2>
           <p className="text-sm text-balance text-muted-foreground md:text-pretty">

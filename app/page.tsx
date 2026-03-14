@@ -1,12 +1,18 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { SimulatorDashboard } from "@components/simulator/SimulatorDashboard";
 import { ThemeToggle } from "@components/simulator/ThemeToggle";
 
+export const metadata: Metadata = {
+  title: "Simulateur de revenu net pour medecin liberal",
+  description:
+    "Calculez une estimation du revenu net annuel et mensuel, des cotisations sociales et de l'impot pour un medecin liberal en micro-BNC ou au reel.",
+};
+
 export default function Home() {
   return (
     <main className="relative flex min-h-screen flex-col bg-background bg-[radial-gradient(circle_at_top_left,rgba(60,126,214,0.16),transparent_32%),radial-gradient(circle_at_top_right,rgba(26,163,111,0.12),transparent_28%),radial-gradient(circle_at_bottom,rgba(243,154,60,0.12),transparent_24%)] bg-no-repeat lg:h-screen lg:overflow-hidden">
-
       <section className="relative shrink-0 border-b border-border/70 bg-background/80 backdrop-blur">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-6 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-6 lg:px-8 2xl:max-w-384">
           <div className="space-y-3">

@@ -13,6 +13,7 @@ import { Input } from "@components/ui/input";
 import type { FieldErrorProps } from "@components/simulator/interfaces/FieldErrorProps";
 import { Label } from "@components/ui/label";
 import type { SimulatorFormProps } from "@components/simulator/interfaces/SimulatorFormProps";
+import { simulatorFormAccessibilityIds } from "@components/simulator/constants";
 import { simulatorFormTexts } from "@components/simulator/texts";
 import {
   Select,
@@ -23,12 +24,19 @@ import {
 } from "@components/ui/select";
 import { simulatorRegimeLabels } from "@lib/simulator/texts";
 
-function FieldError({ message }: FieldErrorProps) {
+function FieldError({
+  id,
+  message,
+}: FieldErrorProps & { id: string }) {
   if (!message) {
     return null;
   }
 
-  return <p className="text-sm text-destructive">{message}</p>;
+  return (
+    <p id={id} role="alert" className="text-sm text-destructive">
+      {message}
+    </p>
+  );
 }
 
 export function SimulatorForm({ form }: SimulatorFormProps) {
@@ -40,6 +48,13 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
     register,
     setValue,
   } = form;
+  const {
+    chargesErrorId,
+    honorairesErrorId,
+    partsFiscalesErrorId,
+    regimeErrorId,
+    regimeHelpId,
+  } = simulatorFormAccessibilityIds;
 
   useEffect(() => {
     if (regime === "micro") {
@@ -48,19 +63,23 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
   }, [regime, setValue]);
 
   return (
-    <div className="space-y-8">
+    <form className="space-y-8" noValidate aria-labelledby="simulation-form-title">
       <div className="space-y-3">
         <p className="text-sm font-medium uppercase tracking-[0.24em] text-primary/70">
           {simulatorFormTexts.eyebrow}
         </p>
         <div className="space-y-2">
-          <h2 className="text-2xl font-semibold tracking-tight">
+          <h2
+            id="simulation-form-title"
+            className="text-2xl font-semibold tracking-tight"
+          >
             {simulatorFormTexts.title}
           </h2>
         </div>
       </div>
 
-      <div className="space-y-5">
+      <fieldset className="space-y-5">
+        <legend className="sr-only">{simulatorFormTexts.title}</legend>
         <div className="space-y-2">
           <Label htmlFor="regime" className="flex items-center gap-2">
             <Scale className="size-4 text-primary/70" />
@@ -70,8 +89,18 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
             control={control}
             name="regime"
             render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger id="regime" className="w-full">
+              <Select
+                name={field.name}
+                value={field.value}
+                onValueChange={field.onChange}
+              >
+                <SelectTrigger
+                  id="regime"
+                  aria-describedby={[regimeHelpId, errors.regime ? regimeErrorId : null].filter(Boolean).join(" ") || undefined}
+                  aria-invalid={errors.regime ? true : undefined}
+                  className="w-full"
+                  onBlur={field.onBlur}
+                >
                   <SelectValue placeholder={fields.taxRegime.placeholder} />
                 </SelectTrigger>
                 <SelectContent>
@@ -85,9 +114,10 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
               </Select>
             )}
           />
-          <p className="text-sm text-muted-foreground">
+          <p id={regimeHelpId} className="text-sm text-muted-foreground">
             {fields.taxRegime.help}
           </p>
+          <FieldError id={regimeErrorId} message={errors.regime?.message} />
         </div>
 
         <div className="space-y-2">
@@ -101,11 +131,18 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
             inputMode="numeric"
             min={0}
             step={1000}
+            aria-describedby={
+              errors.honoraires ? honorairesErrorId : undefined
+            }
+            aria-invalid={errors.honoraires ? true : undefined}
             {...register("honoraires", {
               valueAsNumber: true,
             })}
           />
-          <FieldError message={errors.honoraires?.message} />
+          <FieldError
+            id={honorairesErrorId}
+            message={errors.honoraires?.message}
+          />
         </div>
 
         {regime === "reel" ? (
@@ -120,11 +157,13 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
               inputMode="numeric"
               min={0}
               step={100}
+              aria-describedby={errors.charges ? chargesErrorId : undefined}
+              aria-invalid={errors.charges ? true : undefined}
               {...register("charges", {
                 valueAsNumber: true,
               })}
             />
-            <FieldError message={errors.charges?.message} />
+            <FieldError id={chargesErrorId} message={errors.charges?.message} />
           </div>
         ) : (
           <div className="rounded-2xl border border-dashed border-border/80 bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
@@ -143,13 +182,20 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
             inputMode="decimal"
             min={1}
             step={0.5}
+            aria-describedby={
+              errors.partsFiscales ? partsFiscalesErrorId : undefined
+            }
+            aria-invalid={errors.partsFiscales ? true : undefined}
             {...register("partsFiscales", {
               valueAsNumber: true,
             })}
           />
-          <FieldError message={errors.partsFiscales?.message} />
+          <FieldError
+            id={partsFiscalesErrorId}
+            message={errors.partsFiscales?.message}
+          />
         </div>
-      </div>
-    </div>
+      </fieldset>
+    </form>
   );
 }

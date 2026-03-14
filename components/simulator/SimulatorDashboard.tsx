@@ -164,6 +164,9 @@ export function SimulatorDashboard() {
 
       <div
         ref={scrollPaneRef}
+        aria-busy={shouldShowResultsSkeleton || simulationResultQuery.isFetching}
+        aria-labelledby="simulation-results-heading"
+        role="region"
         className="lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-2"
       >
         <div className="space-y-6">
