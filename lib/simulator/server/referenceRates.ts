@@ -1,3 +1,5 @@
+import "server-only";
+
 import type { RatesResponse } from "@lib/simulator/interfaces/RatesResponse";
 import { ratesResponseSchema } from "@lib/simulator/schemas/ratesResponseSchema";
 

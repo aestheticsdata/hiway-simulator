@@ -15,7 +15,7 @@ import {
   CardTitle,
 } from "@components/ui/card";
 import type { ScenarioSummaryCardProps } from "@components/simulator/simulator-results/interfaces/ScenarioSummaryCardProps";
-import { getFormSummary } from "@lib/simulator/mock-data";
+import { getFormSummary } from "@lib/simulator/presentation";
 
 const summaryIcons: Record<string, LucideIcon> = {
   charges: ReceiptText,

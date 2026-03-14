@@ -1,12 +1,7 @@
-import { defaultFormValues } from "@lib/simulator/constants/defaultFormValues";
-import { referenceRates } from "@lib/simulator/constants/referenceRates";
-import { calculateSimulationResult } from "@lib/simulator/engine/calculateSimulationResult";
+import { formatEuro, formatNumber } from "@lib/simulator/formatters";
+
 import type { FiscalRegime } from "@lib/simulator/interfaces/FiscalRegime";
 import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationFormValues";
-import type { SimulationResult } from "@lib/simulator/interfaces/SimulationResult";
-
-export const referenceSimulationResult: SimulationResult =
-  calculateSimulationResult(defaultFormValues, referenceRates);
 
 export const simulatorPalette = {
   bnc: "#f4f5f7",
@@ -16,22 +11,6 @@ export const simulatorPalette = {
   impot: "#f59e0b",
   net: "#10b981",
 } as const;
-
-export function formatEuro(value: number, withCents = true) {
-  return new Intl.NumberFormat("fr-FR", {
-    style: "currency",
-    currency: "EUR",
-    minimumFractionDigits: withCents ? 2 : 0,
-    maximumFractionDigits: withCents ? 2 : 0,
-  }).format(value);
-}
-
-export function formatPercent(value: number) {
-  return new Intl.NumberFormat("fr-FR", {
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 2,
-  }).format(value);
-}
 
 export function getRegimeLabel(regime: FiscalRegime) {
   return regime === "micro" ? "Micro-BNC" : "Regime reel";
@@ -60,7 +39,7 @@ export function getFormSummary(values: SimulationFormValues) {
     {
       id: "parts",
       label: "Parts fiscales",
-      value: new Intl.NumberFormat("fr-FR").format(values.partsFiscales),
+      value: formatNumber(values.partsFiscales),
     },
   ];
 }

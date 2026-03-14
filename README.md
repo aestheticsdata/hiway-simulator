@@ -61,7 +61,7 @@ React UI
 -> simulator service facade
 -> typed Axios HTTP client
 -> Next.js route handlers (/api/rates, /api/simulate)
--> pure simulation engine
+-> server-only simulation engine
 -> SimulationResult
 -> UI cards + chart adapters
 ```
@@ -217,18 +217,17 @@ At this stage, the app is still a single Next.js project, but the internal bound
 
 - parses the request body with `simulatorFormSchema.safeParse(...)`;
 - returns `400` when the payload is invalid;
-- calls the pure domain engine;
+- calls the server-only simulation engine;
 - validates the returned value against `simulationResultSchema`.
 
 ## Shared domain contracts
 
-The shared domain layer lives under `lib/simulator`.
+The shared frontend/backend contract layer lives under `lib/simulator`.
 
 ### Constants
 
 - `lib/simulator/constants/defaultFormValues.ts`
 - `lib/simulator/constants/fiscalRegimes.ts`
-- `lib/simulator/constants/referenceRates.ts`
 
 ### Interfaces
 
@@ -249,18 +248,20 @@ The shared domain layer lives under `lib/simulator`.
 - `lib/simulator/schemas/cotisationBreakdownItemSchema.ts`
 - `lib/simulator/schemas/taxBracketSchema.ts`
 
-### Engine
+### Presentation helpers
 
-- `lib/simulator/engine/calculateSimulationResult.ts`
+- `lib/simulator/formatters.ts`
+- `lib/simulator/presentation.ts`
 
-The engine is pure and reusable. It has no React, no Axios, and no Next.js dependency.
+## Server-only simulation modules
 
-That makes it suitable for:
+The backend-only simulation layer lives under `lib/simulator/server`.
 
-- route handlers;
-- unit tests;
-- future comparison features such as `Micro-BNC vs Real`;
-- possible extraction into a separate backend package later.
+- `lib/simulator/server/referenceRates.ts`
+- `lib/simulator/server/calculateSimulationResult.ts`
+
+These modules are marked `server-only` so client components cannot import the
+simulation source of truth by mistake.
 
 ## Validation strategy
 
@@ -497,9 +498,11 @@ This shape is intentionally rich enough to feed:
 
 Rates are currently sourced from:
 
-- `lib/simulator/constants/referenceRates.ts`
+- `lib/simulator/server/referenceRates.ts`
 
-The actual simulation logic is not duplicated in the UI. The right pane is driven by the API result, and the initial loading state is represented with skeleton components instead of fake financial data.
+The actual simulation logic is not duplicated in the UI. The right pane is
+driven by the API result, and the initial loading state is represented with
+skeleton components instead of fake financial data.
 
 ## Path aliases
 
@@ -517,7 +520,7 @@ Already in place:
 
 - shared schemas and types for frontend and backend;
 - typed route handlers;
-- pure calculation engine;
+- server-only calculation engine;
 - service facade over Axios;
 - React Query integration;
 - chart adapters from domain data;

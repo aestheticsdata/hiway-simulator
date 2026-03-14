@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 
 import { getDebugApiErrorModeFromHeaders } from "@lib/api/core/constants/debugApi";
-import { referenceRates } from "@lib/simulator/constants/referenceRates";
-import { calculateSimulationResult } from "@lib/simulator/engine/calculateSimulationResult";
 import { simulatorFormSchema } from "@lib/simulator/schemas/simulatorFormSchema";
 import { z } from "zod";
 import { simulationResultSchema } from "@lib/simulator/schemas/simulationResultSchema";
+import { calculateSimulationResult } from "@lib/simulator/server/calculateSimulationResult";
+import { referenceRates } from "@lib/simulator/server/referenceRates";
 
 export async function POST(request: Request) {
   const debugMode = getDebugApiErrorModeFromHeaders(request.headers);
