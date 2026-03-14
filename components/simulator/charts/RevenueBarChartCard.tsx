@@ -20,6 +20,8 @@ import {
   CardTitle,
 } from "@components/ui/card";
 import {
+  chartTooltipItemStyle,
+  chartTooltipLabelStyle,
   chartTooltipStyle,
   formatTooltipEuro,
   getBarChartData,
@@ -69,6 +71,8 @@ export function RevenueBarChartCard({
                 cursor={{ fill: "transparent" }}
                 formatter={formatTooltipEuro}
                 contentStyle={chartTooltipStyle}
+                itemStyle={chartTooltipItemStyle}
+                labelStyle={chartTooltipLabelStyle}
               />
               <Bar dataKey="value" radius={[8, 8, 0, 0]}>
                 {barData.map((entry) => (

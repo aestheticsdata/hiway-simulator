@@ -106,7 +106,16 @@ export const chartTooltipStyle = {
   border:
     "1px solid color-mix(in oklab, var(--color-border) 85%, transparent)",
   backgroundColor: "var(--color-card)",
+  color: "var(--color-card-foreground)",
   boxShadow: "0 20px 50px rgba(15, 23, 42, 0.08)",
+};
+
+export const chartTooltipLabelStyle = {
+  color: "var(--color-card-foreground)",
+};
+
+export const chartTooltipItemStyle = {
+  color: "var(--color-card-foreground)",
 };
 
 export function renderChartPieLabel({

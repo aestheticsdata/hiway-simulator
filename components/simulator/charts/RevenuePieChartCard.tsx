@@ -12,6 +12,8 @@ import {
 
 import {
   chartLegendItems,
+  chartTooltipItemStyle,
+  chartTooltipLabelStyle,
   chartTooltipStyle,
   formatTooltipEuro,
   getPieChartData,
@@ -69,6 +71,8 @@ export function RevenuePieChartCard({
               <Tooltip
                 formatter={formatTooltipEuro}
                 contentStyle={chartTooltipStyle}
+                itemStyle={chartTooltipItemStyle}
+                labelStyle={chartTooltipLabelStyle}
               />
               <Legend
                 verticalAlign="bottom"
