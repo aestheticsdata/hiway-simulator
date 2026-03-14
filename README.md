@@ -35,6 +35,12 @@ pnpm lint
 pnpm build
 ```
 
+## Runtime ports
+
+- Local development uses `pnpm dev` on `http://localhost:3000`.
+- Production on `ks-b` runs through PM2 on `127.0.0.1:3001`.
+- Nginx terminates HTTPS for `https://hiwaysim.1991computer.com` and proxies requests to `3001`.
+
 ## Project goals
 
 The project is structured to support a technical test where both frontend architecture and backend/API design matter.
