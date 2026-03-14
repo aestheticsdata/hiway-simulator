@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { Activity, ChartSpline } from "lucide-react";
 import {
   Area,
@@ -54,14 +53,11 @@ export function IncomeCurveChartCard({
   regime,
 }: IncomeCurveChartCardProps) {
   const texts = simulatorChartTexts.incomeCurveCard;
-  const selectedRangeOption = useMemo(
-    () =>
-      incomeCurveRangePresetOptions.find((option) => option.value === rangePreset),
-    [rangePreset]
+  const selectedRangeOption = incomeCurveRangePresetOptions.find(
+    (option) => option.value === rangePreset
   );
-  const currentScenarioPoint = useMemo(
-    () => curve?.points.find((point) => point.isCurrentScenario),
-    [curve]
+  const currentScenarioPoint = curve?.points.find(
+    (point) => point.isCurrentScenario
   );
   const chartContent = curve ? (
     <>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryStates } from "nuqs";
 import { flushSync } from "react-dom";
@@ -35,10 +35,7 @@ export function SimulatorDashboard() {
   const [urlState, setUrlState] = useQueryStates(simulatorSearchParamParsers, {
     history: "replace",
   });
-  const urlFormValues = useMemo(
-    () => getSimulationInputFromSearchParams(urlState),
-    [urlState]
-  );
+  const urlFormValues = getSimulationInputFromSearchParams(urlState);
 
   const form = useForm<SimulationFormValues>({
     resolver: zodResolver(simulatorFormSchema),
@@ -47,26 +44,13 @@ export function SimulatorDashboard() {
   });
 
   const watchedValues = useWatch({ control: form.control });
-  const formValues = useMemo(
-    () =>
-      normalizeSimulationInput({
-        charges: watchedValues.charges,
-        honoraires: watchedValues.honoraires,
-        partsFiscales: watchedValues.partsFiscales,
-        regime: watchedValues.regime,
-      }),
-    [
-      watchedValues.charges,
-      watchedValues.honoraires,
-      watchedValues.partsFiscales,
-      watchedValues.regime,
-    ]
-  );
+  const formValues = normalizeSimulationInput({
+    charges: watchedValues.charges,
+    honoraires: watchedValues.honoraires,
+    partsFiscales: watchedValues.partsFiscales,
+    regime: watchedValues.regime,
+  });
   const debouncedFormValues = useDebouncedValue(formValues, 350);
-  const canonicalSearchParams = useMemo(
-    () => getSearchParamsFromSimulationInput(debouncedFormValues),
-    [debouncedFormValues]
-  );
   const ratesQuery = useRatesQuery();
   const simulationResultQuery = useSimulationResultQuery(
     debouncedFormValues,
@@ -74,61 +58,58 @@ export function SimulatorDashboard() {
   );
   const exportTexts = simulatorResultsTexts.pdfExport;
   const shouldShowResultsSkeleton = ratesQuery.isPending || !simulationResultQuery.data;
-  const documentTitle = useMemo(() => {
-    const normalizedParts = formValues.partsFiscales.toString().replace(".", "_");
-
-    return [
-      "hiway-simulation",
-      formValues.regime,
-      Math.round(formValues.honoraires),
-      `${normalizedParts}parts`,
-    ].join("-");
-  }, [formValues.honoraires, formValues.partsFiscales, formValues.regime]);
+  const normalizedParts = formValues.partsFiscales.toString().replace(".", "_");
+  const documentTitle = [
+    "hiway-simulation",
+    formValues.regime,
+    Math.round(formValues.honoraires),
+    `${normalizedParts}parts`,
+  ].join("-");
 
   useEffect(() => {
-    if (areSimulationInputsEqual(form.getValues(), urlFormValues)) {
+    const nextUrlFormValues = getSimulationInputFromSearchParams(urlState);
+
+    if (areSimulationInputsEqual(form.getValues(), nextUrlFormValues)) {
       return;
     }
 
-    form.reset(urlFormValues);
-  }, [form, urlFormValues]);
+    form.reset(nextUrlFormValues);
+  }, [form, urlState]);
 
   useEffect(() => {
     if (!form.formState.isValid) {
       return;
     }
 
+    const canonicalSearchParams =
+      getSearchParamsFromSimulationInput(debouncedFormValues);
+
     if (areSimulationSearchParamsEqual(canonicalSearchParams, urlState)) {
       return;
     }
 
     void setUrlState(canonicalSearchParams);
-  }, [
-    canonicalSearchParams,
-    form.formState.isValid,
-    setUrlState,
-    urlState,
-  ]);
-
-  const handleWheel = useCallback((e: WheelEvent) => {
-    const pane = scrollPaneRef.current;
-    if (!pane) return;
-    if (pane.contains(e.target as Node)) return;
-
-    const { scrollTop, scrollHeight, clientHeight } = pane;
-    const atTop = scrollTop <= 0 && e.deltaY < 0;
-    const atBottom =
-      scrollTop + clientHeight >= scrollHeight - 1 && e.deltaY > 0;
-    if (atTop || atBottom) return;
-
-    e.preventDefault();
-    pane.scrollTop += e.deltaY;
-  }, []);
+  }, [debouncedFormValues, form.formState.isValid, setUrlState, urlState]);
 
   useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      const pane = scrollPaneRef.current;
+      if (!pane) return;
+      if (pane.contains(e.target as Node)) return;
+
+      const { scrollTop, scrollHeight, clientHeight } = pane;
+      const atTop = scrollTop <= 0 && e.deltaY < 0;
+      const atBottom =
+        scrollTop + clientHeight >= scrollHeight - 1 && e.deltaY > 0;
+      if (atTop || atBottom) return;
+
+      e.preventDefault();
+      pane.scrollTop += e.deltaY;
+    };
+
     document.addEventListener("wheel", handleWheel, { passive: false });
     return () => document.removeEventListener("wheel", handleWheel);
-  }, [handleWheel]);
+  }, []);
 
   const handlePrint = useReactToPrint({
     contentRef: printableRef,

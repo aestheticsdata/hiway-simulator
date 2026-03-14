@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 
 import { useSimulationCurveQuery } from "@lib/api/simulator/simulator.queries";
 import { useDebouncedValue } from "@components/simulator/hooks/useDebouncedValue";
@@ -18,20 +18,14 @@ export function SimulatorChart({
   const [rangePreset, setRangePreset] =
     useState<IncomeCurveRangePreset>("standard");
   const debouncedFormValues = useDebouncedValue(formValues, 350);
-  const curveRequest = useMemo(
-    () => ({
-      ...debouncedFormValues,
-      rangePreset,
-    }),
-    [debouncedFormValues, rangePreset]
-  );
+  const curveRequest = {
+    ...debouncedFormValues,
+    rangePreset,
+  };
   const curveQuery = useSimulationCurveQuery(curveRequest);
-  const handleRangePresetChange = useCallback(
-    (value: IncomeCurveRangePreset) => {
-      setRangePreset(value);
-    },
-    []
-  );
+  const handleRangePresetChange = (value: IncomeCurveRangePreset) => {
+    setRangePreset(value);
+  };
 
   return (
     <div className="space-y-6">
