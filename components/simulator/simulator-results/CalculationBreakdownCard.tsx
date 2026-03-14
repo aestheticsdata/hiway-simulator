@@ -22,15 +22,15 @@ export function CalculationBreakdownCard({
   const { labels, ...texts } = simulatorResultsTexts.calculationBreakdownCard;
 
   return (
-    <Card className="border-foreground/8 bg-card/90 shadow-sm">
-      <CardHeader>
+    <Card className="border-border/80 bg-card/92 shadow-[0_16px_40px_rgba(118,145,191,0.12)] ring-1 ring-[#e7eef8] dark:shadow-[0_22px_70px_rgba(2,8,22,0.24)] dark:ring-white/3">
+      <CardHeader className="border-b border-border/80">
         <CardTitle className="flex items-center gap-2">
           <ReceiptText className="size-4 text-primary/80" />
           <span>{texts.title}</span>
         </CardTitle>
         <CardDescription>{texts.description}</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 pt-6">
         <div className="space-y-3">
           <div className="flex items-center justify-between gap-4">
             <span className="text-muted-foreground">{labels.preTaxProfit}</span>
@@ -48,9 +48,9 @@ export function CalculationBreakdownCard({
               <span
                 className={cn(
                   "font-medium",
-                  cotisation.id === "urssaf" && "text-blue-500",
-                  cotisation.id === "retraite" && "text-violet-500",
-                  cotisation.id === "csg-crds" && "text-cyan-500"
+                  cotisation.id === "urssaf" && "text-[#4f86ff]",
+                  cotisation.id === "retraite" && "text-[#ff4fa3]",
+                  cotisation.id === "csg-crds" && "text-[#35cbd0]"
                 )}
               >
                 {formatEuro(cotisation.amount)}
@@ -62,7 +62,7 @@ export function CalculationBreakdownCard({
 
           <div className="flex items-center justify-between gap-4">
             <span className="font-medium">{labels.totalContributions}</span>
-            <span className="font-medium text-blue-500">
+            <span className="font-medium text-[#4f86ff]">
               {formatEuro(result.totalCotisations)}
             </span>
           </div>
@@ -79,23 +79,23 @@ export function CalculationBreakdownCard({
 
           <div className="flex items-center justify-between gap-4">
             <span className="text-muted-foreground">{labels.taxPerShare}</span>
-            <span className="font-medium text-amber-500">
+            <span className="font-medium text-[#d7e1ef]">
               {formatEuro(result.impotParPart)}
             </span>
           </div>
 
           <div className="flex items-center justify-between gap-4">
             <span className="font-medium">{labels.totalTax}</span>
-            <span className="font-medium text-amber-500">
+            <span className="font-medium text-[#d7e1ef]">
               {formatEuro(result.impotTotal)}
             </span>
           </div>
 
           <Separator />
 
-          <div className="flex items-center justify-between gap-4 rounded-2xl border border-amber-500/20 bg-amber-500/10 px-4 py-3">
+          <div className="flex items-center justify-between gap-4 rounded-2xl border border-primary/25 bg-primary/10 px-4 py-3">
             <span className="font-medium">{labels.effectiveRate}</span>
-            <span className="text-lg font-semibold text-amber-500">
+            <span className="text-lg font-semibold text-primary">
               {formatPercent(result.tauxGlobalPrelevements)}%
             </span>
           </div>

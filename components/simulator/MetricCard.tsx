@@ -10,7 +10,13 @@ export function MetricCard({
   valueClassName,
 }: MetricCardProps) {
   return (
-    <Card size="sm" className={cn("border-foreground/8 bg-card/90", className)}>
+    <Card
+      size="sm"
+      className={cn(
+        "border-border/70 bg-background/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]",
+        className
+      )}
+    >
       <CardContent className="space-y-2">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           {Icon ? <Icon className="size-4" /> : null}

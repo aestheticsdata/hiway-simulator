@@ -78,20 +78,20 @@ export function RevenueBarChartCard({
   );
 
   return (
-    <Card className="border-foreground/8 bg-card/90 shadow-sm">
-      <CardHeader>
+    <Card className="border-border/80 bg-card/92 shadow-[0_16px_40px_rgba(118,145,191,0.12)] ring-1 ring-[#e7eef8] dark:shadow-[0_22px_70px_rgba(2,8,22,0.24)] dark:ring-white/3">
+      <CardHeader className="border-b border-border/80">
         <CardTitle className="flex items-center gap-2">
           <BarChart3 className="size-4 text-primary/80" />
           <span>{simulatorChartTexts.revenueBarCard.title}</span>
         </CardTitle>
         <CardDescription>{simulatorChartTexts.revenueBarCard.description}</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-6">
         <div
           className={
             isPrinting
-              ? "rounded-2xl border border-border/70 bg-background/70 py-4"
-              : "h-80 rounded-2xl border border-border/70 bg-background/70 px-3 py-4"
+              ? "rounded-2xl border border-border/70 bg-background/45 py-4"
+              : "h-80 rounded-2xl border border-border/70 bg-background/45 px-3 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"
           }
         >
           {isPrinting ? (

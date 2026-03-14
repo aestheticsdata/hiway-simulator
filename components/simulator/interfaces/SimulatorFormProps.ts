@@ -4,4 +4,5 @@ import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationF
 
 export interface SimulatorFormProps {
   form: UseFormReturn<SimulationFormValues>
+  titleId: string
 }

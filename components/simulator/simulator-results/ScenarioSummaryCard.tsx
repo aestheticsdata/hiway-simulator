@@ -31,8 +31,8 @@ export function ScenarioSummaryCard({
   const summary = getFormSummary(formValues);
 
   return (
-    <Card className="border-foreground/8 bg-card/90 shadow-sm">
-      <CardHeader>
+    <Card className="border-border/80 bg-card/92 shadow-[0_16px_40px_rgba(118,145,191,0.12)] ring-1 ring-[#e7eef8] dark:shadow-[0_22px_70px_rgba(2,8,22,0.24)] dark:ring-white/3">
+      <CardHeader className="border-b border-border/80">
         <CardTitle className="flex items-center gap-2">
           <Calculator className="size-4 text-primary/80" />
           <span>{simulatorResultsTexts.scenarioSummaryCard.title}</span>
@@ -41,14 +41,14 @@ export function ScenarioSummaryCard({
           {simulatorResultsTexts.scenarioSummaryCard.description}
         </CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-4 sm:grid-cols-2">
+      <CardContent className="grid gap-4 pt-6 sm:grid-cols-2">
         {summary.map((item) => {
           const Icon = summaryIcons[item.id];
 
           return (
             <div
               key={item.id}
-              className="rounded-2xl border border-border/70 bg-background/70 px-4 py-3"
+              className="rounded-2xl border border-border/70 bg-background/45 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"
             >
               <p className="flex items-center gap-2 text-sm text-muted-foreground">
                 {Icon ? <Icon className="size-4 text-primary/70" /> : null}

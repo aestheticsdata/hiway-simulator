@@ -39,7 +39,7 @@ function FieldError({
   );
 }
 
-export function SimulatorForm({ form }: SimulatorFormProps) {
+export function SimulatorForm({ form, titleId }: SimulatorFormProps) {
   const regime = form.watch("regime");
   const { fields } = simulatorFormTexts;
   const {
@@ -63,21 +63,7 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
   }, [regime, setValue]);
 
   return (
-    <form className="space-y-8" noValidate aria-labelledby="simulation-form-title">
-      <div className="space-y-3">
-        <p className="text-sm font-medium uppercase tracking-[0.24em] text-primary/70">
-          {simulatorFormTexts.eyebrow}
-        </p>
-        <div className="space-y-2">
-          <h2
-            id="simulation-form-title"
-            className="text-2xl font-semibold tracking-tight"
-          >
-            {simulatorFormTexts.title}
-          </h2>
-        </div>
-      </div>
-
+    <form className="space-y-8" noValidate aria-labelledby={titleId}>
       <fieldset className="space-y-5">
         <legend className="sr-only">{simulatorFormTexts.title}</legend>
         <div className="space-y-2">
@@ -166,7 +152,7 @@ export function SimulatorForm({ form }: SimulatorFormProps) {
             <FieldError id={chargesErrorId} message={errors.charges?.message} />
           </div>
         ) : (
-          <div className="rounded-2xl border border-dashed border-border/80 bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
+          <div className="rounded-2xl border border-dashed border-border/80 bg-background/40 px-4 py-3 text-sm text-muted-foreground">
             {fields.annualExpenses.microHint}
           </div>
         )}

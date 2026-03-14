@@ -15,7 +15,7 @@ export function ResultsSummaryBanner({
   onExportPdf,
 }: ResultsSummaryBannerProps) {
   return (
-    <section className="rounded-2xl border border-border/80 bg-background/80 px-4 py-3 shadow-sm">
+    <section className="rounded-2xl border border-border/80 bg-card/88 px-4 py-3 shadow-[0_14px_36px_rgba(118,145,191,0.12)] ring-1 ring-[#e7eef8] dark:shadow-[0_18px_60px_rgba(2,8,22,0.22)] dark:ring-white/3">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
         <div className="min-w-0 space-y-1 lg:basis-2/3 lg:pr-4">
           <h2 id="simulation-results-heading" className="font-medium text-foreground">

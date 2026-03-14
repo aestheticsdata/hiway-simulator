@@ -150,8 +150,8 @@ export function IncomeCurveChartCard({
   ) : null;
 
   return (
-    <Card className="border-foreground/8 bg-card/90 shadow-sm">
-      <CardHeader>
+    <Card className="border-border/80 bg-card/92 shadow-[0_16px_40px_rgba(118,145,191,0.12)] ring-1 ring-[#e7eef8] dark:shadow-[0_22px_70px_rgba(2,8,22,0.24)] dark:ring-white/3">
+      <CardHeader className="border-b border-border/80">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div className="space-y-2">
             <CardTitle className="flex items-center gap-2">
@@ -195,7 +195,7 @@ export function IncomeCurveChartCard({
             </p>
           </div>
 
-          <div className="print-only rounded-2xl border border-border/70 bg-background/70 px-4 py-3 text-sm">
+          <div className="print-only rounded-2xl border border-border/70 bg-background/45 px-4 py-3 text-sm">
             <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary/70">
               {texts.rangeSelectorLabel}
             </p>
@@ -216,7 +216,7 @@ export function IncomeCurveChartCard({
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 pt-6">
         {isLoading || !curve ? (
           <Skeleton className="h-80 rounded-2xl sm:h-96" />
         ) : (
@@ -224,8 +224,8 @@ export function IncomeCurveChartCard({
             <div
               className={
                 isPrinting
-                  ? "rounded-2xl border border-border/70 bg-background/70 py-4"
-                  : "h-80 rounded-2xl border border-border/70 bg-background/70 px-3 py-4 sm:h-96"
+                  ? "rounded-2xl border border-border/70 bg-background/45 py-4"
+                  : "h-80 rounded-2xl border border-border/70 bg-background/45 px-3 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] sm:h-96"
               }
             >
               {isPrinting ? (
@@ -252,21 +252,21 @@ export function IncomeCurveChartCard({
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <div className="rounded-full border border-border/70 bg-background/70 px-3 py-1.5 text-xs text-muted-foreground">
+              <div className="rounded-full border border-border/70 bg-background/45 px-3 py-1.5 text-xs text-muted-foreground">
                 {texts.currentScenario}:{" "}
                 <span className="font-medium text-foreground">
                   {formatEuro(curve.currentHonoraires, false)}
                 </span>
               </div>
               {currentScenarioPoint ? (
-                <div className="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1.5 text-xs text-emerald-600 dark:text-emerald-400">
+                <div className="rounded-full border border-[#20d39c]/25 bg-[#20d39c]/10 px-3 py-1.5 text-xs text-[#0f9e75] dark:text-[#20d39c]">
                   {texts.estimatedNetIncome}:{" "}
                   <span className="font-medium">
                     {formatEuro(currentScenarioPoint.revenuNetAnnuel)}
                   </span>
                 </div>
               ) : null}
-              <div className="rounded-full border border-border/70 bg-background/70 px-3 py-1.5 text-xs text-muted-foreground">
+              <div className="rounded-full border border-border/70 bg-background/45 px-3 py-1.5 text-xs text-muted-foreground">
                 {regime === "reel"
                   ? texts.realRegimeHint
                   : texts.microRegimeHint}

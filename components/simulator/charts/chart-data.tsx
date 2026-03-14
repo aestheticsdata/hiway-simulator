@@ -18,7 +18,7 @@ export function getBarChartData(result: SimulationResult) {
       id: "bnc",
       label: breakdownLabels.preTaxProfit,
       value: result.bnc,
-      fill: simulatorPalette.urssaf,
+      fill: simulatorPalette.bnc,
     },
     {
       id: "urssaf",
@@ -82,27 +82,27 @@ export const chartLegendItems: ChartLegendItem[] = [
   {
     id: "urssaf",
     label: simulatorChartTexts.breakdownLabels.urssaf,
-    dotClassName: "bg-blue-500",
+    dotClassName: "bg-[#4f86ff]",
   },
   {
     id: "retraite",
     label: simulatorChartTexts.breakdownLabels.pension,
-    dotClassName: "bg-violet-500",
+    dotClassName: "bg-[#ff4fa3]",
   },
   {
     id: "csg-crds",
     label: simulatorChartTexts.breakdownLabels.csgCrds,
-    dotClassName: "bg-cyan-500",
+    dotClassName: "bg-[#35cbd0]",
   },
   {
     id: "impot",
     label: simulatorChartTexts.breakdownLabels.tax,
-    dotClassName: "bg-amber-500",
+    dotClassName: "bg-[#9fb1c8]",
   },
   {
     id: "net",
     label: simulatorChartTexts.breakdownLabels.netIncome,
-    dotClassName: "bg-emerald-500",
+    dotClassName: "bg-[#20d39c]",
   },
 ];
 
@@ -112,7 +112,7 @@ export const chartTooltipStyle = {
     "1px solid color-mix(in oklab, var(--color-border) 85%, transparent)",
   backgroundColor: "var(--color-card)",
   color: "var(--color-card-foreground)",
-  boxShadow: "0 20px 50px rgba(15, 23, 42, 0.08)",
+  boxShadow: "0 20px 50px rgba(2, 8, 22, 0.28)",
 };
 
 export const chartTooltipLabelStyle = {

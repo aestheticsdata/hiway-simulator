@@ -39,20 +39,20 @@ export function RevenuePieChartCard({
   const pieData = getPieChartData(result);
 
   return (
-    <Card className="border-foreground/8 bg-card/90 shadow-sm">
-      <CardHeader>
+    <Card className="border-border/80 bg-card/92 shadow-[0_16px_40px_rgba(118,145,191,0.12)] ring-1 ring-[#e7eef8] dark:shadow-[0_22px_70px_rgba(2,8,22,0.24)] dark:ring-white/3">
+      <CardHeader className="border-b border-border/80">
         <CardTitle className="flex items-center gap-2">
           <PieChartIcon className="size-4 text-primary/80" />
           <span>{simulatorChartTexts.revenuePieCard.title}</span>
         </CardTitle>
         <CardDescription>{simulatorChartTexts.revenuePieCard.description}</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 pt-6">
         <div
           className={
             isPrinting
-              ? "rounded-2xl border border-border/70 bg-background/70 px-2 py-4"
-              : "h-96 rounded-2xl border border-border/70 bg-background/70 px-3 py-4"
+              ? "rounded-2xl border border-border/70 bg-background/45 px-2 py-4"
+              : "h-96 rounded-2xl border border-border/70 bg-background/45 px-3 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]"
           }
         >
           {isPrinting ? (
@@ -76,7 +76,7 @@ export function RevenuePieChartCard({
                       <Cell
                         key={entry.id}
                         fill={entry.fill}
-                        stroke="white"
+                        stroke="color-mix(in oklab, var(--color-card) 92%, transparent)"
                         strokeWidth={1.25}
                       />
                     ))}
@@ -105,7 +105,7 @@ export function RevenuePieChartCard({
                         <Cell
                           key={entry.id}
                           fill={entry.fill}
-                          stroke="white"
+                          stroke="color-mix(in oklab, var(--color-card) 92%, transparent)"
                           strokeWidth={1.25}
                         />
                       ))}

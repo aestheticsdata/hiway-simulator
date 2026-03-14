@@ -19,7 +19,7 @@ export function ThemeToggle() {
     return (
       <div
         aria-hidden="true"
-        className="h-8 w-14 shrink-0 rounded-full border border-zinc-700/60 bg-zinc-950/40"
+        className="h-8 w-14 shrink-0 rounded-full border border-border bg-input/70"
       />
     );
   }
@@ -35,12 +35,12 @@ export function ThemeToggle() {
           });
         }}
         className={cn(
-          "origin-center scale-[1.75] rounded-full border shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_8px_24px_rgba(15,23,42,0.14)] backdrop-blur-sm transition-[border-color,box-shadow,background-color] duration-300 ease-out",
-          "cursor-pointer border-zinc-300/90 bg-zinc-100/80 hover:border-rose-400 focus-visible:border-rose-400 focus-visible:ring-2 focus-visible:ring-rose-400/30 dark:border-zinc-700 dark:bg-zinc-950/70 dark:hover:border-rose-400"
+          "origin-center scale-[1.75] rounded-full border shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_8px_24px_rgba(7,13,25,0.24)] backdrop-blur-sm transition-[border-color,box-shadow,background-color] duration-300 ease-out",
+          "cursor-pointer border-border bg-input/90 hover:border-primary/70 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/30 dark:bg-input/85"
         )}
         thumbClassName={cn(
-          "border border-zinc-200 bg-zinc-50 text-zinc-700 shadow-lg shadow-zinc-950/10 transition-[background-color,border-color,color,box-shadow] duration-300 ease-out",
-          "dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:shadow-black/40"
+          "border border-border bg-card text-primary shadow-lg shadow-background/30 transition-[background-color,border-color,color,box-shadow] duration-300 ease-out",
+          "dark:bg-card dark:text-primary dark:shadow-black/35"
         )}
         thumbChildren={
           <span className="relative flex size-full items-center justify-center">

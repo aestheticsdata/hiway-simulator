@@ -24,42 +24,42 @@ export function ReferenceScenarioCard({
   const { metrics, ...texts } = simulatorResultsTexts.referenceScenarioCard;
 
   return (
-    <Card className="border-foreground/8 bg-card/90 shadow-sm">
-      <CardHeader>
+    <Card className="border-border/80 bg-card/92 shadow-[0_16px_40px_rgba(118,145,191,0.12)] ring-1 ring-[#e7eef8] dark:shadow-[0_22px_70px_rgba(2,8,22,0.24)] dark:ring-white/3">
+      <CardHeader className="border-b border-border/80">
         <CardTitle className="flex items-center gap-2">
           <FileText className="size-4 text-primary/80" />
           <span>{texts.title}</span>
         </CardTitle>
         <CardDescription>{texts.description}</CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-4 sm:grid-cols-2">
+      <CardContent className="grid gap-4 pt-6 sm:grid-cols-2">
         <MetricCard
           label={metrics.annualNetIncome}
           value={formatEuro(result.revenuNetAnnuel)}
           icon={TrendingUp}
-          className="border-emerald-500/30 bg-emerald-500/10 shadow-sm shadow-emerald-500/10"
-          valueClassName="text-emerald-500"
+          className="border-[#20d39c]/24 bg-[#20d39c]/10 shadow-sm shadow-[#20d39c]/10"
+          valueClassName="text-[#20d39c]"
         />
         <MetricCard
           label={metrics.monthlyNetIncome}
           value={formatEuro(result.revenuNetMensuel)}
           icon={BadgeEuro}
-          className="border-emerald-500/30 bg-emerald-500/10 shadow-sm shadow-emerald-500/10"
-          valueClassName="text-emerald-500"
+          className="border-[#74e38f]/24 bg-[#74e38f]/10 shadow-sm shadow-[#74e38f]/10"
+          valueClassName="text-[#74e38f]"
         />
         <MetricCard
           label={metrics.socialContributions}
           value={formatEuro(result.totalCotisations)}
           icon={HandCoins}
-          className="border-blue-500/20 bg-blue-500/10"
-          valueClassName="text-blue-500"
+          className="border-[#4f86ff]/20 bg-[#4f86ff]/10"
+          valueClassName="text-[#4f86ff]"
         />
         <MetricCard
           label={metrics.estimatedTax}
           value={formatEuro(result.impotTotal)}
           icon={Landmark}
-          className="border-amber-500/20 bg-amber-500/10"
-          valueClassName="text-amber-500"
+          className="border-[#9fb1c8]/20 bg-[#9fb1c8]/10"
+          valueClassName="text-[#d7e1ef]"
         />
       </CardContent>
     </Card>

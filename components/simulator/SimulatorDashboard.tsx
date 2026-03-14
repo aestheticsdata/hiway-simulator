@@ -8,7 +8,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { useReactToPrint } from "react-to-print";
 
 import { useSimulationResultQuery, useRatesQuery } from "@lib/api/simulator/simulator.queries";
-import { Card, CardContent } from "@components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
 import { useDebouncedValue } from "@components/simulator/hooks/useDebouncedValue";
 import { simulatorFormSchema } from "@lib/simulator/schemas/simulatorFormSchema";
 import {
@@ -25,6 +25,7 @@ import { ResultsSummaryBanner } from "@components/simulator/simulator-results/Re
 import { SimulatorResults } from "@components/simulator/simulator-results/SimulatorResults";
 import { SimulatorResultsSkeleton } from "@components/simulator/simulator-results/SimulatorResultsSkeleton";
 import { simulatorResultsTexts } from "@components/simulator/simulator-results/texts";
+import { simulatorFormTexts } from "@components/simulator/texts";
 
 import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationFormValues";
 
@@ -58,6 +59,7 @@ export function SimulatorDashboard() {
   );
   const exportTexts = simulatorResultsTexts.pdfExport;
   const shouldShowResultsSkeleton = ratesQuery.isPending || !simulationResultQuery.data;
+  const simulationFormTitleId = "simulation-form-title";
   const normalizedParts = formValues.partsFiscales.toString().replace(".", "_");
   const documentTitle = [
     "hiway-simulation",
@@ -155,9 +157,20 @@ export function SimulatorDashboard() {
   return (
     <div className="grid items-start gap-6 lg:h-full lg:min-h-0 lg:grid-cols-[minmax(0,25rem)_minmax(0,1fr)] lg:gap-8">
       <div className="lg:h-full">
-        <Card className="border-foreground/8 bg-card/90 shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
+        <Card className="border-border/80 bg-card/92 shadow-[0_22px_52px_rgba(118,145,191,0.14)] ring-1 ring-[#e7eef8] dark:shadow-[0_30px_90px_rgba(2,8,22,0.36)] dark:ring-white/3">
+          <CardHeader className="border-b border-border/80">
+            <p className="text-sm font-medium uppercase tracking-[0.24em] text-primary/70">
+              {simulatorFormTexts.eyebrow}
+            </p>
+            <CardTitle
+              id={simulationFormTitleId}
+              className="text-2xl font-semibold tracking-tight"
+            >
+              {simulatorFormTexts.title}
+            </CardTitle>
+          </CardHeader>
           <CardContent className="py-8">
-            <SimulatorForm form={form} />
+            <SimulatorForm form={form} titleId={simulationFormTitleId} />
           </CardContent>
         </Card>
       </div>

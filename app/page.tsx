@@ -12,12 +12,12 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="relative flex min-h-screen flex-col bg-background bg-[radial-gradient(circle_at_top_left,rgba(60,126,214,0.16),transparent_32%),radial-gradient(circle_at_top_right,rgba(26,163,111,0.12),transparent_28%),radial-gradient(circle_at_bottom,rgba(243,154,60,0.12),transparent_24%)] bg-no-repeat lg:h-screen lg:overflow-hidden">
-      <section className="relative shrink-0 border-b border-border/70 bg-background/80 backdrop-blur">
+    <main className="relative flex min-h-screen flex-col bg-background bg-[radial-gradient(circle_at_top_left,rgba(93,137,255,0.1),transparent_24%),linear-gradient(180deg,#f7faff_0%,#edf3fb_100%)] bg-no-repeat dark:bg-[radial-gradient(circle_at_top_left,rgba(79,125,255,0.28),transparent_28%),radial-gradient(circle_at_top_right,rgba(54,194,242,0.14),transparent_22%),linear-gradient(180deg,rgba(8,18,37,0.98)_0%,rgba(8,18,37,1)_100%)] lg:h-screen lg:overflow-hidden">
+      <section className="relative shrink-0 border-b border-border/80 bg-background/75 backdrop-blur-xl dark:bg-[#0d1931]/82">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-6 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-6 lg:px-8 2xl:max-w-384">
           <div className="space-y-3">
             <div className="flex items-center justify-between gap-4">
-              <p className="text-sm font-medium uppercase tracking-[0.24em] text-primary/70">
+              <p className="text-sm font-medium uppercase tracking-[0.24em] text-primary/75">
                 Hiway • Lead Frontend Test
               </p>
               <div className="lg:hidden">

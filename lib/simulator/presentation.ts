@@ -13,12 +13,12 @@ import type { FiscalRegime } from "@lib/simulator/interfaces/FiscalRegime";
 import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationFormValues";
 
 export const simulatorPalette = {
-  bnc: "#f4f5f7",
-  urssaf: "#3b82f6",
-  retraite: "#8b5cf6",
-  csgCrds: "#06b6d4",
-  impot: "#f59e0b",
-  net: "#10b981",
+  bnc: "#aabedb",
+  urssaf: "#4f86ff",
+  retraite: "#ff4fa3",
+  csgCrds: "#35cbd0",
+  impot: "#9fb1c8",
+  net: "#20d39c",
 } as const;
 
 export const incomeCurveRangePresetOptions: Array<{

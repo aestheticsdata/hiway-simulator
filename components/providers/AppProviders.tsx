@@ -28,10 +28,10 @@ export function AppProviders({ children }: AppProvidersProps) {
     <NuqsAdapter>
       <ThemeProvider
         attribute="class"
-        defaultTheme="system"
-        enableSystem
+        defaultTheme="dark"
+        enableSystem={false}
         disableTransitionOnChange
-        storageKey="theme-hiway"
+        storageKey="theme-hiway-v2"
       >
         <QueryClientProvider client={queryClient}>
           {children}
