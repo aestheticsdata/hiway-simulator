@@ -15,7 +15,7 @@ import {
 } from "@components/ui/card";
 import { MetricCard } from "@components/simulator/MetricCard";
 import type { ReferenceScenarioCardProps } from "@components/simulator/simulator-results/interfaces/ReferenceScenarioCardProps";
-import { formatEuro } from "@lib/simulator/mock-data";
+import { formatEuro } from "@lib/simulator/formatters";
 
 export function ReferenceScenarioCard({
   result,

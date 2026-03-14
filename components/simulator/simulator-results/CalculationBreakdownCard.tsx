@@ -11,7 +11,7 @@ import { Separator } from "@components/ui/separator";
 import {
   formatEuro,
   formatPercent,
-} from "@lib/simulator/mock-data";
+} from "@lib/simulator/formatters";
 import type { CalculationBreakdownCardProps } from "@components/simulator/simulator-results/interfaces/CalculationBreakdownCardProps";
 import { cn } from "@lib/utils";
 

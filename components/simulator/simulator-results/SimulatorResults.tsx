@@ -19,7 +19,7 @@ export function SimulatorResults({
       </div>
 
       <CalculationBreakdownCard result={result} />
-      <ChartsSection result={result} />
+      <ChartsSection formValues={formValues} result={result} />
     </div>
   );
 }

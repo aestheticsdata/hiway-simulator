@@ -27,7 +27,7 @@ import {
   getBarChartData,
 } from "@components/simulator/charts/chart-data";
 import type { RevenueBarChartCardProps } from "@components/simulator/charts/interfaces/RevenueBarChartCardProps";
-import { formatEuro } from "@lib/simulator/mock-data";
+import { formatEuro } from "@lib/simulator/formatters";
 
 export function RevenueBarChartCard({
   result,

@@ -27,12 +27,13 @@ const SimulatorChart = dynamic(
         <CardContent className="space-y-4">
           <div className="h-64 rounded-2xl border border-border/70 bg-muted/40" />
           <div className="h-80 rounded-2xl border border-border/70 bg-muted/40" />
+          <div className="h-96 rounded-2xl border border-border/70 bg-muted/40" />
         </CardContent>
       </Card>
     ),
   }
 );
 
-export function ChartsSection({ result }: ChartsSectionProps) {
-  return <SimulatorChart result={result} />;
+export function ChartsSection({ formValues, result }: ChartsSectionProps) {
+  return <SimulatorChart formValues={formValues} result={result} />;
 }

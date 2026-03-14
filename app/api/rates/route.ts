@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
 import { getDebugApiErrorModeFromHeaders } from "@lib/api/core/constants/debugApi";
-import { referenceRates } from "@lib/simulator/constants/referenceRates";
 import { ratesResponseSchema } from "@lib/simulator/schemas/ratesResponseSchema";
+import { referenceRates } from "@lib/simulator/server/referenceRates";
 
 export async function GET(request: Request) {
   const debugMode = getDebugApiErrorModeFromHeaders(request.headers);

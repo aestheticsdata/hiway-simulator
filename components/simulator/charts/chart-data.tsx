@@ -1,8 +1,8 @@
 import {
-  formatEuro,
   getBreakdownColor,
   simulatorPalette,
-} from "@lib/simulator/mock-data";
+} from "@lib/simulator/presentation";
+import { formatEuro } from "@lib/simulator/formatters";
 import type {
   ChartLegendItem,
   PieLabelProps,

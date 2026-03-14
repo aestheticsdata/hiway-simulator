@@ -1,3 +1,5 @@
+import "server-only";
+
 import { simulationResultSchema } from "@lib/simulator/schemas/simulationResultSchema";
 
 import type { RatesResponse } from "@lib/simulator/interfaces/RatesResponse";
@@ -50,8 +52,7 @@ export function calculateSimulationResult(
   const quotientRaw = revenuImposableRaw / input.partsFiscales;
   const impotParPartRaw = calculateTaxOnQuotient(quotientRaw, rates.taxBrackets);
   const impotTotalRaw = impotParPartRaw * input.partsFiscales;
-  const revenuNetAnnuelRaw =
-    bncRaw - totalCotisationsRaw - impotTotalRaw;
+  const revenuNetAnnuelRaw = bncRaw - totalCotisationsRaw - impotTotalRaw;
   const revenuNetMensuelRaw = revenuNetAnnuelRaw / 12;
   const tauxGlobalPrelevementsRaw =
     input.honoraires === 0

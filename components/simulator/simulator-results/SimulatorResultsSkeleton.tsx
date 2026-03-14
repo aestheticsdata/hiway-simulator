@@ -77,6 +77,19 @@ export function SimulatorResultsSkeleton({
             <Skeleton className="h-96 rounded-2xl" />
           </CardContent>
         </Card>
+
+        <Card className="border-foreground/8 bg-card/90 shadow-sm">
+          <CardHeader>
+            <CardTitle>Income curve</CardTitle>
+            <CardDescription>
+              The income curve appears after the chart module and API response
+              are available.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="h-96 rounded-2xl" />
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
