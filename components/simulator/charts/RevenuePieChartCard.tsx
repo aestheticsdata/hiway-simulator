@@ -3,7 +3,6 @@
 import { PieChart as PieChartIcon } from "lucide-react";
 import {
   Cell,
-  Legend,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -87,41 +86,41 @@ export function RevenuePieChartCard({
               <PieChartLegend items={chartLegendItems} />
             </div>
           ) : (
-            <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-              <PieChart>
-                <Pie
-                  cx="50%"
-                  cy="46%"
-                  data={pieData}
-                  dataKey="value"
-                  isAnimationActive
-                  label={renderChartPieLabel}
-                  labelLine={false}
-                  nameKey="name"
-                  outerRadius={118}
-                >
-                  {pieData.map((entry) => (
-                    <Cell
-                      key={entry.id}
-                      fill={entry.fill}
-                      stroke="white"
-                      strokeWidth={1.25}
+            <div className="flex h-full flex-col gap-4">
+              <div className="min-h-0 flex-1">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+                  <PieChart>
+                    <Pie
+                      cx="50%"
+                      cy="50%"
+                      data={pieData}
+                      dataKey="value"
+                      isAnimationActive={false}
+                      label={renderChartPieLabel}
+                      labelLine={false}
+                      nameKey="name"
+                      outerRadius="78%"
+                    >
+                      {pieData.map((entry) => (
+                        <Cell
+                          key={entry.id}
+                          fill={entry.fill}
+                          stroke="white"
+                          strokeWidth={1.25}
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      contentStyle={chartTooltipStyle}
+                      formatter={formatTooltipEuro}
+                      itemStyle={chartTooltipItemStyle}
+                      labelStyle={chartTooltipLabelStyle}
                     />
-                  ))}
-                </Pie>
-                <Tooltip
-                  contentStyle={chartTooltipStyle}
-                  formatter={formatTooltipEuro}
-                  itemStyle={chartTooltipItemStyle}
-                  labelStyle={chartTooltipLabelStyle}
-                />
-                <Legend
-                  align="center"
-                  content={() => <PieChartLegend items={chartLegendItems} />}
-                  verticalAlign="bottom"
-                />
-              </PieChart>
-            </ResponsiveContainer>
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+              <PieChartLegend items={chartLegendItems} />
+            </div>
           )}
         </div>
       </CardContent>
