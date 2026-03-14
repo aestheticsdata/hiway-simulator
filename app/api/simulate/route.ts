@@ -4,6 +4,7 @@ import { getDebugApiErrorModeFromHeaders } from "@lib/api/core/constants/debugAp
 import { referenceRates } from "@lib/simulator/constants/referenceRates";
 import { calculateSimulationResult } from "@lib/simulator/engine/calculateSimulationResult";
 import { simulatorFormSchema } from "@lib/simulator/schemas/simulatorFormSchema";
+import { z } from "zod";
 import { simulationResultSchema } from "@lib/simulator/schemas/simulationResultSchema";
 
 export async function POST(request: Request) {
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
   if (!parsedInput.success) {
     return NextResponse.json(
       {
-        issues: parsedInput.error.flatten(),
+        issues: z.flattenError(parsedInput.error),
         message: "Invalid simulation payload.",
       },
       {
