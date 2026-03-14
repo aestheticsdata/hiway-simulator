@@ -33,7 +33,41 @@ Useful commands:
 ```bash
 pnpm lint
 pnpm build
+pnpm test:unit
+pnpm test:unit:coverage
 ```
+
+## Unit tests
+
+Current scope:
+
+- `lib/simulator/server/__tests__/calculateSimulationResult.test.ts`
+  - covers `micro` vs `reel` calculation paths;
+  - verifies cotisation totals, quotient familial, tax brackets, and net income outputs;
+  - locks the current rounding behavior;
+  - includes characterization checks against `referenceRates`.
+- `lib/simulator/server/__tests__/calculateIncomeCurve.test.ts`
+  - covers range presets, sampling bounds, and fallback ranges;
+  - verifies sorted and deduplicated sampling;
+  - checks that the current scenario is always injected into the curve;
+  - verifies that each point recalculates `revenuNetAnnuel` from the simulation engine.
+
+Run the unit test suite:
+
+```bash
+pnpm test:unit
+```
+
+Run the same suite with coverage:
+
+```bash
+pnpm test:unit:coverage
+```
+
+Current exclusions:
+
+- `POST /api/simulate` route handler is not unit-tested yet;
+- `POST /api/simulate-curve` route handler is not unit-tested yet.
 
 ## Runtime ports
 
@@ -608,6 +642,8 @@ Already in place:
 - shared schemas and types for frontend and backend;
 - typed route handlers;
 - server-only calculation engine;
+- unit tests for `calculateSimulationResult`;
+- unit tests for `calculateIncomeCurve`;
 - server-side income curve generation;
 - service facade over Axios;
 - React Query integration;
@@ -617,6 +653,5 @@ Already in place:
 Still natural next steps:
 
 - expand business rules if the brief evolves;
-- add unit tests for the simulation engine;
 - add API integration tests for route handlers;
 - add side-by-side `Micro-BNC vs Real` comparison on top of the existing `SimulationResult` contract.

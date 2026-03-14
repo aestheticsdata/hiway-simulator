@@ -30,10 +30,7 @@ function calculateTaxOnQuotient(quotient: number, taxBrackets: TaxBracket[]) {
   }, 0);
 }
 
-export function calculateSimulationResult(
-  input: SimulationInput,
-  rates: RatesResponse
-): SimulationResult {
+export function calculateSimulationResult(input: SimulationInput, rates: RatesResponse): SimulationResult {
   const bncRaw =
     input.regime === "micro"
       ? input.honoraires * MICRO_BNC_FACTOR
@@ -44,20 +41,14 @@ export function calculateSimulationResult(
     amount: roundToCurrency((bncRaw * cotisation.rate) / 100),
   }));
 
-  const totalCotisationsRaw = cotisations.reduce(
-    (total, cotisation) => total + cotisation.amount,
-    0
-  );
+  const totalCotisationsRaw = cotisations.reduce((total, cotisation) => total + cotisation.amount, 0);
   const revenuImposableRaw = bncRaw - totalCotisationsRaw;
   const quotientRaw = revenuImposableRaw / input.partsFiscales;
   const impotParPartRaw = calculateTaxOnQuotient(quotientRaw, rates.taxBrackets);
   const impotTotalRaw = impotParPartRaw * input.partsFiscales;
   const revenuNetAnnuelRaw = bncRaw - totalCotisationsRaw - impotTotalRaw;
   const revenuNetMensuelRaw = revenuNetAnnuelRaw / 12;
-  const tauxGlobalPrelevementsRaw =
-    input.honoraires === 0
-      ? 0
-      : ((totalCotisationsRaw + impotTotalRaw) / input.honoraires) * 100;
+  const tauxGlobalPrelevementsRaw = input.honoraires === 0 ? 0 : ((totalCotisationsRaw + impotTotalRaw) / input.honoraires) * 100;
 
   return simulationResultSchema.parse({
     bnc: roundToCurrency(bncRaw),
