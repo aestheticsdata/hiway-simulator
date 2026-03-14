@@ -3,5 +3,6 @@ import type { SimulationResult } from "@lib/simulator/interfaces/SimulationResul
 
 export interface SimulatorChartProps {
   formValues: SimulationFormValues;
+  isPrinting: boolean;
   result: SimulationResult;
 }

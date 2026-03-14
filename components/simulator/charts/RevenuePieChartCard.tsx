@@ -30,7 +30,11 @@ import {
 } from "@components/ui/card";
 import { simulatorChartTexts } from "@components/simulator/charts/texts";
 
+const PRINT_PIE_CHART_WIDTH = 500;
+const PRINT_PIE_CHART_HEIGHT = 320;
+
 export function RevenuePieChartCard({
+  isPrinting,
   result,
 }: RevenuePieChartCardProps) {
   const pieData = getPieChartData(result);
@@ -45,41 +49,80 @@ export function RevenuePieChartCard({
         <CardDescription>{simulatorChartTexts.revenuePieCard.description}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="h-96 rounded-2xl border border-border/70 bg-background/70 px-3 py-4">
-          <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-            <PieChart>
-              <Pie
-                data={pieData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="46%"
-                outerRadius={118}
-                labelLine={false}
-                label={renderChartPieLabel}
-              >
-                {pieData.map((entry) => (
-                  <Cell
-                    key={entry.id}
-                    fill={entry.fill}
-                    stroke="white"
-                    strokeWidth={1.25}
-                  />
-                ))}
-              </Pie>
-              <Tooltip
-                formatter={formatTooltipEuro}
-                contentStyle={chartTooltipStyle}
-                itemStyle={chartTooltipItemStyle}
-                labelStyle={chartTooltipLabelStyle}
-              />
-              <Legend
-                verticalAlign="bottom"
-                align="center"
-                content={() => <PieChartLegend items={chartLegendItems} />}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+        <div
+          className={
+            isPrinting
+              ? "rounded-2xl border border-border/70 bg-background/70 px-2 py-4"
+              : "h-96 rounded-2xl border border-border/70 bg-background/70 px-3 py-4"
+          }
+        >
+          {isPrinting ? (
+            <div className="space-y-4">
+              <div className="flex justify-center">
+                <PieChart
+                  height={PRINT_PIE_CHART_HEIGHT}
+                  width={PRINT_PIE_CHART_WIDTH}
+                >
+                  <Pie
+                    cx={PRINT_PIE_CHART_WIDTH / 2}
+                    cy={136}
+                    data={pieData}
+                    dataKey="value"
+                    isAnimationActive={false}
+                    labelLine={false}
+                    nameKey="name"
+                    outerRadius={112}
+                  >
+                    {pieData.map((entry) => (
+                      <Cell
+                        key={entry.id}
+                        fill={entry.fill}
+                        stroke="white"
+                        strokeWidth={1.25}
+                      />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </div>
+              <PieChartLegend items={chartLegendItems} />
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+              <PieChart>
+                <Pie
+                  cx="50%"
+                  cy="46%"
+                  data={pieData}
+                  dataKey="value"
+                  isAnimationActive
+                  label={renderChartPieLabel}
+                  labelLine={false}
+                  nameKey="name"
+                  outerRadius={118}
+                >
+                  {pieData.map((entry) => (
+                    <Cell
+                      key={entry.id}
+                      fill={entry.fill}
+                      stroke="white"
+                      strokeWidth={1.25}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={chartTooltipStyle}
+                  formatter={formatTooltipEuro}
+                  itemStyle={chartTooltipItemStyle}
+                  labelStyle={chartTooltipLabelStyle}
+                />
+                <Legend
+                  align="center"
+                  content={() => <PieChartLegend items={chartLegendItems} />}
+                  verticalAlign="bottom"
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          )}
         </div>
       </CardContent>
     </Card>

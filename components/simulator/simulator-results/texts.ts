@@ -1,8 +1,14 @@
 export const simulatorResultsTexts = {
-  activeAlert: {
+  resultsBanner: {
     title: "Lecture des estimations",
     description:
       "Les montants ci-dessous donnent une vision exploitable du revenu disponible, des prelevements et de la repartition des charges pour le scenario retenu.",
+  },
+  pdfExport: {
+    buttonLabel: "Exporter en PDF",
+    title: "Simulation de revenu net pour medecin liberal",
+    description:
+      "Export des resultats et des graphiques correspondant au scenario actuellement affiche.",
   },
   scenarioSummaryCard: {
     title: "Hypotheses retenues",

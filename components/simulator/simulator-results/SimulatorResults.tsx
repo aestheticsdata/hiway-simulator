@@ -1,4 +1,5 @@
-import { ActiveInterfaceAlert } from "@components/simulator/simulator-results/ActiveInterfaceAlert";
+"use client";
+
 import { CalculationBreakdownCard } from "@components/simulator/simulator-results/CalculationBreakdownCard";
 import { ChartsSection } from "@components/simulator/simulator-results/ChartsSection";
 import type { SimulatorResultsProps } from "@components/simulator/simulator-results/interfaces/SimulatorResultsProps";
@@ -7,19 +8,22 @@ import { ScenarioSummaryCard } from "@components/simulator/simulator-results/Sce
 
 export function SimulatorResults({
   formValues,
+  isPrinting,
   result,
 }: SimulatorResultsProps) {
   return (
     <div className="space-y-6">
-      <ActiveInterfaceAlert />
-
       <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
         <ScenarioSummaryCard formValues={formValues} />
         <ReferenceScenarioCard result={result} />
       </div>
 
       <CalculationBreakdownCard result={result} />
-      <ChartsSection formValues={formValues} result={result} />
+      <ChartsSection
+        formValues={formValues}
+        isPrinting={isPrinting}
+        result={result}
+      />
     </div>
   );
 }

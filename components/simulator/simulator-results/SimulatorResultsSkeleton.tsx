@@ -6,7 +6,6 @@ import {
   CardTitle,
 } from "@components/ui/card";
 import { Skeleton } from "@components/ui/skeleton";
-import { ActiveInterfaceAlert } from "@components/simulator/simulator-results/ActiveInterfaceAlert";
 import type { SimulatorResultsSkeletonProps } from "@components/simulator/simulator-results/interfaces/SimulatorResultsSkeletonProps";
 import { ScenarioSummaryCard } from "@components/simulator/simulator-results/ScenarioSummaryCard";
 import { simulatorResultsTexts } from "@components/simulator/simulator-results/texts";
@@ -18,8 +17,6 @@ export function SimulatorResultsSkeleton({
 
   return (
     <div className="space-y-6">
-      <ActiveInterfaceAlert />
-
       <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
         <ScenarioSummaryCard formValues={formValues} />
 

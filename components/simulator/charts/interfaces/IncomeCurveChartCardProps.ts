@@ -5,6 +5,7 @@ import type { IncomeCurveResponse } from "@lib/simulator/interfaces/IncomeCurveR
 export interface IncomeCurveChartCardProps {
   curve?: IncomeCurveResponse;
   isLoading: boolean;
+  isPrinting: boolean;
   isUpdating: boolean;
   onRangePresetChange: (value: IncomeCurveRangePreset) => void;
   rangePreset: IncomeCurveRangePreset;

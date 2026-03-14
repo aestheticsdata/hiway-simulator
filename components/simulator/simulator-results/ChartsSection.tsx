@@ -33,6 +33,16 @@ const SimulatorChart = dynamic(
   }
 );
 
-export function ChartsSection({ formValues, result }: ChartsSectionProps) {
-  return <SimulatorChart formValues={formValues} result={result} />;
+export function ChartsSection({
+  formValues,
+  isPrinting,
+  result,
+}: ChartsSectionProps) {
+  return (
+    <SimulatorChart
+      formValues={formValues}
+      isPrinting={isPrinting}
+      result={result}
+    />
+  );
 }
