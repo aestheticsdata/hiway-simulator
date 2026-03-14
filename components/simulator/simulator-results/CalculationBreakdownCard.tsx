@@ -23,17 +23,19 @@ export function CalculationBreakdownCard({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ReceiptText className="size-4 text-primary/80" />
-          <span>Detail du calcul</span>
+          <span>Lecture des prelevements</span>
         </CardTitle>
         <CardDescription>
-          Structure detaillee du <code>SimulationResult</code> renvoye par
-          l&apos;API.
+          Detail des postes qui reduisent le revenu disponible, du benefice
+          estime jusqu&apos;au net apres impot.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-3">
           <div className="flex items-center justify-between gap-4">
-            <span className="text-muted-foreground">BNC</span>
+            <span className="text-muted-foreground">
+              Benefice avant prelevements
+            </span>
             <span className="font-medium">{formatEuro(result.bnc)}</span>
           </div>
 
@@ -73,7 +75,7 @@ export function CalculationBreakdownCard({
           </div>
 
           <div className="flex items-center justify-between gap-4">
-            <span className="text-muted-foreground">Quotient</span>
+            <span className="text-muted-foreground">Quotient familial</span>
             <span className="font-medium">{formatEuro(result.quotient)}</span>
           </div>
 

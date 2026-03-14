@@ -39,10 +39,11 @@ export function RevenuePieChartCard({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <PieChartIcon className="size-4 text-primary/80" />
-          <span>Repartition des revenus</span>
+          <span>Poids de chaque poste</span>
         </CardTitle>
         <CardDescription>
-          Part relative de chaque poste sur la simulation actuellement chargee.
+          Compare la part des cotisations, de l&apos;impot et du revenu net dans
+          l&apos;equilibre global.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">

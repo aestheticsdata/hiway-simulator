@@ -22,9 +22,10 @@ export function SimulatorResultsSkeleton({
 
         <Card className="border-foreground/8 bg-card/90 shadow-sm">
           <CardHeader>
-            <CardTitle>Loading simulation result</CardTitle>
+            <CardTitle>Synthese financiere</CardTitle>
             <CardDescription>
-              Waiting for the API response before rendering financial data.
+              Les principaux indicateurs s&apos;affichent des que l&apos;estimation
+              est calculee.
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
@@ -38,9 +39,10 @@ export function SimulatorResultsSkeleton({
 
       <Card className="border-foreground/8 bg-card/90 shadow-sm">
         <CardHeader>
-          <CardTitle>Calculation breakdown</CardTitle>
+          <CardTitle>Lecture des prelevements</CardTitle>
           <CardDescription>
-            The detailed result will appear here once the simulation succeeds.
+            Le detail des montants s&apos;affichera ici une fois le calcul
+            termine.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
@@ -56,9 +58,10 @@ export function SimulatorResultsSkeleton({
       <div className="space-y-6">
         <Card className="border-foreground/8 bg-card/90 shadow-sm">
           <CardHeader>
-            <CardTitle>Revenue waterfall</CardTitle>
+            <CardTitle>Formation du revenu net</CardTitle>
             <CardDescription>
-              The bar chart appears after the simulation result is available.
+              La lecture poste par poste apparait des que les montants sont
+              disponibles.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -68,9 +71,10 @@ export function SimulatorResultsSkeleton({
 
         <Card className="border-foreground/8 bg-card/90 shadow-sm">
           <CardHeader>
-            <CardTitle>Revenue breakdown</CardTitle>
+            <CardTitle>Poids de chaque poste</CardTitle>
             <CardDescription>
-              The pie chart appears after the simulation result is available.
+              La repartition globale s&apos;affiche des que l&apos;estimation est
+              prete.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -80,10 +84,10 @@ export function SimulatorResultsSkeleton({
 
         <Card className="border-foreground/8 bg-card/90 shadow-sm">
           <CardHeader>
-            <CardTitle>Income curve</CardTitle>
+            <CardTitle>Sensibilite du revenu</CardTitle>
             <CardDescription>
-              The income curve appears after the chart module and API response
-              are available.
+              La projection apparait des que la simulation et la plage
+              d&apos;analyse sont disponibles.
             </CardDescription>
           </CardHeader>
           <CardContent>

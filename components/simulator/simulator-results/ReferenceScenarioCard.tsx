@@ -25,10 +25,11 @@ export function ReferenceScenarioCard({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileText className="size-4 text-primary/80" />
-          <span>Resultats cles</span>
+          <span>Synthese financiere</span>
         </CardTitle>
         <CardDescription>
-          Synthese principale du resultat renvoye par la simulation courante.
+          Vue d&apos;ensemble des montants a retenir pour mesurer le revenu
+          reellement disponible.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4 sm:grid-cols-2">
@@ -47,14 +48,14 @@ export function ReferenceScenarioCard({
           valueClassName="text-emerald-500"
         />
         <MetricCard
-          label="Total cotisations"
+          label="Cotisations sociales"
           value={formatEuro(result.totalCotisations)}
           icon={HandCoins}
           className="border-blue-500/20 bg-blue-500/10"
           valueClassName="text-blue-500"
         />
         <MetricCard
-          label="Impot total"
+          label="Impot estime"
           value={formatEuro(result.impotTotal)}
           icon={Landmark}
           className="border-amber-500/20 bg-amber-500/10"

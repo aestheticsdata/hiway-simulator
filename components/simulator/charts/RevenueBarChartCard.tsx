@@ -39,10 +39,11 @@ export function RevenueBarChartCard({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BarChart3 className="size-4 text-primary/80" />
-          <span>Cascade des revenus</span>
+          <span>Formation du revenu net</span>
         </CardTitle>
         <CardDescription>
-          Lecture rapide des postes calcules a partir du resultat courant.
+          Visualise le passage des honoraires au revenu disponible, poste par
+          poste.
         </CardDescription>
       </CardHeader>
       <CardContent>

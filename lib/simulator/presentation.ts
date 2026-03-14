@@ -21,15 +21,15 @@ export const incomeCurveRangePresetOptions: Array<{
   value: IncomeCurveRangePreset;
 }> = [
   {
-    label: "Autour du scenario",
+    label: "Autour de l'activite actuelle",
     value: incomeCurveRangePresets[0],
   },
   {
-    label: "Jusqu'a 2x",
+    label: "Projection jusqu'a 2x",
     value: incomeCurveRangePresets[1],
   },
   {
-    label: "Jusqu'a 3x",
+    label: "Projection jusqu'a 3x",
     value: incomeCurveRangePresets[2],
   },
 ];
@@ -42,21 +42,21 @@ export function getFormSummary(values: SimulationFormValues) {
   return [
     {
       id: "regime",
-      label: "Regime",
+      label: "Cadre fiscal",
       value: getRegimeLabel(values.regime),
     },
     {
       id: "honoraires",
-      label: "Honoraires",
+      label: "Honoraires annuels",
       value: formatEuro(values.honoraires, false),
     },
     {
       id: "charges",
-      label: "Charges",
+      label: "Charges professionnelles",
       value:
         values.regime === "reel"
           ? formatEuro(values.charges, false)
-          : "Ignorees en micro-BNC",
+          : "Non retenues en micro-BNC",
     },
     {
       id: "parts",

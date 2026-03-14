@@ -61,11 +61,11 @@ export function IncomeCurveChartCard({
           <div className="space-y-2">
             <CardTitle className="flex items-center gap-2">
               <ChartSpline className="size-4 text-primary/80" />
-              <span>Courbe du revenu net</span>
+              <span>Sensibilite du revenu</span>
             </CardTitle>
             <CardDescription>
-              Projection du revenu net annuel sur une plage d&apos;honoraires.
-              En regime reel, les charges restent fixes sur toute la courbe.
+              Montre comment le revenu net annuel evolue lorsque les honoraires
+              varient, afin de situer le scenario actuel.
             </CardDescription>
           </div>
 
@@ -207,7 +207,7 @@ export function IncomeCurveChartCard({
               </div>
               {currentScenarioPoint ? (
                 <div className="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1.5 text-xs text-emerald-600 dark:text-emerald-400">
-                  Net estime:{" "}
+                  Revenu net estime:{" "}
                   <span className="font-medium">
                     {formatEuro(currentScenarioPoint.revenuNetAnnuel)}
                   </span>
@@ -215,13 +215,13 @@ export function IncomeCurveChartCard({
               ) : null}
               <div className="rounded-full border border-border/70 bg-background/70 px-3 py-1.5 text-xs text-muted-foreground">
                 {regime === "reel"
-                  ? "Charges fixes sur la plage"
-                  : "Abattement micro-BNC constant"}
+                  ? "Charges professionnelles maintenues sur la projection"
+                  : "Abattement forfaitaire micro-BNC constant"}
               </div>
               {isUpdating ? (
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs text-primary">
                   <Activity className="size-3.5" />
-                  <span>Actualisation de la courbe...</span>
+                  <span>Mise a jour de la projection...</span>
                 </div>
               ) : null}
             </div>

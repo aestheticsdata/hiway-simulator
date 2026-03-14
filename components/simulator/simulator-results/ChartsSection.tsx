@@ -19,9 +19,10 @@ const SimulatorChart = dynamic(
     loading: () => (
       <Card className="border-foreground/8 bg-card/90 shadow-sm">
         <CardHeader>
-          <CardTitle>Visualisation</CardTitle>
+          <CardTitle>Visualisations en preparation</CardTitle>
           <CardDescription>
-            Chargement des graphiques de demonstration...
+            Les graphiques s&apos;affichent des que les estimations sont
+            disponibles.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

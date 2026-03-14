@@ -34,10 +34,11 @@ export function ScenarioSummaryCard({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Calculator className="size-4 text-primary/80" />
-          <span>Scenario saisi</span>
+          <span>Hypotheses retenues</span>
         </CardTitle>
         <CardDescription>
-          Snapshot du payload actuellement envoye a <code>/api/simulate</code>.
+          Parametres pris en compte pour etablir l&apos;estimation du revenu et
+          des prelevements.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4 sm:grid-cols-2">
