@@ -11,7 +11,7 @@ export const simulatorResultsTexts = {
   },
   viewSwitch: {
     hint: "Comparatif simplifie",
-    label: "Mode VS",
+    label: "Mode comparaison",
   },
   pdfExport: {
     buttonLabel: "Exporter en PDF",

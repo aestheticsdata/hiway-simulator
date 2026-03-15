@@ -7,7 +7,7 @@ export const simulatorFormTexts = {
     pendingDescription:
       "Renseignez d'abord les charges annuelles du profil reel. L'URL et la vue de droite ne basculeront en VS qu'une fois cette valeur saisie.",
     pendingTitle: "Charges reel requises",
-    title: "Mode VS",
+    title: "Mode comparaison",
   },
   fields: {
     taxRegime: {
