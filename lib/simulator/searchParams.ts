@@ -6,7 +6,11 @@ import {
 
 import { defaultFormValues } from "@lib/simulator/constants/defaultFormValues";
 import { fiscalRegimes } from "@lib/simulator/constants/fiscalRegimes";
+import { simulatorViewModes } from "@lib/simulator/constants/simulatorViewModes";
+import type { IncomeCurveRequest } from "@lib/simulator/interfaces/IncomeCurveRequest";
 import type { SimulationInput } from "@lib/simulator/interfaces/SimulationInput";
+import type { SimulatorViewMode } from "@lib/simulator/interfaces/SimulatorViewMode";
+import { incomeCurveRequestSchema } from "@lib/simulator/schemas/incomeCurveRequestSchema";
 import { simulatorFormSchema } from "@lib/simulator/schemas/simulatorFormSchema";
 
 export const simulatorSearchParamParsers = {
@@ -16,9 +20,22 @@ export const simulatorSearchParamParsers = {
   regime: parseAsStringLiteral(fiscalRegimes),
 };
 
+export const simulatorViewModeParser = parseAsStringLiteral(
+  simulatorViewModes
+)
+  .withDefault("default")
+  .withOptions({
+    clearOnDefault: true,
+    history: "replace",
+  });
+
 export type SimulatorSearchParams = inferParserType<
   typeof simulatorSearchParamParsers
 >;
+
+export type SimulatorViewModeSearchParam = inferParserType<{
+  view: typeof simulatorViewModeParser;
+}>["view"];
 
 type SimulationInputDraft = Partial<{
   [Key in keyof SimulationInput]: SimulationInput[Key] | null;
@@ -50,11 +67,27 @@ export function normalizeSimulationInput(
       : defaultFormValues.regime,
   };
 
-  if (normalizedInput.regime === "micro") {
-    normalizedInput.charges = 0;
+  return simulatorFormSchema.parse(normalizedInput);
+}
+
+export function getCanonicalSimulationInput(input: SimulationInput) {
+  const normalizedInput = normalizeSimulationInput(input);
+
+  if (normalizedInput.regime !== "micro") {
+    return normalizedInput;
   }
 
-  return simulatorFormSchema.parse(normalizedInput);
+  return simulatorFormSchema.parse({
+    ...normalizedInput,
+    charges: 0,
+  });
+}
+
+export function getCanonicalIncomeCurveRequest(input: IncomeCurveRequest) {
+  return incomeCurveRequestSchema.parse({
+    ...getCanonicalSimulationInput(input),
+    rangePreset: input.rangePreset,
+  });
 }
 
 export function getSimulationInputFromSearchParams(
@@ -64,14 +97,31 @@ export function getSimulationInputFromSearchParams(
 }
 
 export function getSearchParamsFromSimulationInput(input: SimulationInput) {
+  return getSearchParamsFromSimulationInputForView(input);
+}
+
+export function getSearchParamsFromSimulationInputForView(
+  input: SimulationInput,
+  options: {
+    includeRegime?: boolean;
+  } = {}
+) {
   const normalizedInput = normalizeSimulationInput(input);
 
   return {
     charges: normalizedInput.charges,
     honoraires: normalizedInput.honoraires,
     partsFiscales: normalizedInput.partsFiscales,
-    regime: normalizedInput.regime,
+    regime: options.includeRegime === false ? null : normalizedInput.regime,
   };
+}
+
+export function normalizeSimulatorViewMode(
+  viewMode: SimulatorViewModeSearchParam | null | undefined
+): SimulatorViewMode {
+  return simulatorViewModes.includes(viewMode as SimulatorViewMode)
+    ? (viewMode as SimulatorViewMode)
+    : "default";
 }
 
 export function areSimulationSearchParamsEqual(

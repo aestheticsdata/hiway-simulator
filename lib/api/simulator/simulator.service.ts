@@ -10,6 +10,12 @@ export const simulatorService = {
   runSimulation(input: SimulationInput, requestOptions?: ApiRequestOptions) {
     return simulatorApi.simulate(input, requestOptions);
   },
+  runSimulationComparison(
+    input: SimulationInput,
+    requestOptions?: ApiRequestOptions
+  ) {
+    return simulatorApi.simulateComparison(input, requestOptions);
+  },
   runSimulationCurve(
     input: IncomeCurveRequest,
     requestOptions?: ApiRequestOptions

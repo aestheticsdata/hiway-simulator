@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import {
   BadgeEuro,
   ReceiptText,
@@ -39,14 +38,18 @@ function FieldError({
   );
 }
 
-export function SimulatorForm({ form, titleId }: SimulatorFormProps) {
+export function SimulatorForm({
+  form,
+  showComparisonChargesField = false,
+  titleId,
+  viewMode,
+}: SimulatorFormProps) {
   const regime = form.watch("regime");
   const { fields } = simulatorFormTexts;
   const {
     control,
     formState: { errors },
     register,
-    setValue,
   } = form;
   const {
     chargesErrorId,
@@ -55,12 +58,11 @@ export function SimulatorForm({ form, titleId }: SimulatorFormProps) {
     regimeErrorId,
     regimeHelpId,
   } = simulatorFormAccessibilityIds;
-
-  useEffect(() => {
-    if (regime === "micro") {
-      setValue("charges", 0, { shouldDirty: true, shouldValidate: true });
-    }
-  }, [regime, setValue]);
+  const shouldDisableRegimeField = viewMode === "vs";
+  const shouldShowChargesField =
+    showComparisonChargesField || viewMode === "vs" || regime === "reel";
+  const regimeHelpText =
+    viewMode === "vs" ? fields.taxRegime.vsHelp : fields.taxRegime.help;
 
   return (
     <form className="space-y-8" noValidate aria-labelledby={titleId}>
@@ -76,12 +78,14 @@ export function SimulatorForm({ form, titleId }: SimulatorFormProps) {
             name="regime"
             render={({ field }) => (
               <Select
+                disabled={shouldDisableRegimeField}
                 name={field.name}
                 value={field.value}
                 onValueChange={field.onChange}
               >
                 <SelectTrigger
                   id="regime"
+                  disabled={shouldDisableRegimeField}
                   aria-describedby={[regimeHelpId, errors.regime ? regimeErrorId : null].filter(Boolean).join(" ") || undefined}
                   aria-invalid={errors.regime ? true : undefined}
                   className="w-full"
@@ -101,7 +105,7 @@ export function SimulatorForm({ form, titleId }: SimulatorFormProps) {
             )}
           />
           <p id={regimeHelpId} className="text-sm text-muted-foreground">
-            {fields.taxRegime.help}
+            {regimeHelpText}
           </p>
           <FieldError id={regimeErrorId} message={errors.regime?.message} />
         </div>
@@ -131,7 +135,7 @@ export function SimulatorForm({ form, titleId }: SimulatorFormProps) {
           />
         </div>
 
-        {regime === "reel" ? (
+        {shouldShowChargesField ? (
           <div className="space-y-2">
             <Label htmlFor="charges" className="flex items-center gap-2">
               <ReceiptText className="size-4 text-primary/70" />

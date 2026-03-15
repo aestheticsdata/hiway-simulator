@@ -125,6 +125,78 @@
   }
 }
 
+@keyframes results-panel-enter-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-28px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes results-panel-enter-right {
+  from {
+    opacity: 0;
+    transform: translate3d(28px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes results-panel-exit-left {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(-28px, 0, 0);
+  }
+}
+
+@keyframes results-panel-exit-right {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(28px, 0, 0);
+  }
+}
+
+@layer utilities {
+  .animate-results-panel-enter-left {
+    animation: results-panel-enter-left 180ms cubic-bezier(0.2, 0.8, 0.2, 1)
+      both;
+    will-change: opacity, transform;
+  }
+
+  .animate-results-panel-enter-right {
+    animation: results-panel-enter-right 180ms cubic-bezier(0.2, 0.8, 0.2, 1)
+      both;
+    will-change: opacity, transform;
+  }
+
+  .animate-results-panel-exit-left {
+    animation: results-panel-exit-left 140ms cubic-bezier(0.4, 0, 1, 1) both;
+    will-change: opacity, transform;
+  }
+
+  .animate-results-panel-exit-right {
+    animation: results-panel-exit-right 140ms cubic-bezier(0.4, 0, 1, 1) both;
+    will-change: opacity, transform;
+  }
+}
+
 .print-only {
   display: none;
 }
