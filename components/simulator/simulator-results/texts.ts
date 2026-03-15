@@ -4,6 +4,15 @@ export const simulatorResultsTexts = {
     description:
       "Les montants ci-dessous donnent une vision exploitable du revenu disponible, des prelevements et de la repartition des charges pour le scenario retenu.",
   },
+  comparisonBanner: {
+    title: "Micro-BNC vs regime reel",
+    description:
+      "Le mode VS compare uniquement le revenu net annuel, le revenu mensuel et le regime le plus favorable a hypotheses constantes.",
+  },
+  viewSwitch: {
+    hint: "Comparatif simplifie",
+    label: "Mode comparaison",
+  },
   pdfExport: {
     buttonLabel: "Exporter en PDF",
     title: "Simulation de revenu net pour medecin liberal",
@@ -45,6 +54,24 @@ export const simulatorResultsTexts = {
     description:
       "Les graphiques s'affichent des que les estimations sont disponibles.",
   },
+  comparisonView: {
+    annualCard: {
+      helper: "Comparaison du net apres cotisations et impot",
+      optimalBadge: "Le plus favorable",
+      title: "Revenu net annuel",
+    },
+    monthlyCard: {
+      helper: "Projection lissee sur 12 mois",
+      title: "Revenu net mensuel",
+    },
+    optimalCard: {
+      equivalent: "Equivalent",
+      gainLabelAnnual: "de mieux par an",
+      gainLabelMonthly: "soit par mois",
+      helper: "Le regime qui preserve le plus de revenu disponible",
+      title: "Choix optimal",
+    },
+  },
   skeleton: {
     financialSummary: {
       title: "Synthese financiere",
@@ -70,6 +97,11 @@ export const simulatorResultsTexts = {
       title: "Sensibilite du revenu",
       description:
         "La projection apparait des que la simulation et la plage d'analyse sont disponibles.",
+    },
+    comparison: {
+      annualTitle: "Revenu net annuel",
+      monthlyTitle: "Revenu net mensuel",
+      optimalTitle: "Choix optimal",
     },
   },
 } as const;

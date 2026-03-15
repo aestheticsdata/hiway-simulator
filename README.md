@@ -125,13 +125,16 @@ The simulator UI is split into focused components:
   - owns the form state;
   - debounces the input;
   - triggers API queries;
+  - switches the right pane between the default result view and the simplified `VS` comparison view;
   - keeps the desktop scroll behavior where only the right pane scrolls.
 - `components/simulator/SimulatorForm.tsx`
   - renders the form fields;
   - uses `react-hook-form` + `zodResolver`;
-  - hides and resets `charges` when the selected regime is `micro`.
+  - renders the `Mode VS` switch below the form;
+  - disables the `regime` select while the `VS` comparison is active;
+  - can force the `charges` field visible when `VS` is requested from a `micro` scenario without stored real-world charges.
 - `components/simulator/simulator-results/*`
-  - orchestrates summary cards, breakdown, and charts.
+  - orchestrates summary cards, breakdown, charts, and the simplified `VS` comparison cards.
 - `components/simulator/charts/*`
   - renders Recharts components only;
   - does not own business logic.
@@ -217,7 +220,8 @@ That choice is deliberate because:
 
 - the form is already owned by `react-hook-form`;
 - Zod validation already lives at the form layer;
-- the UI has conditional behavior such as `charges` being reset in `micro`;
+- the UI has conditional behavior such as guarding `VS` activation until real
+  `charges` are available for the comparison;
 - React Query queries already depend on the form state.
 
 The `nuqs` integration lives in:
@@ -228,26 +232,39 @@ The `nuqs` integration lives in:
 
 #### Search params used by the simulator
 
-The current URL contract mirrors the simulation input:
+The current URL contract mirrors the simulation input and the active result
+view:
 
 - `regime`
 - `honoraires`
 - `charges`
 - `partsFiscales`
+- `view`
+
+Current behavior:
+
+- `view=vs` activates the simplified right-panel comparison view;
+- when `view=vs`, `regime` is intentionally omitted from the URL because the
+  comparison computes both `micro-BNC` and `reel`;
+- when the UI is in the default result view, `regime` is still mirrored in the
+  URL as before.
 
 #### Synchronization flow
 
 The synchronization flow is:
 
 1. `NuqsAdapter` enables App Router query state handling.
-2. `SimulatorDashboard` reads search params with `useQueryStates(...)`.
+2. `SimulatorDashboard` reads simulation input search params with
+   `useQueryStates(...)` and the active result view with `useQueryState(...)`.
 3. Search params are normalized into a valid `SimulationInput`.
 4. The form is hydrated or reset from that normalized input.
 5. The user edits the form through `react-hook-form`.
 6. The current form values are normalized again.
 7. The normalized form values are debounced.
 8. The debounced values are mirrored back to the URL with `history: "replace"`.
-9. The debounced values also drive the React Query simulation request.
+9. The display mode is mirrored independently through `view`.
+10. The debounced values drive either the default simulation query or the
+    comparison query, depending on `view`.
 
 #### Why normalization exists
 
@@ -268,7 +285,10 @@ Current examples:
 
 - if a query param is missing, a default value is used;
 - if a numeric query param is invalid, the app falls back to a valid value;
-- if `regime === "micro"`, `charges` is forced to `0`.
+- if `view=vs`, the form keeps its current `regime`, but the URL does not
+  expose it;
+- if `regime === "micro"` in the default view, `charges` is canonicalized to
+  `0` only for the simulation request, not for the persisted form state.
 
 #### Why the URL uses `replace` history
 
@@ -287,6 +307,8 @@ This ensures that:
 - the API always receives a valid `SimulationInput`;
 - React Query keys stay aligned with validated business input;
 - charts and dashboard cards are derived from the same canonical result;
+- the `VS` comparison can preserve a user-entered `charges` value even when the
+  current form regime is `micro`;
 - URL state remains a persistence mechanism, not the business source of truth.
 
 ### Chart adapters
@@ -309,6 +331,7 @@ The backend currently lives inside Next.js App Router route handlers:
 
 - `app/api/rates/route.ts`
 - `app/api/simulate/route.ts`
+- `app/api/simulate-comparison/route.ts`
 - `app/api/simulate-curve/route.ts`
 
 At this stage, the app is still a single Next.js project, but the internal boundaries already mimic a cleaner front/backend split.
@@ -327,6 +350,15 @@ At this stage, the app is still a single Next.js project, but the internal bound
 - calls the server-only simulation engine;
 - validates the returned value against `simulationResultSchema`.
 
+`POST /api/simulate-comparison`
+
+- parses the request body with `simulatorFormSchema.safeParse(...)`;
+- returns `400` when the payload is invalid;
+- computes both `micro-BNC` and `reel` scenarios from the same input;
+- ignores `charges` for the `micro-BNC` branch only;
+- derives the optimal regime plus annual and monthly gain;
+- validates the returned value against `simulationComparisonResultSchema`.
+
 `POST /api/simulate-curve`
 
 - parses the request body with `incomeCurveRequestSchema.safeParse(...)`;
@@ -343,14 +375,17 @@ The shared frontend/backend contract layer lives under `lib/simulator`.
 
 - `lib/simulator/constants/defaultFormValues.ts`
 - `lib/simulator/constants/fiscalRegimes.ts`
+- `lib/simulator/constants/simulatorViewModes.ts`
 
 ### Interfaces
 
 - `lib/simulator/interfaces/IncomeCurveRequest.ts`
 - `lib/simulator/interfaces/IncomeCurveResponse.ts`
+- `lib/simulator/interfaces/SimulationComparisonResult.ts`
 - `lib/simulator/interfaces/SimulationInput.ts`
 - `lib/simulator/interfaces/SimulationFormValues.ts`
 - `lib/simulator/interfaces/SimulationResult.ts`
+- `lib/simulator/interfaces/SimulatorViewMode.ts`
 - `lib/simulator/interfaces/RatesResponse.ts`
 - `lib/simulator/interfaces/CotisationRate.ts`
 - `lib/simulator/interfaces/CotisationBreakdownItem.ts`
@@ -362,6 +397,7 @@ The shared frontend/backend contract layer lives under `lib/simulator`.
 - `lib/simulator/schemas/incomeCurveRequestSchema.ts`
 - `lib/simulator/schemas/incomeCurveResponseSchema.ts`
 - `lib/simulator/schemas/simulatorFormSchema.ts`
+- `lib/simulator/schemas/simulationComparisonResultSchema.ts`
 - `lib/simulator/schemas/simulationResultSchema.ts`
 - `lib/simulator/schemas/ratesResponseSchema.ts`
 - `lib/simulator/schemas/cotisationRateSchema.ts`
@@ -380,6 +416,7 @@ The backend-only simulation layer lives under `lib/simulator/server`.
 
 - `lib/simulator/server/referenceRates.ts`
 - `lib/simulator/server/calculateSimulationResult.ts`
+- `lib/simulator/server/calculateSimulationComparisonResult.ts`
 - `lib/simulator/server/calculateIncomeCurve.ts`
 
 These modules are marked `server-only` so client components cannot import the
@@ -476,6 +513,8 @@ This file contains the raw endpoint calls:
 
 - `getRates()`
 - `simulate(input)`
+- `simulateComparison(input)`
+- `simulateCurve(input)`
 
 ### Service facade
 
@@ -487,6 +526,8 @@ Its role is to expose a stable frontend API such as:
 
 - `loadRates()`
 - `runSimulation(input)`
+- `runSimulationComparison(input)`
+- `runSimulationCurve(input)`
 
 If later the frontend needs to combine multiple endpoints, compare regimes, or add orchestration logic, that belongs here instead of in React components.
 
@@ -511,6 +552,8 @@ Current hooks:
 
 - `useRatesQuery()`
 - `useSimulationResultQuery(input, enabled)`
+- `useSimulationComparisonQuery(input, enabled)`
+- `useSimulationCurveQuery(input, enabled)`
 
 Even though `/api/simulate` is a `POST`, it is treated as a query from the UI perspective because it reads a computed result and does not mutate persisted server state.
 
@@ -626,6 +669,21 @@ The actual simulation logic is not duplicated in the UI. The right pane is
 driven by the API result, and the initial loading state is represented with
 skeleton components instead of fake financial data.
 
+The simplified `VS` view follows the same rule. The UI does not compute the
+comparison locally from displayed card values; it consumes a dedicated contract
+that contains:
+
+- a `micro` `SimulationResult`;
+- a `reel` `SimulationResult`;
+- `optimalRegime`;
+- `annualGain`;
+- `monthlyGain`.
+
+The `VS` toggle is also guarded when the current form regime is `micro` and no
+real-world `charges` have been provided yet. In that case, the form reveals the
+`charges` field, keeps the URL in the default result view, and only activates
+`view=vs` once the missing value is entered.
+
 The income curve follows the same rule: each plotted point is produced by a
 full server-side recalculation through `calculateSimulationResult(...)` for a
 specific `honoraires` value. The chart line is visually interpolated by the
@@ -651,14 +709,18 @@ Already in place:
 - server-only calculation engine;
 - unit tests for `calculateSimulationResult`;
 - unit tests for `calculateIncomeCurve`;
+- unit tests for `calculateSimulationComparisonResult`;
 - server-side income curve generation;
 - service facade over Axios;
 - React Query integration;
 - chart adapters from domain data;
+- simplified `Mode VS` comparison view with URL-synced `view=vs`;
+- dedicated `POST /api/simulate-comparison` comparison endpoint;
 - Next.js error boundary integration.
 
 Still natural next steps:
 
 - expand business rules if the brief evolves;
 - add API integration tests for route handlers;
-- add side-by-side `Micro-BNC vs Real` comparison on top of the existing `SimulationResult` contract.
+- add richer comparison surfaces if the brief eventually needs more than the
+  simplified three-card `VS` summary.
