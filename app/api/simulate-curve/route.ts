@@ -24,7 +24,21 @@ export async function POST(request: Request) {
     });
   }
 
-  const requestBody: unknown = await request.json();
+  let requestBody: unknown;
+
+  try {
+    requestBody = await request.json();
+  } catch {
+    return NextResponse.json(
+      {
+        message: "Invalid simulation curve payload.",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
   const parsedRequest = incomeCurveRequestSchema.safeParse(requestBody);
 
   if (!parsedRequest.success) {
