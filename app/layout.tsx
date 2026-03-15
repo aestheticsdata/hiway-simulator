@@ -3,8 +3,30 @@ import "./globals.css";
 import { cn } from "@lib/utils";
 import { AppProviders } from "@components/providers/AppProviders";
 
+const DEFAULT_SITE_URL = "https://hiwaysim.1991computer.com";
+
+function getMetadataBase(): URL {
+  const configuredSiteUrl =
+    [
+      process.env.NEXT_PUBLIC_SITE_URL,
+      process.env.VERCEL_PROJECT_PRODUCTION_URL,
+      process.env.VERCEL_URL,
+    ].find((value) => typeof value === "string" && value.trim().length > 0) ??
+    DEFAULT_SITE_URL;
+
+  const normalizedSiteUrl = configuredSiteUrl.startsWith("http")
+    ? configuredSiteUrl
+    : `https://${configuredSiteUrl}`;
+
+  try {
+    return new URL(normalizedSiteUrl);
+  } catch {
+    return new URL(DEFAULT_SITE_URL);
+  }
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hiwaysim.1991computer.com"),
+  metadataBase: getMetadataBase(),
   title: {
     default: "Simulateur de revenu net pour medecin liberal | Hiway Simulator",
     template: "%s | Hiway Simulator",

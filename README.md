@@ -37,6 +37,13 @@ pnpm test:unit
 pnpm test:unit:coverage
 ```
 
+## Environment variables
+
+- `NEXT_PUBLIC_API_BASE_URL`: base URL used by the frontend HTTP client.
+- `NEXT_PUBLIC_SITE_URL`: optional public site URL used to resolve Next.js metadata such as canonical and Open Graph URLs.
+
+If `NEXT_PUBLIC_SITE_URL` is not set, metadata falls back to Vercel-provided deployment domains when available, then to `https://hiwaysim.1991computer.com`.
+
 ## Unit tests
 
 Current scope:
