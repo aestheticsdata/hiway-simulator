@@ -1,38 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRightLeft, CircleAlert } from "lucide-react";
-import { useQueryState, useQueryStates } from "nuqs";
+import { useRef, useState } from "react";
 import { flushSync } from "react-dom";
-import { useForm, useWatch } from "react-hook-form";
 import { useReactToPrint } from "react-to-print";
 
-import {
-  useSimulationComparisonQuery,
-  useSimulationResultQuery,
-} from "@lib/api/simulator/simulator.queries";
 import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@components/ui/alert";
-import { useDebouncedValue } from "@components/simulator/hooks/useDebouncedValue";
-import { Label } from "@components/ui/label";
-import { Switch } from "@components/ui/switch";
-import { simulatorFormSchema } from "@lib/simulator/schemas/simulatorFormSchema";
-import {
-  areSimulationSearchParamsEqual,
-  areSimulationInputsEqual,
-  getSearchParamsFromSimulationInputForView,
-  getSimulationInputFromSearchParams,
-  normalizeSimulationInput,
-  normalizeSimulatorViewMode,
-  simulatorSearchParamParsers,
-  simulatorViewModeParser,
-} from "@lib/simulator/searchParams";
-
+import { useScrollForwarding } from "@components/simulator/hooks/useScrollForwarding";
+import { useSimulatorState } from "@components/simulator/hooks/useSimulatorState";
+import { ComparisonModeToggle } from "@components/simulator/ComparisonModeToggle";
 import { SimulatorForm } from "@components/simulator/SimulatorForm";
 import { ResultsViewSwap } from "@components/simulator/simulator-results/ResultsViewSwap";
 import { ResultsSummaryBanner } from "@components/simulator/simulator-results/ResultsSummaryBanner";
@@ -43,65 +18,30 @@ import { SimulatorResultsSkeleton } from "@components/simulator/simulator-result
 import { simulatorResultsTexts } from "@components/simulator/simulator-results/texts";
 import { simulatorFormTexts } from "@components/simulator/texts";
 
-import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationFormValues";
+const simulationFormTitleId = "simulation-form-title";
 
 export function SimulatorDashboard() {
   const [isPrinting, setIsPrinting] = useState(false);
-  const [isVsPendingActivation, setIsVsPendingActivation] = useState(false);
   const printableRef = useRef<HTMLDivElement>(null);
   const scrollPaneRef = useRef<HTMLDivElement>(null);
-  const [viewMode, setViewMode] = useQueryState("view", simulatorViewModeParser);
-  const [urlState, setUrlState] = useQueryStates(simulatorSearchParamParsers, {
-    history: "replace",
-  });
-  const urlFormValues = getSimulationInputFromSearchParams(urlState);
-  const normalizedViewMode = normalizeSimulatorViewMode(viewMode);
 
-  const form = useForm<SimulationFormValues>({
-    resolver: zodResolver(simulatorFormSchema),
-    mode: "onChange",
-    defaultValues: urlFormValues,
-  });
-
-  const watchedValues = useWatch({ control: form.control });
-  const formValues = normalizeSimulationInput({
-    charges: watchedValues.charges,
-    honoraires: watchedValues.honoraires,
-    partsFiscales: watchedValues.partsFiscales,
-    regime: watchedValues.regime,
-  });
-  const debouncedFormValues = useDebouncedValue(formValues, 350);
-  const simulationResultQuery = useSimulationResultQuery(
-    debouncedFormValues,
-    normalizedViewMode === "default" && form.formState.isValid
-  );
-  const simulationComparisonQuery = useSimulationComparisonQuery(
-    debouncedFormValues,
-    normalizedViewMode === "vs" && form.formState.isValid
-  );
-  const exportTexts = simulatorResultsTexts.pdfExport;
-  const isDefaultView = normalizedViewMode === "default";
-  const shouldShowResultsSkeleton = isDefaultView
-    ? !simulationResultQuery.data
-    : !simulationComparisonQuery.data;
-  const isResultsUpdating = isDefaultView
-    ? simulationResultQuery.isFetching
-    : simulationComparisonQuery.isFetching;
-  const simulationFormTitleId = "simulation-form-title";
-  const normalizedParts = formValues.partsFiscales.toString().replace(".", "_");
-  const needsComparisonCharges =
-    formValues.regime === "micro" && formValues.charges <= 0;
-  const isVsSwitchChecked = normalizedViewMode === "vs" || isVsPendingActivation;
-  const defaultViewSearchParams = getSearchParamsFromSimulationInputForView(
+  const {
+    form,
     formValues,
-    {
-      includeRegime: true,
-    }
-  );
-  const isDefaultViewUrlSynced = areSimulationSearchParamsEqual(
-    defaultViewSearchParams,
-    urlState
-  );
+    normalizedViewMode,
+    simulationResultQuery,
+    simulationComparisonQuery,
+    isVsPendingActivation,
+    isVsSwitchChecked,
+    shouldShowResultsSkeleton,
+    isResultsUpdating,
+    handleVsToggle,
+  } = useSimulatorState();
+
+  useScrollForwarding(scrollPaneRef);
+
+  const exportTexts = simulatorResultsTexts.pdfExport;
+  const normalizedParts = formValues.partsFiscales.toString().replace(".", "_");
   const documentTitle = [
     "hiway-simulation",
     normalizedViewMode,
@@ -109,106 +49,6 @@ export function SimulatorDashboard() {
     Math.round(formValues.honoraires),
     `${normalizedParts}parts`,
   ].join("-");
-
-  useEffect(() => {
-    const currentFormValues = form.getValues();
-    const nextUrlFormValues = getSimulationInputFromSearchParams({
-      ...urlState,
-      regime: urlState.regime ?? currentFormValues.regime,
-    });
-
-    if (areSimulationInputsEqual(form.getValues(), nextUrlFormValues)) {
-      return;
-    }
-
-    form.reset(nextUrlFormValues);
-  }, [form, urlState]);
-
-  useEffect(() => {
-    if (!form.formState.isValid) {
-      return;
-    }
-
-    const canonicalSearchParams = getSearchParamsFromSimulationInputForView(
-      debouncedFormValues,
-      {
-        includeRegime: normalizedViewMode !== "vs",
-      }
-    );
-
-    if (areSimulationSearchParamsEqual(canonicalSearchParams, urlState)) {
-      return;
-    }
-
-    void setUrlState(canonicalSearchParams);
-  }, [
-    debouncedFormValues,
-    form.formState.isValid,
-    normalizedViewMode,
-    setUrlState,
-    urlState,
-  ]);
-
-  useEffect(() => {
-    if (normalizedViewMode !== "vs" || !needsComparisonCharges) {
-      return;
-    }
-
-    const timer = window.setTimeout(() => {
-      setIsVsPendingActivation(true);
-      void setViewMode("default");
-    }, 0);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, [needsComparisonCharges, normalizedViewMode, setViewMode]);
-
-  useEffect(() => {
-    if (
-      !isVsPendingActivation ||
-      !form.formState.isValid ||
-      needsComparisonCharges ||
-      !isDefaultViewUrlSynced
-    ) {
-      return;
-    }
-
-    const timer = window.setTimeout(() => {
-      setIsVsPendingActivation(false);
-      void setViewMode("vs");
-    }, 0);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, [
-    form.formState.isValid,
-    isDefaultViewUrlSynced,
-    isVsPendingActivation,
-    needsComparisonCharges,
-    setViewMode,
-  ]);
-
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      const pane = scrollPaneRef.current;
-      if (!pane) return;
-      if (pane.contains(e.target as Node)) return;
-
-      const { scrollTop, scrollHeight, clientHeight } = pane;
-      const atTop = scrollTop <= 0 && e.deltaY < 0;
-      const atBottom =
-        scrollTop + clientHeight >= scrollHeight - 1 && e.deltaY > 0;
-      if (atTop || atBottom) return;
-
-      e.preventDefault();
-      pane.scrollTop += e.deltaY;
-    };
-
-    document.addEventListener("wheel", handleWheel, { passive: false });
-    return () => document.removeEventListener("wheel", handleWheel);
-  }, []);
 
   const handlePrint = useReactToPrint({
     contentRef: printableRef,
@@ -273,58 +113,11 @@ export function SimulatorDashboard() {
               titleId={simulationFormTitleId}
               viewMode={normalizedViewMode}
             />
-            <div className="rounded-[1.75rem] border border-border/75 bg-background/55 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
-              <div className="flex items-center justify-between gap-4">
-                <div className="min-w-0">
-                  <p className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <ArrowRightLeft className="size-4 text-primary/80" />
-                    <span>{simulatorFormTexts.comparisonMode.title}</span>
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {simulatorFormTexts.comparisonMode.description}
-                  </p>
-                </div>
-                <div className="flex shrink-0 items-center gap-3">
-                  <Label
-                    htmlFor="simulator-vs-switch"
-                    className="sr-only"
-                  >
-                    {simulatorFormTexts.comparisonMode.title}
-                  </Label>
-                  <Switch
-                    id="simulator-vs-switch"
-                    checked={isVsSwitchChecked}
-                    onCheckedChange={(checked) => {
-                      if (!checked) {
-                        setIsVsPendingActivation(false);
-                        void setViewMode("default");
-                        return;
-                      }
-
-                      if (needsComparisonCharges) {
-                        setIsVsPendingActivation(true);
-                        return;
-                      }
-
-                      setIsVsPendingActivation(false);
-                      void setViewMode("vs");
-                    }}
-                  />
-                </div>
-              </div>
-
-              {isVsPendingActivation ? (
-                <Alert className="mt-4 border-amber-200/80 bg-amber-50/85 text-amber-950 dark:border-amber-300/20 dark:bg-amber-400/8 dark:text-amber-100">
-                  <CircleAlert className="size-4" />
-                  <AlertTitle>
-                    {simulatorFormTexts.comparisonMode.pendingTitle}
-                  </AlertTitle>
-                  <AlertDescription className="text-amber-900/80 dark:text-amber-100/78">
-                    {simulatorFormTexts.comparisonMode.pendingDescription}
-                  </AlertDescription>
-                </Alert>
-              ) : null}
-            </div>
+            <ComparisonModeToggle
+              isChecked={isVsSwitchChecked}
+              isPendingActivation={isVsPendingActivation}
+              onCheckedChange={handleVsToggle}
+            />
           </CardContent>
         </Card>
       </div>
