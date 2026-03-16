@@ -92,6 +92,16 @@ export function SimulatorDashboard() {
   const needsComparisonCharges =
     formValues.regime === "micro" && formValues.charges <= 0;
   const isVsSwitchChecked = normalizedViewMode === "vs" || isVsPendingActivation;
+  const defaultViewSearchParams = getSearchParamsFromSimulationInputForView(
+    formValues,
+    {
+      includeRegime: true,
+    }
+  );
+  const isDefaultViewUrlSynced = areSimulationSearchParamsEqual(
+    defaultViewSearchParams,
+    urlState
+  );
   const documentTitle = [
     "hiway-simulation",
     normalizedViewMode,
@@ -155,7 +165,12 @@ export function SimulatorDashboard() {
   }, [needsComparisonCharges, normalizedViewMode, setViewMode]);
 
   useEffect(() => {
-    if (!isVsPendingActivation || !form.formState.isValid || needsComparisonCharges) {
+    if (
+      !isVsPendingActivation ||
+      !form.formState.isValid ||
+      needsComparisonCharges ||
+      !isDefaultViewUrlSynced
+    ) {
       return;
     }
 
@@ -169,6 +184,7 @@ export function SimulatorDashboard() {
     };
   }, [
     form.formState.isValid,
+    isDefaultViewUrlSynced,
     isVsPendingActivation,
     needsComparisonCharges,
     setViewMode,
