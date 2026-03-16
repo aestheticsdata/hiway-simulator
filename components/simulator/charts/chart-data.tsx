@@ -1,13 +1,7 @@
-import {
-  getBreakdownColor,
-  simulatorPalette,
-} from "@lib/simulator/presentation";
+import { getBreakdownColor, simulatorPalette } from "@lib/simulator/presentation";
 import { formatEuro } from "@lib/simulator/formatters";
 import { simulatorChartTexts } from "@components/simulator/charts/texts";
-import type {
-  ChartLegendItem,
-  PieLabelProps,
-} from "@components/simulator/charts/interfaces/ChartData";
+import type { ChartLegendItem, PieLabelProps } from "@components/simulator/charts/interfaces/ChartData";
 import type { SimulationResult } from "@lib/simulator/interfaces/SimulationResult";
 
 export function getBarChartData(result: SimulationResult) {
@@ -108,8 +102,7 @@ export const chartLegendItems: ChartLegendItem[] = [
 
 export const chartTooltipStyle = {
   borderRadius: "1rem",
-  border:
-    "1px solid color-mix(in oklab, var(--color-border) 85%, transparent)",
+  border: "1px solid color-mix(in oklab, var(--color-border) 85%, transparent)",
   backgroundColor: "var(--color-card)",
   color: "var(--color-card-foreground)",
   boxShadow: "0 20px 50px rgba(2, 8, 22, 0.28)",
@@ -123,15 +116,7 @@ export const chartTooltipItemStyle = {
   color: "var(--color-card-foreground)",
 };
 
-export function renderChartPieLabel({
-  cx,
-  cy,
-  innerRadius,
-  outerRadius,
-  midAngle,
-  percent,
-  name,
-}: PieLabelProps) {
+export function renderChartPieLabel({ cx, cy, innerRadius, outerRadius, midAngle, percent, name }: PieLabelProps) {
   if (
     cx === undefined ||
     cy === undefined ||

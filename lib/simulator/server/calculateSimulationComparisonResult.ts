@@ -13,7 +13,7 @@ function roundToCurrency(value: number) {
 
 export function calculateSimulationComparisonResult(
   input: SimulationInput,
-  rates: RatesResponse
+  rates: RatesResponse,
 ): SimulationComparisonResult {
   const micro = calculateSimulationResult(
     {
@@ -21,14 +21,14 @@ export function calculateSimulationComparisonResult(
       charges: 0,
       regime: "micro",
     },
-    rates
+    rates,
   );
   const reel = calculateSimulationResult(
     {
       ...input,
       regime: "reel",
     },
-    rates
+    rates,
   );
   const annualDifference = reel.revenuNetAnnuel - micro.revenuNetAnnuel;
   const monthlyDifference = reel.revenuNetMensuel - micro.revenuNetMensuel;
@@ -37,8 +37,7 @@ export function calculateSimulationComparisonResult(
     annualGain: roundToCurrency(Math.abs(annualDifference)),
     micro,
     monthlyGain: roundToCurrency(Math.abs(monthlyDifference)),
-    optimalRegime:
-      annualDifference > 0 ? "reel" : annualDifference < 0 ? "micro" : "equivalent",
+    optimalRegime: annualDifference > 0 ? "reel" : annualDifference < 0 ? "micro" : "equivalent",
     reel,
   });
 }

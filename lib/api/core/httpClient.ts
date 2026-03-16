@@ -22,12 +22,7 @@ function getDefaultHeaders(headers?: Record<string, string>) {
   };
 }
 
-function parseResponseData<T>(
-  endpoint: string,
-  method: string,
-  responseData: unknown,
-  zodSchema?: ZodType<T>
-) {
+function parseResponseData<T>(endpoint: string, method: string, responseData: unknown, zodSchema?: ZodType<T>) {
   if (!zodSchema) {
     return responseData as T;
   }
@@ -45,20 +40,14 @@ function parseResponseData<T>(
   return parsed.data;
 }
 
-function normalizeError(
-  error: unknown,
-  endpoint: string,
-  method: string
-) {
+function normalizeError(error: unknown, endpoint: string, method: string) {
   if (error instanceof ApiException) {
     return error;
   }
 
   if (axios.isAxiosError(error)) {
     const responseMessage =
-      typeof error.response?.data === "object" &&
-      error.response?.data !== null &&
-      "message" in error.response.data
+      typeof error.response?.data === "object" && error.response?.data !== null && "message" in error.response.data
         ? String(error.response.data.message)
         : error.message;
 
@@ -83,7 +72,7 @@ async function request<T>(
   method: string,
   requestOptions: ApiRequestOptions = {},
   zodSchema?: ZodType<T>,
-  data?: unknown
+  data?: unknown,
 ) {
   try {
     const response = await axiosClient.request<unknown>({
@@ -91,9 +80,7 @@ async function request<T>(
       url: endpoint,
       method,
       data,
-      headers: getDefaultHeaders(
-        requestOptions.headers as Record<string, string> | undefined
-      ),
+      headers: getDefaultHeaders(requestOptions.headers as Record<string, string> | undefined),
     });
 
     return parseResponseData(endpoint, method, response.data, zodSchema);
@@ -103,34 +90,16 @@ async function request<T>(
 }
 
 export const httpClient = {
-  delete<T>(
-    endpoint: string,
-    requestOptions: ApiRequestOptions = {},
-    zodSchema?: ZodType<T>
-  ) {
+  delete<T>(endpoint: string, requestOptions: ApiRequestOptions = {}, zodSchema?: ZodType<T>) {
     return request<T>(endpoint, "DELETE", requestOptions, zodSchema);
   },
-  get<T>(
-    endpoint: string,
-    requestOptions: ApiRequestOptions = {},
-    zodSchema?: ZodType<T>
-  ) {
+  get<T>(endpoint: string, requestOptions: ApiRequestOptions = {}, zodSchema?: ZodType<T>) {
     return request<T>(endpoint, "GET", requestOptions, zodSchema);
   },
-  post<T>(
-    endpoint: string,
-    data?: unknown,
-    requestOptions: ApiRequestOptions = {},
-    zodSchema?: ZodType<T>
-  ) {
+  post<T>(endpoint: string, data?: unknown, requestOptions: ApiRequestOptions = {}, zodSchema?: ZodType<T>) {
     return request<T>(endpoint, "POST", requestOptions, zodSchema, data);
   },
-  put<T>(
-    endpoint: string,
-    data?: unknown,
-    requestOptions: ApiRequestOptions = {},
-    zodSchema?: ZodType<T>
-  ) {
+  put<T>(endpoint: string, data?: unknown, requestOptions: ApiRequestOptions = {}, zodSchema?: ZodType<T>) {
     return request<T>(endpoint, "PUT", requestOptions, zodSchema, data);
   },
 };

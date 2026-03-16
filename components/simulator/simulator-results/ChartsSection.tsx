@@ -1,20 +1,11 @@
 import dynamic from "next/dynamic";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@components/ui/card";
 import type { ChartsSectionProps } from "@components/simulator/simulator-results/interfaces/ChartsSectionProps";
 import { simulatorResultsTexts } from "@components/simulator/simulator-results/texts";
 
 const SimulatorChart = dynamic(
-  () =>
-    import("@components/simulator/charts/SimulatorChart").then(
-      (mod) => mod.SimulatorChart
-    ),
+  () => import("@components/simulator/charts/SimulatorChart").then((mod) => mod.SimulatorChart),
   {
     ssr: false,
     loading: () => (
@@ -30,19 +21,9 @@ const SimulatorChart = dynamic(
         </CardContent>
       </Card>
     ),
-  }
+  },
 );
 
-export function ChartsSection({
-  formValues,
-  isPrinting,
-  result,
-}: ChartsSectionProps) {
-  return (
-    <SimulatorChart
-      formValues={formValues}
-      isPrinting={isPrinting}
-      result={result}
-    />
-  );
+export function ChartsSection({ formValues, isPrinting, result }: ChartsSectionProps) {
+  return <SimulatorChart formValues={formValues} isPrinting={isPrinting} result={result} />;
 }

@@ -13,21 +13,9 @@ import {
   YAxis,
 } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@components/ui/card";
 import { Skeleton } from "@components/ui/skeleton";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@components/ui/select";
 import {
   chartTooltipItemStyle,
   chartTooltipLabelStyle,
@@ -53,32 +41,14 @@ export function IncomeCurveChartCard({
   regime,
 }: IncomeCurveChartCardProps) {
   const texts = simulatorChartTexts.incomeCurveCard;
-  const selectedRangeOption = incomeCurveRangePresetOptions.find(
-    (option) => option.value === rangePreset
-  );
-  const currentScenarioPoint = curve?.points.find(
-    (point) => point.isCurrentScenario
-  );
+  const selectedRangeOption = incomeCurveRangePresetOptions.find((option) => option.value === rangePreset);
+  const currentScenarioPoint = curve?.points.find((point) => point.isCurrentScenario);
   const chartContent = curve ? (
     <>
       <defs>
-        <linearGradient
-          id={INCOME_CURVE_GRADIENT_ID}
-          x1="0"
-          y1="0"
-          x2="0"
-          y2="1"
-        >
-          <stop
-            offset="5%"
-            stopColor={simulatorPalette.net}
-            stopOpacity={0.32}
-          />
-          <stop
-            offset="95%"
-            stopColor={simulatorPalette.net}
-            stopOpacity={0.04}
-          />
+        <linearGradient id={INCOME_CURVE_GRADIENT_ID} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="5%" stopColor={simulatorPalette.net} stopOpacity={0.32} />
+          <stop offset="95%" stopColor={simulatorPalette.net} stopOpacity={0.04} />
         </linearGradient>
       </defs>
       <CartesianGrid
@@ -107,14 +77,9 @@ export function IncomeCurveChartCard({
       />
       <Tooltip
         contentStyle={chartTooltipStyle}
-        formatter={(value) => [
-          formatEuro(Number(value)),
-          texts.annualNetIncomeTooltip,
-        ]}
+        formatter={(value) => [formatEuro(Number(value)), texts.annualNetIncomeTooltip]}
         itemStyle={chartTooltipItemStyle}
-        labelFormatter={(value) =>
-          `${texts.feesTooltip}: ${formatEuro(Number(value), false)}`
-        }
+        labelFormatter={(value) => `${texts.feesTooltip}: ${formatEuro(Number(value), false)}`}
         labelStyle={chartTooltipLabelStyle}
       />
       <ReferenceLine
@@ -165,12 +130,7 @@ export function IncomeCurveChartCard({
             <p className="text-xs font-medium uppercase tracking-[0.18em] text-primary/70">
               {texts.rangeSelectorLabel}
             </p>
-            <Select
-              value={rangePreset}
-              onValueChange={(value) =>
-                onRangePresetChange(value as IncomeCurveRangePreset)
-              }
-            >
+            <Select value={rangePreset} onValueChange={(value) => onRangePresetChange(value as IncomeCurveRangePreset)}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={texts.rangeSelectorPlaceholder} />
               </SelectTrigger>
@@ -186,11 +146,8 @@ export function IncomeCurveChartCard({
               {curve
                 ? `${texts.rangeBoundsPrefix} ${formatEuro(
                     curve.minHonoraires,
-                    false
-                  )} ${texts.rangeBoundsSeparator} ${formatEuro(
-                    curve.maxHonoraires,
-                    false
-                  )}`
+                    false,
+                  )} ${texts.rangeBoundsSeparator} ${formatEuro(curve.maxHonoraires, false)}`
                 : texts.rangeLoading}
             </p>
           </div>
@@ -206,11 +163,8 @@ export function IncomeCurveChartCard({
               {curve
                 ? `${texts.rangeBoundsPrefix} ${formatEuro(
                     curve.minHonoraires,
-                    false
-                  )} ${texts.rangeBoundsSeparator} ${formatEuro(
-                    curve.maxHonoraires,
-                    false
-                  )}`
+                    false,
+                  )} ${texts.rangeBoundsSeparator} ${formatEuro(curve.maxHonoraires, false)}`
                 : texts.rangeLoading}
             </p>
           </div>
@@ -241,10 +195,7 @@ export function IncomeCurveChartCard({
                 </div>
               ) : (
                 <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-                  <AreaChart
-                    data={curve.points}
-                    margin={{ top: 10, right: 16, bottom: 6, left: 0 }}
-                  >
+                  <AreaChart data={curve.points} margin={{ top: 10, right: 16, bottom: 6, left: 0 }}>
                     {chartContent}
                   </AreaChart>
                 </ResponsiveContainer>
@@ -254,22 +205,16 @@ export function IncomeCurveChartCard({
             <div className="flex flex-wrap items-center gap-2">
               <div className="rounded-full border border-border/70 bg-background/45 px-3 py-1.5 text-xs text-muted-foreground">
                 {texts.currentScenario}:{" "}
-                <span className="font-medium text-foreground">
-                  {formatEuro(curve.currentHonoraires, false)}
-                </span>
+                <span className="font-medium text-foreground">{formatEuro(curve.currentHonoraires, false)}</span>
               </div>
               {currentScenarioPoint ? (
                 <div className="rounded-full border border-[#20d39c]/25 bg-[#20d39c]/10 px-3 py-1.5 text-xs text-[#0f9e75] dark:text-[#20d39c]">
                   {texts.estimatedNetIncome}:{" "}
-                  <span className="font-medium">
-                    {formatEuro(currentScenarioPoint.revenuNetAnnuel)}
-                  </span>
+                  <span className="font-medium">{formatEuro(currentScenarioPoint.revenuNetAnnuel)}</span>
                 </div>
               ) : null}
               <div className="rounded-full border border-border/70 bg-background/45 px-3 py-1.5 text-xs text-muted-foreground">
-                {regime === "reel"
-                  ? texts.realRegimeHint
-                  : texts.microRegimeHint}
+                {regime === "reel" ? texts.realRegimeHint : texts.microRegimeHint}
               </div>
               {isUpdating ? (
                 <div className="screen-only inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs text-primary">

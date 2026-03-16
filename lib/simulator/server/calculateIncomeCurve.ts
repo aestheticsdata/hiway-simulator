@@ -49,22 +49,13 @@ function roundToNearestStep(value: number, step: number) {
   return Math.round(value / step) * step;
 }
 
-function getHonorairesBounds(
-  honoraires: number,
-  rangePreset: IncomeCurveRangePreset
-) {
+function getHonorairesBounds(honoraires: number, rangePreset: IncomeCurveRangePreset) {
   const config = incomeCurveRangeConfig[rangePreset];
-  const minHonoraires = Math.max(
-    0,
-    roundDownToStep(honoraires * config.minMultiplier, RANGE_ROUNDING_STEP)
-  );
-  const computedMaxHonoraires =
-    honoraires > 0
-      ? honoraires * config.maxMultiplier
-      : config.fallbackMaxHonoraires;
+  const minHonoraires = Math.max(0, roundDownToStep(honoraires * config.minMultiplier, RANGE_ROUNDING_STEP));
+  const computedMaxHonoraires = honoraires > 0 ? honoraires * config.maxMultiplier : config.fallbackMaxHonoraires;
   const maxHonoraires = Math.max(
     roundUpToStep(computedMaxHonoraires, RANGE_ROUNDING_STEP),
-    minHonoraires + RANGE_ROUNDING_STEP
+    minHonoraires + RANGE_ROUNDING_STEP,
   );
 
   return {
@@ -73,11 +64,7 @@ function getHonorairesBounds(
   };
 }
 
-function getSampleHonorairesValues(
-  minHonoraires: number,
-  maxHonoraires: number,
-  currentHonoraires: number
-) {
+function getSampleHonorairesValues(minHonoraires: number, maxHonoraires: number, currentHonoraires: number) {
   const step = (maxHonoraires - minHonoraires) / (INCOME_CURVE_POINT_COUNT - 1);
   const sampledHonoraires = new Set<number>([currentHonoraires]);
 
@@ -87,27 +74,14 @@ function getSampleHonorairesValues(
   }
 
   return [...sampledHonoraires]
-    .filter(
-      (honoraires) =>
-        honoraires >= minHonoraires && honoraires <= maxHonoraires
-    )
+    .filter((honoraires) => honoraires >= minHonoraires && honoraires <= maxHonoraires)
     .sort((left, right) => left - right);
 }
 
-export function calculateIncomeCurve(
-  request: IncomeCurveRequest,
-  rates: RatesResponse
-): IncomeCurveResponse {
+export function calculateIncomeCurve(request: IncomeCurveRequest, rates: RatesResponse): IncomeCurveResponse {
   const { rangePreset, ...input } = request;
-  const { maxHonoraires, minHonoraires } = getHonorairesBounds(
-    input.honoraires,
-    rangePreset
-  );
-  const points = getSampleHonorairesValues(
-    minHonoraires,
-    maxHonoraires,
-    input.honoraires
-  ).map((honoraires) => ({
+  const { maxHonoraires, minHonoraires } = getHonorairesBounds(input.honoraires, rangePreset);
+  const points = getSampleHonorairesValues(minHonoraires, maxHonoraires, input.honoraires).map((honoraires) => ({
     honoraires,
     isCurrentScenario: honoraires === input.honoraires,
     revenuNetAnnuel: calculateSimulationResult(
@@ -115,7 +89,7 @@ export function calculateIncomeCurve(
         ...input,
         honoraires,
       },
-      rates
+      rates,
     ).revenuNetAnnuel,
   }));
 

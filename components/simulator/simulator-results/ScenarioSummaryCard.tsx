@@ -1,19 +1,7 @@
-import {
-  BadgeEuro,
-  Calculator,
-  ReceiptText,
-  Scale,
-  Users,
-} from "lucide-react";
+import { BadgeEuro, Calculator, ReceiptText, Scale, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@components/ui/card";
 import type { ScenarioSummaryCardProps } from "@components/simulator/simulator-results/interfaces/ScenarioSummaryCardProps";
 import { simulatorResultsTexts } from "@components/simulator/simulator-results/texts";
 import { getFormSummary } from "@lib/simulator/presentation";
@@ -25,9 +13,7 @@ const summaryIcons: Record<string, LucideIcon> = {
   regime: Scale,
 };
 
-export function ScenarioSummaryCard({
-  formValues,
-}: ScenarioSummaryCardProps) {
+export function ScenarioSummaryCard({ formValues }: ScenarioSummaryCardProps) {
   const summary = getFormSummary(formValues);
 
   return (
@@ -37,9 +23,7 @@ export function ScenarioSummaryCard({
           <Calculator className="size-4 text-primary/80" />
           <span>{simulatorResultsTexts.scenarioSummaryCard.title}</span>
         </CardTitle>
-        <CardDescription>
-          {simulatorResultsTexts.scenarioSummaryCard.description}
-        </CardDescription>
+        <CardDescription>{simulatorResultsTexts.scenarioSummaryCard.description}</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4 pt-6 sm:grid-cols-2">
         {summary.map((item) => {

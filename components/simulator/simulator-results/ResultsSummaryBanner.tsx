@@ -13,15 +13,8 @@ interface ResultsSummaryBannerProps {
   viewMode: SimulatorViewMode;
 }
 
-export function ResultsSummaryBanner({
-  isExportPdfDisabled,
-  onExportPdf,
-  viewMode,
-}: ResultsSummaryBannerProps) {
-  const bannerTexts =
-    viewMode === "vs"
-      ? simulatorResultsTexts.comparisonBanner
-      : simulatorResultsTexts.resultsBanner;
+export function ResultsSummaryBanner({ isExportPdfDisabled, onExportPdf, viewMode }: ResultsSummaryBannerProps) {
+  const bannerTexts = viewMode === "vs" ? simulatorResultsTexts.comparisonBanner : simulatorResultsTexts.resultsBanner;
 
   return (
     <section className="rounded-2xl border border-border/80 bg-card/88 px-4 py-3 shadow-[0_14px_36px_rgba(118,145,191,0.12)] ring-1 ring-[#e7eef8] dark:shadow-[0_18px_60px_rgba(2,8,22,0.22)] dark:ring-white/3">
@@ -30,9 +23,7 @@ export function ResultsSummaryBanner({
           <h2 id="simulation-results-heading" className="font-medium text-foreground">
             {bannerTexts.title}
           </h2>
-          <p className="text-sm text-balance text-muted-foreground md:text-pretty">
-            {bannerTexts.description}
-          </p>
+          <p className="text-sm text-balance text-muted-foreground md:text-pretty">{bannerTexts.description}</p>
         </div>
         <div className="screen-only w-full lg:flex lg:basis-1/3 lg:justify-end">
           <Button

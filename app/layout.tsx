@@ -7,16 +7,11 @@ const DEFAULT_SITE_URL = "https://hiwaysim.1991computer.com";
 
 function getMetadataBase(): URL {
   const configuredSiteUrl =
-    [
-      process.env.NEXT_PUBLIC_SITE_URL,
-      process.env.VERCEL_PROJECT_PRODUCTION_URL,
-      process.env.VERCEL_URL,
-    ].find((value) => typeof value === "string" && value.trim().length > 0) ??
-    DEFAULT_SITE_URL;
+    [process.env.NEXT_PUBLIC_SITE_URL, process.env.VERCEL_PROJECT_PRODUCTION_URL, process.env.VERCEL_URL].find(
+      (value) => typeof value === "string" && value.trim().length > 0,
+    ) ?? DEFAULT_SITE_URL;
 
-  const normalizedSiteUrl = configuredSiteUrl.startsWith("http")
-    ? configuredSiteUrl
-    : `https://${configuredSiteUrl}`;
+  const normalizedSiteUrl = configuredSiteUrl.startsWith("http") ? configuredSiteUrl : `https://${configuredSiteUrl}`;
 
   try {
     return new URL(normalizedSiteUrl);
@@ -64,11 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="fr"
-      suppressHydrationWarning
-      className={cn("font-sans")}
-    >
+    <html lang="fr" suppressHydrationWarning className={cn("font-sans")}>
       <body className="antialiased">
         <AppProviders>{children}</AppProviders>
       </body>

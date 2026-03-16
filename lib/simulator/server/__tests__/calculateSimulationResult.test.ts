@@ -85,10 +85,7 @@ describe("calculateSimulationResult", () => {
       });
 
       const chargedResult = calculateSimulationResult(chargedInput, simpleRates);
-      const unchargedResult = calculateSimulationResult(
-        unchargedInput,
-        simpleRates
-      );
+      const unchargedResult = calculateSimulationResult(unchargedInput, simpleRates);
 
       expect(chargedResult).toEqual({
         bnc: 33_000,
@@ -131,7 +128,7 @@ describe("calculateSimulationResult", () => {
           honoraires: 50_000,
           charges: 5_000,
         }),
-        simpleRates
+        simpleRates,
       );
 
       expect(result).toMatchObject({
@@ -150,7 +147,7 @@ describe("calculateSimulationResult", () => {
         createInput({
           honoraires: 10_000,
         }),
-        simpleRates
+        simpleRates,
       );
 
       expect(result.quotient).toBe(8_250);
@@ -164,7 +161,7 @@ describe("calculateSimulationResult", () => {
         createInput({
           honoraires: 15_000,
         }),
-        simpleRates
+        simpleRates,
       );
 
       expect(result.quotient).toBe(12_375);
@@ -177,7 +174,7 @@ describe("calculateSimulationResult", () => {
         createInput({
           honoraires: 100_000,
         }),
-        simpleRates
+        simpleRates,
       );
 
       expect(result.quotient).toBe(82_500);
@@ -192,14 +189,14 @@ describe("calculateSimulationResult", () => {
           honoraires: 50_000,
           partsFiscales: 1,
         }),
-        simpleRates
+        simpleRates,
       );
       const twoPartsResult = calculateSimulationResult(
         createInput({
           honoraires: 50_000,
           partsFiscales: 2,
         }),
-        simpleRates
+        simpleRates,
       );
 
       expect(onePartResult.quotient).toBe(41_250);
@@ -208,9 +205,7 @@ describe("calculateSimulationResult", () => {
       expect(twoPartsResult.impotParPart).toBe(1_125);
       expect(onePartResult.impotTotal).toBe(5_250);
       expect(twoPartsResult.impotTotal).toBe(2_250);
-      expect(twoPartsResult.revenuNetAnnuel).toBeGreaterThan(
-        onePartResult.revenuNetAnnuel
-      );
+      expect(twoPartsResult.revenuNetAnnuel).toBeGreaterThan(onePartResult.revenuNetAnnuel);
     });
 
     it("returns a 0 global rate when honoraires is 0", () => {
@@ -235,7 +230,7 @@ describe("calculateSimulationResult", () => {
         createInput({
           honoraires: 10.05,
         }),
-        roundingRates
+        roundingRates,
       );
 
       expect(result).toMatchObject({
@@ -255,7 +250,7 @@ describe("calculateSimulationResult", () => {
           honoraires: 1_000,
           charges: 1_500,
         }),
-        simpleRates
+        simpleRates,
       );
 
       expect(result).toMatchObject({
@@ -301,7 +296,7 @@ describe("calculateSimulationResult", () => {
           charges: 25_000,
           partsFiscales: 2,
         }),
-        referenceRates
+        referenceRates,
       );
 
       expect(result).toEqual({
@@ -345,7 +340,7 @@ describe("calculateSimulationResult", () => {
           charges: 0,
           partsFiscales: 2,
         }),
-        referenceRates
+        referenceRates,
       );
       const highChargesResult = calculateSimulationResult(
         createInput({
@@ -354,7 +349,7 @@ describe("calculateSimulationResult", () => {
           charges: 80_000,
           partsFiscales: 2,
         }),
-        referenceRates
+        referenceRates,
       );
 
       expect(highChargesResult).toEqual(lowChargesResult);

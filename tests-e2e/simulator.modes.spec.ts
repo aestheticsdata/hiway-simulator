@@ -30,21 +30,13 @@ test("calcule et affiche la synthese en regime reel", async ({ page }) => {
 
   await expect(summaryCard).toContainText("Regime reel");
   await expect(summaryCard).toContainText(formatEuro(50_000, false));
-  await expect(summaryCard).toContainText(
-    formatEuro(scenarios.reel.charges, false)
-  );
+  await expect(summaryCard).toContainText(formatEuro(scenarios.reel.charges, false));
   await expect(summaryCard).toContainText("1");
 
   await expect(financialCard).toContainText("Revenu net annuel");
-  await expect(financialCard).toContainText(
-    formatEuro(scenarios.reel.annualNetIncome)
-  );
-  await expect(financialCard).toContainText(
-    formatEuro(scenarios.reel.monthlyNetIncome)
-  );
-  await expect(financialCard).toContainText(
-    formatEuro(scenarios.reel.totalContributions)
-  );
+  await expect(financialCard).toContainText(formatEuro(scenarios.reel.annualNetIncome));
+  await expect(financialCard).toContainText(formatEuro(scenarios.reel.monthlyNetIncome));
+  await expect(financialCard).toContainText(formatEuro(scenarios.reel.totalContributions));
   await expect(financialCard).toContainText(formatEuro(scenarios.reel.tax));
 });
 
@@ -60,8 +52,8 @@ test("bascule en micro-BNC et masque les charges saisies", async ({ page }) => {
   await expect(page.locator("#charges")).toHaveCount(0);
   await expect(
     page.getByText(
-      "Les charges ne sont pas saisies en micro-BNC. L'abattement forfaitaire de 34% servira de base de calcul a l'etape metier."
-    )
+      "Les charges ne sont pas saisies en micro-BNC. L'abattement forfaitaire de 34% servira de base de calcul a l'etape metier.",
+    ),
   ).toBeVisible();
 
   await expect(summaryCard).toContainText("Micro-BNC");
@@ -69,21 +61,13 @@ test("bascule en micro-BNC et masque les charges saisies", async ({ page }) => {
   await expect(summaryCard).toContainText(scenarios.micro.chargesSummary);
   await expect(summaryCard).toContainText("1");
 
-  await expect(financialCard).toContainText(
-    formatEuro(scenarios.micro.annualNetIncome)
-  );
-  await expect(financialCard).toContainText(
-    formatEuro(scenarios.micro.monthlyNetIncome)
-  );
-  await expect(financialCard).toContainText(
-    formatEuro(scenarios.micro.totalContributions)
-  );
+  await expect(financialCard).toContainText(formatEuro(scenarios.micro.annualNetIncome));
+  await expect(financialCard).toContainText(formatEuro(scenarios.micro.monthlyNetIncome));
+  await expect(financialCard).toContainText(formatEuro(scenarios.micro.totalContributions));
   await expect(financialCard).toContainText(formatEuro(scenarios.micro.tax));
 });
 
-test("restaure l'état depuis les paramètres URL au chargement de la page", async ({
-  page,
-}) => {
+test("restaure l'état depuis les paramètres URL au chargement de la page", async ({ page }) => {
   const ex = scenarios.verificationExample;
   const url = `/?honoraires=${ex.honoraires}&charges=${ex.charges}&partsFiscales=${ex.partsFiscales}&regime=reel`;
 

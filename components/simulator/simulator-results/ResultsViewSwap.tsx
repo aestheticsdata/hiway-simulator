@@ -19,11 +19,7 @@ type TransitionDirection = "to-default" | "to-vs";
 const EXIT_DURATION_MS = 140;
 const ENTER_DURATION_MS = 180;
 
-export function ResultsViewSwap({
-  defaultContent,
-  viewMode,
-  vsContent,
-}: ResultsViewSwapProps) {
+export function ResultsViewSwap({ defaultContent, viewMode, vsContent }: ResultsViewSwapProps) {
   const [displayedMode, setDisplayedMode] = useState<SimulatorViewMode>(viewMode);
   const [phase, setPhase] = useState<TransitionPhase>("idle");
   const [direction, setDirection] = useState<TransitionDirection>("to-vs");
@@ -36,7 +32,7 @@ export function ResultsViewSwap({
         timers.push(
           window.setTimeout(() => {
             setPhase("idle");
-          }, 0)
+          }, 0),
         );
       }
 
@@ -60,11 +56,11 @@ export function ResultsViewSwap({
             timers.push(
               window.setTimeout(() => {
                 setPhase("idle");
-              }, ENTER_DURATION_MS)
+              }, ENTER_DURATION_MS),
             );
-          }, EXIT_DURATION_MS)
+          }, EXIT_DURATION_MS),
         );
-      }, 0)
+      }, 0),
     );
 
     return () => {
@@ -79,18 +75,10 @@ export function ResultsViewSwap({
       <div
         className={cn(
           "motion-reduce:animate-none",
-          phase === "entering" &&
-            direction === "to-vs" &&
-            "animate-results-panel-enter-left",
-          phase === "entering" &&
-            direction === "to-default" &&
-            "animate-results-panel-enter-right",
-          phase === "exiting" &&
-            direction === "to-vs" &&
-            "animate-results-panel-exit-right",
-          phase === "exiting" &&
-            direction === "to-default" &&
-            "animate-results-panel-exit-left"
+          phase === "entering" && direction === "to-vs" && "animate-results-panel-enter-left",
+          phase === "entering" && direction === "to-default" && "animate-results-panel-enter-right",
+          phase === "exiting" && direction === "to-vs" && "animate-results-panel-exit-right",
+          phase === "exiting" && direction === "to-default" && "animate-results-panel-exit-left",
         )}
       >
         {displayedMode === "vs" ? vsContent : defaultContent}

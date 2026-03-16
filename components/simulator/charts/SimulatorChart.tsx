@@ -10,13 +10,8 @@ import { RevenuePieChartCard } from "@components/simulator/charts/RevenuePieChar
 import { RevenueBarChartCard } from "@components/simulator/charts/RevenueBarChartCard";
 import type { IncomeCurveRangePreset } from "@lib/simulator/constants/incomeCurveRangePresets";
 
-export function SimulatorChart({
-  formValues,
-  isPrinting,
-  result,
-}: SimulatorChartProps) {
-  const [rangePreset, setRangePreset] =
-    useState<IncomeCurveRangePreset>("standard");
+export function SimulatorChart({ formValues, isPrinting, result }: SimulatorChartProps) {
+  const [rangePreset, setRangePreset] = useState<IncomeCurveRangePreset>("standard");
   const debouncedFormValues = useDebouncedValue(formValues, 350);
   const curveRequest = {
     ...debouncedFormValues,

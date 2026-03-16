@@ -1,0 +1,4 @@
+pnpm exec biome format --write --staged --no-errors-on-unmatched
+
+# Refresh the index so the commit includes the formatted staged files.
+git update-index --again

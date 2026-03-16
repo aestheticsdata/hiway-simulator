@@ -11,10 +11,7 @@ export async function POST(request: Request) {
   const debugMode = getDebugApiErrorModeFromHeaders(request.headers);
 
   if (debugMode === "simulate-500") {
-    return NextResponse.json(
-      { message: "Simulated simulation curve API failure." },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Simulated simulation curve API failure." }, { status: 500 });
   }
 
   if (debugMode === "simulate-invalid-schema") {
@@ -35,7 +32,7 @@ export async function POST(request: Request) {
       },
       {
         status: 400,
-      }
+      },
     );
   }
 
@@ -49,7 +46,7 @@ export async function POST(request: Request) {
       },
       {
         status: 400,
-      }
+      },
     );
   }
 

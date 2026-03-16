@@ -62,7 +62,7 @@ describe("searchParams helpers", () => {
       },
       {
         includeRegime: false,
-      }
+      },
     );
 
     expect(result).toMatchObject({

@@ -1,24 +1,13 @@
 import { ReceiptText } from "lucide-react";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@components/ui/card";
 import { Separator } from "@components/ui/separator";
-import {
-  formatEuro,
-  formatPercent,
-} from "@lib/simulator/formatters";
+import { formatEuro, formatPercent } from "@lib/simulator/formatters";
 import type { CalculationBreakdownCardProps } from "@components/simulator/simulator-results/interfaces/CalculationBreakdownCardProps";
 import { simulatorResultsTexts } from "@components/simulator/simulator-results/texts";
 import { cn } from "@lib/utils";
 
-export function CalculationBreakdownCard({
-  result,
-}: CalculationBreakdownCardProps) {
+export function CalculationBreakdownCard({ result }: CalculationBreakdownCardProps) {
   const { labels, ...texts } = simulatorResultsTexts.calculationBreakdownCard;
 
   return (
@@ -38,10 +27,7 @@ export function CalculationBreakdownCard({
           </div>
 
           {result.cotisations.map((cotisation) => (
-            <div
-              key={cotisation.id}
-              className="flex items-center justify-between gap-4"
-            >
+            <div key={cotisation.id} className="flex items-center justify-between gap-4">
               <span className="text-muted-foreground">
                 {cotisation.label} ({formatPercent(cotisation.rate)}%)
               </span>
@@ -50,7 +36,7 @@ export function CalculationBreakdownCard({
                   "font-medium",
                   cotisation.id === "urssaf" && "text-[#4f86ff]",
                   cotisation.id === "retraite" && "text-[#ff4fa3]",
-                  cotisation.id === "csg-crds" && "text-[#35cbd0]"
+                  cotisation.id === "csg-crds" && "text-[#35cbd0]",
                 )}
               >
                 {formatEuro(cotisation.amount)}
@@ -62,9 +48,7 @@ export function CalculationBreakdownCard({
 
           <div className="flex items-center justify-between gap-4">
             <span className="font-medium">{labels.totalContributions}</span>
-            <span className="font-medium text-[#4f86ff]">
-              {formatEuro(result.totalCotisations)}
-            </span>
+            <span className="font-medium text-[#4f86ff]">{formatEuro(result.totalCotisations)}</span>
           </div>
 
           <div className="flex items-center justify-between gap-4">
@@ -79,25 +63,19 @@ export function CalculationBreakdownCard({
 
           <div className="flex items-center justify-between gap-4">
             <span className="text-muted-foreground">{labels.taxPerShare}</span>
-            <span className="font-medium text-[#d7e1ef]">
-              {formatEuro(result.impotParPart)}
-            </span>
+            <span className="font-medium text-[#d7e1ef]">{formatEuro(result.impotParPart)}</span>
           </div>
 
           <div className="flex items-center justify-between gap-4">
             <span className="font-medium">{labels.totalTax}</span>
-            <span className="font-medium text-[#d7e1ef]">
-              {formatEuro(result.impotTotal)}
-            </span>
+            <span className="font-medium text-[#d7e1ef]">{formatEuro(result.impotTotal)}</span>
           </div>
 
           <Separator />
 
           <div className="flex items-center justify-between gap-4 rounded-2xl border border-primary/25 bg-primary/10 px-4 py-3">
             <span className="font-medium">{labels.effectiveRate}</span>
-            <span className="text-lg font-semibold text-primary">
-              {formatPercent(result.tauxGlobalPrelevements)}%
-            </span>
+            <span className="text-lg font-semibold text-primary">{formatPercent(result.tauxGlobalPrelevements)}%</span>
           </div>
         </div>
       </CardContent>

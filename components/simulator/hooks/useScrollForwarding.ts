@@ -2,9 +2,7 @@
 
 import { useEffect, type RefObject } from "react";
 
-export function useScrollForwarding(
-  paneRef: RefObject<HTMLDivElement | null>
-) {
+export function useScrollForwarding(paneRef: RefObject<HTMLDivElement | null>) {
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       const pane = paneRef.current;
@@ -13,8 +11,7 @@ export function useScrollForwarding(
 
       const { scrollTop, scrollHeight, clientHeight } = pane;
       const atTop = scrollTop <= 0 && e.deltaY < 0;
-      const atBottom =
-        scrollTop + clientHeight >= scrollHeight - 1 && e.deltaY > 0;
+      const atBottom = scrollTop + clientHeight >= scrollHeight - 1 && e.deltaY > 0;
       if (atTop || atBottom) return;
 
       e.preventDefault();

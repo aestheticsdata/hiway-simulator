@@ -1,13 +1,7 @@
 "use client";
 
 import { PieChart as PieChartIcon } from "lucide-react";
-import {
-  Cell,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-} from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import {
   chartLegendItems,
@@ -20,22 +14,13 @@ import {
 } from "@components/simulator/charts/chart-data";
 import type { RevenuePieChartCardProps } from "@components/simulator/charts/interfaces/RevenuePieChartCardProps";
 import { PieChartLegend } from "@components/simulator/charts/PieChartLegend";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@components/ui/card";
 import { simulatorChartTexts } from "@components/simulator/charts/texts";
 
 const PRINT_PIE_CHART_WIDTH = 500;
 const PRINT_PIE_CHART_HEIGHT = 320;
 
-export function RevenuePieChartCard({
-  isPrinting,
-  result,
-}: RevenuePieChartCardProps) {
+export function RevenuePieChartCard({ isPrinting, result }: RevenuePieChartCardProps) {
   const pieData = getPieChartData(result);
 
   return (
@@ -58,10 +43,7 @@ export function RevenuePieChartCard({
           {isPrinting ? (
             <div className="space-y-4">
               <div className="flex justify-center">
-                <PieChart
-                  height={PRINT_PIE_CHART_HEIGHT}
-                  width={PRINT_PIE_CHART_WIDTH}
-                >
+                <PieChart height={PRINT_PIE_CHART_HEIGHT} width={PRINT_PIE_CHART_WIDTH}>
                   <Pie
                     cx={PRINT_PIE_CHART_WIDTH / 2}
                     cy={136}

@@ -1,8 +1,4 @@
-import {
-  parseAsFloat,
-  parseAsStringLiteral,
-  type inferParserType,
-} from "nuqs/server";
+import { parseAsFloat, parseAsStringLiteral, type inferParserType } from "nuqs/server";
 
 import { defaultFormValues } from "@lib/simulator/constants/defaultFormValues";
 import { fiscalRegimes } from "@lib/simulator/constants/fiscalRegimes";
@@ -20,18 +16,12 @@ export const simulatorSearchParamParsers = {
   regime: parseAsStringLiteral(fiscalRegimes),
 };
 
-export const simulatorViewModeParser = parseAsStringLiteral(
-  simulatorViewModes
-)
-  .withDefault("default")
-  .withOptions({
-    clearOnDefault: true,
-    history: "replace",
-  });
+export const simulatorViewModeParser = parseAsStringLiteral(simulatorViewModes).withDefault("default").withOptions({
+  clearOnDefault: true,
+  history: "replace",
+});
 
-export type SimulatorSearchParams = inferParserType<
-  typeof simulatorSearchParamParsers
->;
+export type SimulatorSearchParams = inferParserType<typeof simulatorSearchParamParsers>;
 
 export type SimulatorViewModeSearchParam = inferParserType<{
   view: typeof simulatorViewModeParser;
@@ -49,22 +39,12 @@ function isValidPositiveNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value) && value >= 1;
 }
 
-export function normalizeSimulationInput(
-  input: SimulationInputDraft
-): SimulationInput {
+export function normalizeSimulationInput(input: SimulationInputDraft): SimulationInput {
   const normalizedInput = {
-    charges: isValidNonNegativeNumber(input.charges)
-      ? input.charges
-      : defaultFormValues.charges,
-    honoraires: isValidNonNegativeNumber(input.honoraires)
-      ? input.honoraires
-      : defaultFormValues.honoraires,
-    partsFiscales: isValidPositiveNumber(input.partsFiscales)
-      ? input.partsFiscales
-      : defaultFormValues.partsFiscales,
-    regime: fiscalRegimes.includes(input.regime as SimulationInput["regime"])
-      ? input.regime
-      : defaultFormValues.regime,
+    charges: isValidNonNegativeNumber(input.charges) ? input.charges : defaultFormValues.charges,
+    honoraires: isValidNonNegativeNumber(input.honoraires) ? input.honoraires : defaultFormValues.honoraires,
+    partsFiscales: isValidPositiveNumber(input.partsFiscales) ? input.partsFiscales : defaultFormValues.partsFiscales,
+    regime: fiscalRegimes.includes(input.regime as SimulationInput["regime"]) ? input.regime : defaultFormValues.regime,
   };
 
   return simulatorFormSchema.parse(normalizedInput);
@@ -90,9 +70,7 @@ export function getCanonicalIncomeCurveRequest(input: IncomeCurveRequest) {
   });
 }
 
-export function getSimulationInputFromSearchParams(
-  searchParams: SimulatorSearchParams
-): SimulationInput {
+export function getSimulationInputFromSearchParams(searchParams: SimulatorSearchParams): SimulationInput {
   return normalizeSimulationInput(searchParams);
 }
 
@@ -104,7 +82,7 @@ export function getSearchParamsFromSimulationInputForView(
   input: SimulationInput,
   options: {
     includeRegime?: boolean;
-  } = {}
+  } = {},
 ) {
   const normalizedInput = normalizeSimulationInput(input);
 
@@ -117,16 +95,14 @@ export function getSearchParamsFromSimulationInputForView(
 }
 
 export function normalizeSimulatorViewMode(
-  viewMode: SimulatorViewModeSearchParam | null | undefined
+  viewMode: SimulatorViewModeSearchParam | null | undefined,
 ): SimulatorViewMode {
-  return simulatorViewModes.includes(viewMode as SimulatorViewMode)
-    ? (viewMode as SimulatorViewMode)
-    : "default";
+  return simulatorViewModes.includes(viewMode as SimulatorViewMode) ? (viewMode as SimulatorViewMode) : "default";
 }
 
 export function areSimulationSearchParamsEqual(
   left: ReturnType<typeof getSearchParamsFromSimulationInput>,
-  right: SimulatorSearchParams
+  right: SimulatorSearchParams,
 ) {
   return (
     left.charges === right.charges &&
@@ -136,10 +112,7 @@ export function areSimulationSearchParamsEqual(
   );
 }
 
-export function areSimulationInputsEqual(
-  left: SimulationInput,
-  right: SimulationInput
-) {
+export function areSimulationInputsEqual(left: SimulationInput, right: SimulationInput) {
   return (
     left.charges === right.charges &&
     left.honoraires === right.honoraires &&

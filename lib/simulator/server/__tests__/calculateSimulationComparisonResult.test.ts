@@ -58,14 +58,12 @@ describe("calculateSimulationComparisonResult", () => {
       createInput({
         charges: 5_000,
       }),
-      simpleRates
+      simpleRates,
     );
 
     expect(result.optimalRegime).toBe("reel");
     expect(result.annualGain).toBeGreaterThan(0);
-    expect(result.reel.revenuNetAnnuel).toBeGreaterThan(
-      result.micro.revenuNetAnnuel
-    );
+    expect(result.reel.revenuNetAnnuel).toBeGreaterThan(result.micro.revenuNetAnnuel);
   });
 
   it("marks micro-BNC as optimal when charges exceed the forfait deduction", () => {
@@ -73,14 +71,12 @@ describe("calculateSimulationComparisonResult", () => {
       createInput({
         charges: 20_000,
       }),
-      simpleRates
+      simpleRates,
     );
 
     expect(result.optimalRegime).toBe("micro");
     expect(result.annualGain).toBeGreaterThan(0);
-    expect(result.micro.revenuNetAnnuel).toBeGreaterThan(
-      result.reel.revenuNetAnnuel
-    );
+    expect(result.micro.revenuNetAnnuel).toBeGreaterThan(result.reel.revenuNetAnnuel);
   });
 
   it("returns an equivalent outcome when both regimes produce the same BNC", () => {
@@ -88,7 +84,7 @@ describe("calculateSimulationComparisonResult", () => {
       createInput({
         charges: 17_000,
       }),
-      simpleRates
+      simpleRates,
     );
 
     expect(result.optimalRegime).toBe("equivalent");
@@ -102,13 +98,13 @@ describe("calculateSimulationComparisonResult", () => {
       createInput({
         charges: 0,
       }),
-      simpleRates
+      simpleRates,
     );
     const highChargesResult = calculateSimulationComparisonResult(
       createInput({
         charges: 99_999,
       }),
-      simpleRates
+      simpleRates,
     );
 
     expect(lowChargesResult.micro).toEqual(highChargesResult.micro);

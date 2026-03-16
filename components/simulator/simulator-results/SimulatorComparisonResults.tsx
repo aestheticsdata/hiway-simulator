@@ -33,17 +33,14 @@ function ComparisonValueRow({
         "rounded-[1.55rem] border px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]",
         forceDark
           ? cn(
-              subdued
-                ? "border-white/8 bg-white/3"
-                : "border-white/12 bg-white/7",
+              subdued ? "border-white/8 bg-white/3" : "border-white/12 bg-white/7",
               isOptimal && "border-white/20 bg-white/12",
             )
           : cn(
               subdued
                 ? "border-black/8 bg-black/3 dark:border-white/8 dark:bg-white/3"
                 : "border-black/12 bg-black/7 dark:border-white/12 dark:bg-white/7",
-              isOptimal &&
-                "border-black/20 bg-black/12 dark:border-white/20 dark:bg-white/12",
+              isOptimal && "border-black/20 bg-black/12 dark:border-white/20 dark:bg-white/12",
             ),
       )}
     >
@@ -51,9 +48,7 @@ function ComparisonValueRow({
         <p
           className={cn(
             "text-sm font-medium uppercase tracking-[0.18em]",
-            forceDark
-              ? "text-white/70"
-              : "text-muted-foreground dark:text-white/70",
+            forceDark ? "text-white/70" : "text-muted-foreground dark:text-white/70",
           )}
         >
           {label}
@@ -83,9 +78,7 @@ function ComparisonValueRow({
   );
 }
 
-export function SimulatorComparisonResults({
-  comparison,
-}: SimulatorComparisonResultsProps) {
+export function SimulatorComparisonResults({ comparison }: SimulatorComparisonResultsProps) {
   const texts = simulatorResultsTexts.comparisonView;
   const isMicroOptimal = comparison.optimalRegime === "micro";
   const isReelOptimal = comparison.optimalRegime === "reel";
@@ -103,9 +96,7 @@ export function SimulatorComparisonResults({
             <span>{texts.annualCard.title}</span>
           </div>
           <CardTitle className="sr-only">{texts.annualCard.title}</CardTitle>
-          <p className="max-w-xl text-sm leading-6 text-white/72">
-            {texts.annualCard.helper}
-          </p>
+          <p className="max-w-xl text-sm leading-6 text-white/72">{texts.annualCard.helper}</p>
         </CardHeader>
         <CardContent className="space-y-4 pb-6">
           <ComparisonValueRow
@@ -133,9 +124,7 @@ export function SimulatorComparisonResults({
             <span>{texts.monthlyCard.title}</span>
           </div>
           <CardTitle className="sr-only">{texts.monthlyCard.title}</CardTitle>
-          <p className="text-sm leading-6 text-muted-foreground dark:text-white/52">
-            {texts.monthlyCard.helper}
-          </p>
+          <p className="text-sm leading-6 text-muted-foreground dark:text-white/52">{texts.monthlyCard.helper}</p>
         </CardHeader>
         <CardContent className="space-y-4 pb-6">
           <ComparisonValueRow
@@ -160,9 +149,7 @@ export function SimulatorComparisonResults({
             <span>{texts.optimalCard.title}</span>
           </div>
           <CardTitle className="sr-only">{texts.optimalCard.title}</CardTitle>
-          <p className="text-sm leading-6 text-muted-foreground dark:text-white/52">
-            {texts.optimalCard.helper}
-          </p>
+          <p className="text-sm leading-6 text-muted-foreground dark:text-white/52">{texts.optimalCard.helper}</p>
         </CardHeader>
         <CardContent className="space-y-5 pb-6">
           <p className="max-w-[8ch] text-[clamp(2.2rem,2.8vw,3.25rem)] font-semibold leading-[0.9] tracking-[-0.05em] text-foreground dark:text-white">

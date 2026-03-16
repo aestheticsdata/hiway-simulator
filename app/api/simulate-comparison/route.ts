@@ -18,14 +18,11 @@ export async function POST(request: Request) {
       },
       {
         status: 400,
-      }
+      },
     );
   }
 
-  const result = calculateSimulationComparisonResult(
-    parsedInput.data,
-    referenceRates
-  );
+  const result = calculateSimulationComparisonResult(parsedInput.data, referenceRates);
   const responseBody = simulationComparisonResultSchema.parse(result);
 
   return NextResponse.json(responseBody);

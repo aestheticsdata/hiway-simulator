@@ -1,13 +1,6 @@
-import {
-  incomeCurveRangePresets,
-  type IncomeCurveRangePreset,
-} from "@lib/simulator/constants/incomeCurveRangePresets";
+import { incomeCurveRangePresets, type IncomeCurveRangePreset } from "@lib/simulator/constants/incomeCurveRangePresets";
 import { formatEuro, formatNumber } from "@lib/simulator/formatters";
-import {
-  incomeCurveRangePresetLabels,
-  simulatorPresentationTexts,
-  simulatorRegimeLabels,
-} from "@lib/simulator/texts";
+import { incomeCurveRangePresetLabels, simulatorPresentationTexts, simulatorRegimeLabels } from "@lib/simulator/texts";
 
 import type { FiscalRegime } from "@lib/simulator/interfaces/FiscalRegime";
 import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationFormValues";
@@ -50,10 +43,7 @@ export function getFormSummary(values: SimulationFormValues) {
     {
       id: "charges",
       label: formSummary.businessExpenses,
-      value:
-        values.regime === "reel"
-          ? formatEuro(values.charges, false)
-          : formSummary.microExpensesFallback,
+      value: values.regime === "reel" ? formatEuro(values.charges, false) : formSummary.microExpensesFallback,
     },
     {
       id: "parts",

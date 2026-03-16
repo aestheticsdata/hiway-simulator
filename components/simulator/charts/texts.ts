@@ -1,13 +1,11 @@
 export const simulatorChartTexts = {
   revenueBarCard: {
     title: "Formation du revenu net",
-    description:
-      "Visualise le passage des honoraires au revenu disponible, poste par poste.",
+    description: "Visualise le passage des honoraires au revenu disponible, poste par poste.",
   },
   revenuePieCard: {
     title: "Poids de chaque poste",
-    description:
-      "Compare la part des cotisations, de l'impot et du revenu net dans l'equilibre global.",
+    description: "Compare la part des cotisations, de l'impot et du revenu net dans l'equilibre global.",
   },
   incomeCurveCard: {
     title: "Sensibilite du revenu",

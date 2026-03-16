@@ -2,21 +2,13 @@ import { expect, test } from "@playwright/test";
 
 import { formatEuro } from "@lib/simulator/formatters";
 
-import {
-  cardByHeading,
-  gotoSimulator,
-  scenarios,
-  selectRegime,
-  setNumberField,
-} from "./helpers/simulator";
+import { cardByHeading, gotoSimulator, scenarios, selectRegime, setNumberField } from "./helpers/simulator";
 
 test.beforeEach(async ({ page }) => {
   await gotoSimulator(page);
 });
 
-test("active le mode comparaison et affiche le regime optimal", async ({
-  page,
-}) => {
+test("active le mode comparaison et affiche le regime optimal", async ({ page }) => {
   await setNumberField(page, "Honoraires annuels", 50_000);
   await setNumberField(page, "Charges annuelles", scenarios.reel.charges);
   await setNumberField(page, "Parts fiscales", 1);
@@ -31,9 +23,7 @@ test("active le mode comparaison et affiche le regime optimal", async ({
   const optimalCard = cardByHeading(page, "Choix optimal");
 
   await expect(page).toHaveURL(/view=vs/);
-  await expect(
-    page.getByRole("heading", { name: "Micro-BNC vs regime reel" })
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Micro-BNC vs regime reel" })).toBeVisible();
   await expect(page.getByLabel("Regime fiscal")).toBeDisabled();
 
   const searchParams = new URL(page.url()).searchParams;
@@ -47,17 +37,11 @@ test("active le mode comparaison et affiche le regime optimal", async ({
   await expect(monthlyCard).toContainText(formatEuro(1_775.17, false));
   await expect(monthlyCard).toContainText(formatEuro(2_352.36, false));
   await expect(optimalCard).toContainText("Regime reel");
-  await expect(optimalCard).toContainText(
-    formatEuro(scenarios.comparison.annualGain, false)
-  );
-  await expect(optimalCard).toContainText(
-    formatEuro(scenarios.comparison.monthlyGain, false)
-  );
+  await expect(optimalCard).toContainText(formatEuro(scenarios.comparison.annualGain, false));
+  await expect(optimalCard).toContainText(formatEuro(scenarios.comparison.monthlyGain, false));
 });
 
-test("retarde l'activation du mode comparaison en micro tant que les charges reel sont absentes", async ({
-  page,
-}) => {
+test("retarde l'activation du mode comparaison en micro tant que les charges reel sont absentes", async ({ page }) => {
   await setNumberField(page, "Honoraires annuels", 50_000);
   await setNumberField(page, "Charges annuelles", 0);
   await setNumberField(page, "Parts fiscales", 2);
@@ -73,21 +57,13 @@ test("retarde l'activation du mode comparaison en micro tant que les charges ree
   const chargesField = page.locator("#charges");
   await expect(chargesField).toBeVisible();
   await chargesField.fill(String(scenarios.pendingComparison.charges));
-  await expect(chargesField).toHaveValue(
-    String(scenarios.pendingComparison.charges)
-  );
+  await expect(chargesField).toHaveValue(String(scenarios.pendingComparison.charges));
   await expect(page).toHaveURL(/charges=20000/);
 
   const optimalCard = cardByHeading(page, "Choix optimal");
 
   await expect(page).toHaveURL(/view=vs/);
-  await expect(
-    page.getByRole("heading", { name: "Micro-BNC vs regime reel" })
-  ).toBeVisible();
-  await expect(optimalCard).toContainText(
-    scenarios.pendingComparison.optimalRegime
-  );
-  await expect(optimalCard).toContainText(
-    formatEuro(scenarios.pendingComparison.annualGain, false)
-  );
+  await expect(page.getByRole("heading", { name: "Micro-BNC vs regime reel" })).toBeVisible();
+  await expect(optimalCard).toContainText(scenarios.pendingComparison.optimalRegime);
+  await expect(optimalCard).toContainText(formatEuro(scenarios.pendingComparison.annualGain, false));
 });

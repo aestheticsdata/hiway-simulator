@@ -30,17 +30,13 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
 
           <div className="space-y-3">
             <div className="space-y-1">
-              <p className="text-sm font-medium uppercase tracking-[0.24em] text-primary/70">
-                Hiway API
-              </p>
-              <h1 className="text-2xl font-semibold tracking-tight">
-                Une erreur a interrompu la simulation
-              </h1>
+              <p className="text-sm font-medium uppercase tracking-[0.24em] text-primary/70">Hiway API</p>
+              <h1 className="text-2xl font-semibold tracking-tight">Une erreur a interrompu la simulation</h1>
             </div>
 
             <p className="text-sm text-muted-foreground">
-              Le front a detecte une erreur reseau ou un contrat API invalide.
-              Corrige la source du probleme puis relance la page.
+              Le front a detecte une erreur reseau ou un contrat API invalide. Corrige la source du probleme puis
+              relance la page.
             </p>
 
             <div className="rounded-2xl border border-border/70 bg-background/70 px-4 py-3 text-sm text-muted-foreground">

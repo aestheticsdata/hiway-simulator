@@ -8,10 +8,7 @@ export async function GET(request: Request) {
   const debugMode = getDebugApiErrorModeFromHeaders(request.headers);
 
   if (debugMode === "rates-500") {
-    return NextResponse.json(
-      { message: "Simulated rates API failure." },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Simulated rates API failure." }, { status: 500 });
   }
 
   const responseBody = ratesResponseSchema.parse(referenceRates);

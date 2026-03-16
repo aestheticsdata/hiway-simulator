@@ -6,10 +6,7 @@ export const simulatorRegimeLabels: Record<FiscalRegime, string> = {
   reel: "Regime reel",
 };
 
-export const incomeCurveRangePresetLabels: Record<
-  IncomeCurveRangePreset,
-  string
-> = {
+export const incomeCurveRangePresetLabels: Record<IncomeCurveRangePreset, string> = {
   focused: "Autour de l'activite actuelle",
   standard: "Projection jusqu'a 2x",
   wide: "Projection jusqu'a 3x",

@@ -21,7 +21,7 @@ export function AppProviders({ children }: AppProvidersProps) {
             retry: 0,
           },
         },
-      })
+      }),
   );
 
   return (
@@ -33,9 +33,7 @@ export function AppProviders({ children }: AppProvidersProps) {
         disableTransitionOnChange
         storageKey="theme-hiway-v2"
       >
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
       </ThemeProvider>
     </NuqsAdapter>
   );

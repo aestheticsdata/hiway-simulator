@@ -20,9 +20,7 @@ const percentFormatter = new Intl.NumberFormat("fr-FR", {
 const numberFormatter = new Intl.NumberFormat("fr-FR");
 
 export function formatEuro(value: number, withCents = true) {
-  return (
-    withCents ? euroFormatterWithCents : euroFormatterWithoutCents
-  ).format(value);
+  return (withCents ? euroFormatterWithCents : euroFormatterWithoutCents).format(value);
 }
 
 export function formatPercent(value: number) {

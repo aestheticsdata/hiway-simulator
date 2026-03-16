@@ -1,18 +1,10 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@components/ui/card";
 import { Skeleton } from "@components/ui/skeleton";
 import type { SimulatorResultsSkeletonProps } from "@components/simulator/simulator-results/interfaces/SimulatorResultsSkeletonProps";
 import { ScenarioSummaryCard } from "@components/simulator/simulator-results/ScenarioSummaryCard";
 import { simulatorResultsTexts } from "@components/simulator/simulator-results/texts";
 
-export function SimulatorResultsSkeleton({
-  formValues,
-}: SimulatorResultsSkeletonProps) {
+export function SimulatorResultsSkeleton({ formValues }: SimulatorResultsSkeletonProps) {
   const { skeleton } = simulatorResultsTexts;
 
   return (

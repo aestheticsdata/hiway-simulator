@@ -4,8 +4,8 @@ import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationF
 import type { SimulatorViewMode } from "@lib/simulator/interfaces/SimulatorViewMode";
 
 export interface SimulatorFormProps {
-  form: UseFormReturn<SimulationFormValues>
-  showComparisonChargesField?: boolean
-  titleId: string
-  viewMode: SimulatorViewMode
+  form: UseFormReturn<SimulationFormValues>;
+  showComparisonChargesField?: boolean;
+  titleId: string;
+  viewMode: SimulatorViewMode;
 }

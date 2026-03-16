@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  BadgeEuro,
-  ReceiptText,
-  Scale,
-  Users,
-} from "lucide-react";
+import { BadgeEuro, ReceiptText, Scale, Users } from "lucide-react";
 import { Controller } from "react-hook-form";
 
 import { Input } from "@components/ui/input";
@@ -14,19 +9,10 @@ import { Label } from "@components/ui/label";
 import type { SimulatorFormProps } from "@components/simulator/interfaces/SimulatorFormProps";
 import { simulatorFormAccessibilityIds } from "@components/simulator/constants";
 import { simulatorFormTexts } from "@components/simulator/texts";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@components/ui/select";
 import { simulatorRegimeLabels } from "@lib/simulator/texts";
 
-function FieldError({
-  id,
-  message,
-}: FieldErrorProps & { id: string }) {
+function FieldError({ id, message }: FieldErrorProps & { id: string }) {
   if (!message) {
     return null;
   }
@@ -38,12 +24,7 @@ function FieldError({
   );
 }
 
-export function SimulatorForm({
-  form,
-  showComparisonChargesField = false,
-  titleId,
-  viewMode,
-}: SimulatorFormProps) {
+export function SimulatorForm({ form, showComparisonChargesField = false, titleId, viewMode }: SimulatorFormProps) {
   const regime = form.watch("regime");
   const { fields } = simulatorFormTexts;
   const {
@@ -51,18 +32,11 @@ export function SimulatorForm({
     formState: { errors },
     register,
   } = form;
-  const {
-    chargesErrorId,
-    honorairesErrorId,
-    partsFiscalesErrorId,
-    regimeErrorId,
-    regimeHelpId,
-  } = simulatorFormAccessibilityIds;
+  const { chargesErrorId, honorairesErrorId, partsFiscalesErrorId, regimeErrorId, regimeHelpId } =
+    simulatorFormAccessibilityIds;
   const shouldDisableRegimeField = viewMode === "vs";
-  const shouldShowChargesField =
-    showComparisonChargesField || viewMode === "vs" || regime === "reel";
-  const regimeHelpText =
-    viewMode === "vs" ? fields.taxRegime.vsHelp : fields.taxRegime.help;
+  const shouldShowChargesField = showComparisonChargesField || viewMode === "vs" || regime === "reel";
+  const regimeHelpText = viewMode === "vs" ? fields.taxRegime.vsHelp : fields.taxRegime.help;
 
   return (
     <form className="space-y-8" noValidate aria-labelledby={titleId}>
@@ -86,7 +60,9 @@ export function SimulatorForm({
                 <SelectTrigger
                   id="regime"
                   disabled={shouldDisableRegimeField}
-                  aria-describedby={[regimeHelpId, errors.regime ? regimeErrorId : null].filter(Boolean).join(" ") || undefined}
+                  aria-describedby={
+                    [regimeHelpId, errors.regime ? regimeErrorId : null].filter(Boolean).join(" ") || undefined
+                  }
                   aria-invalid={errors.regime ? true : undefined}
                   className="w-full"
                   onBlur={field.onBlur}
@@ -94,12 +70,8 @@ export function SimulatorForm({
                   <SelectValue placeholder={fields.taxRegime.placeholder} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="micro">
-                    {simulatorRegimeLabels.micro}
-                  </SelectItem>
-                  <SelectItem value="reel">
-                    {simulatorRegimeLabels.reel}
-                  </SelectItem>
+                  <SelectItem value="micro">{simulatorRegimeLabels.micro}</SelectItem>
+                  <SelectItem value="reel">{simulatorRegimeLabels.reel}</SelectItem>
                 </SelectContent>
               </Select>
             )}
@@ -121,18 +93,13 @@ export function SimulatorForm({
             inputMode="numeric"
             min={0}
             step={1000}
-            aria-describedby={
-              errors.honoraires ? honorairesErrorId : undefined
-            }
+            aria-describedby={errors.honoraires ? honorairesErrorId : undefined}
             aria-invalid={errors.honoraires ? true : undefined}
             {...register("honoraires", {
               valueAsNumber: true,
             })}
           />
-          <FieldError
-            id={honorairesErrorId}
-            message={errors.honoraires?.message}
-          />
+          <FieldError id={honorairesErrorId} message={errors.honoraires?.message} />
         </div>
 
         {shouldShowChargesField ? (
@@ -172,18 +139,13 @@ export function SimulatorForm({
             inputMode="decimal"
             min={1}
             step={0.5}
-            aria-describedby={
-              errors.partsFiscales ? partsFiscalesErrorId : undefined
-            }
+            aria-describedby={errors.partsFiscales ? partsFiscalesErrorId : undefined}
             aria-invalid={errors.partsFiscales ? true : undefined}
             {...register("partsFiscales", {
               valueAsNumber: true,
             })}
           />
-          <FieldError
-            id={partsFiscalesErrorId}
-            message={errors.partsFiscales?.message}
-          />
+          <FieldError id={partsFiscalesErrorId} message={errors.partsFiscales?.message} />
         </div>
       </fieldset>
     </form>

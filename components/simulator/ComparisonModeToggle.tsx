@@ -1,10 +1,6 @@
 import { ArrowRightLeft, CircleAlert } from "lucide-react";
 
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@components/ui/alert";
 import { Label } from "@components/ui/label";
 import { Switch } from "@components/ui/switch";
 import { simulatorFormTexts } from "@components/simulator/texts";
@@ -15,11 +11,7 @@ interface ComparisonModeToggleProps {
   onCheckedChange: (checked: boolean) => void;
 }
 
-export function ComparisonModeToggle({
-  isChecked,
-  isPendingActivation,
-  onCheckedChange,
-}: ComparisonModeToggleProps) {
+export function ComparisonModeToggle({ isChecked, isPendingActivation, onCheckedChange }: ComparisonModeToggleProps) {
   const texts = simulatorFormTexts.comparisonMode;
 
   return (
@@ -30,19 +22,13 @@ export function ComparisonModeToggle({
             <ArrowRightLeft className="size-4 text-primary/80" />
             <span>{texts.title}</span>
           </p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {texts.description}
-          </p>
+          <p className="mt-1 text-sm text-muted-foreground">{texts.description}</p>
         </div>
         <div className="flex shrink-0 items-center gap-3">
           <Label htmlFor="simulator-vs-switch" className="sr-only">
             {texts.title}
           </Label>
-          <Switch
-            id="simulator-vs-switch"
-            checked={isChecked}
-            onCheckedChange={onCheckedChange}
-          />
+          <Switch id="simulator-vs-switch" checked={isChecked} onCheckedChange={onCheckedChange} />
         </div>
       </div>
 

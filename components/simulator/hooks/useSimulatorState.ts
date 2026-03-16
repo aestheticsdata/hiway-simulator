@@ -5,10 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryState, useQueryStates } from "nuqs";
 import { useForm, useWatch } from "react-hook-form";
 
-import {
-  useSimulationComparisonQuery,
-  useSimulationResultQuery,
-} from "@lib/api/simulator/simulator.queries";
+import { useSimulationComparisonQuery, useSimulationResultQuery } from "@lib/api/simulator/simulator.queries";
 import { useDebouncedValue } from "@components/simulator/hooks/useDebouncedValue";
 import { simulatorFormSchema } from "@lib/simulator/schemas/simulatorFormSchema";
 import {
@@ -26,10 +23,7 @@ import type { SimulationFormValues } from "@lib/simulator/interfaces/SimulationF
 
 export function useSimulatorState() {
   const [isVsPendingActivation, setIsVsPendingActivation] = useState(false);
-  const [viewMode, setViewMode] = useQueryState(
-    "view",
-    simulatorViewModeParser
-  );
+  const [viewMode, setViewMode] = useQueryState("view", simulatorViewModeParser);
   const [urlState, setUrlState] = useQueryStates(simulatorSearchParamParsers, {
     history: "replace",
   });
@@ -53,32 +47,18 @@ export function useSimulatorState() {
   const debouncedFormValues = useDebouncedValue(formValues, 350);
 
   const isDefaultView = normalizedViewMode === "default";
-  const simulationResultQuery = useSimulationResultQuery(
-    debouncedFormValues,
-    isDefaultView && form.formState.isValid
-  );
+  const simulationResultQuery = useSimulationResultQuery(debouncedFormValues, isDefaultView && form.formState.isValid);
   const simulationComparisonQuery = useSimulationComparisonQuery(
     debouncedFormValues,
-    normalizedViewMode === "vs" && form.formState.isValid
+    normalizedViewMode === "vs" && form.formState.isValid,
   );
 
-  const needsComparisonCharges =
-    formValues.regime === "micro" && formValues.charges <= 0;
+  const needsComparisonCharges = formValues.regime === "micro" && formValues.charges <= 0;
   const isVsSwitchChecked = normalizedViewMode === "vs" || isVsPendingActivation;
-  const shouldShowResultsSkeleton = isDefaultView
-    ? !simulationResultQuery.data
-    : !simulationComparisonQuery.data;
-  const isResultsUpdating = isDefaultView
-    ? simulationResultQuery.isFetching
-    : simulationComparisonQuery.isFetching;
-  const defaultViewSearchParams = getSearchParamsFromSimulationInputForView(
-    formValues,
-    { includeRegime: true }
-  );
-  const isDefaultViewUrlSynced = areSimulationSearchParamsEqual(
-    defaultViewSearchParams,
-    urlState
-  );
+  const shouldShowResultsSkeleton = isDefaultView ? !simulationResultQuery.data : !simulationComparisonQuery.data;
+  const isResultsUpdating = isDefaultView ? simulationResultQuery.isFetching : simulationComparisonQuery.isFetching;
+  const defaultViewSearchParams = getSearchParamsFromSimulationInputForView(formValues, { includeRegime: true });
+  const isDefaultViewUrlSynced = areSimulationSearchParamsEqual(defaultViewSearchParams, urlState);
 
   useEffect(() => {
     const nextUrlFormValues = getSimulationInputFromSearchParams({
@@ -98,23 +78,16 @@ export function useSimulatorState() {
       return;
     }
 
-    const canonicalSearchParams = getSearchParamsFromSimulationInputForView(
-      debouncedFormValues,
-      { includeRegime: normalizedViewMode !== "vs" }
-    );
+    const canonicalSearchParams = getSearchParamsFromSimulationInputForView(debouncedFormValues, {
+      includeRegime: normalizedViewMode !== "vs",
+    });
 
     if (areSimulationSearchParamsEqual(canonicalSearchParams, urlState)) {
       return;
     }
 
     void setUrlState(canonicalSearchParams);
-  }, [
-    debouncedFormValues,
-    form.formState.isValid,
-    normalizedViewMode,
-    setUrlState,
-    urlState,
-  ]);
+  }, [debouncedFormValues, form.formState.isValid, normalizedViewMode, setUrlState, urlState]);
 
   useEffect(() => {
     if (normalizedViewMode !== "vs" || !needsComparisonCharges) {
@@ -132,12 +105,7 @@ export function useSimulatorState() {
   }, [needsComparisonCharges, normalizedViewMode, setViewMode]);
 
   useEffect(() => {
-    if (
-      !isVsPendingActivation ||
-      !form.formState.isValid ||
-      needsComparisonCharges ||
-      !isDefaultViewUrlSynced
-    ) {
+    if (!isVsPendingActivation || !form.formState.isValid || needsComparisonCharges || !isDefaultViewUrlSynced) {
       return;
     }
 
@@ -149,13 +117,7 @@ export function useSimulatorState() {
     return () => {
       window.clearTimeout(timer);
     };
-  }, [
-    form.formState.isValid,
-    isDefaultViewUrlSynced,
-    isVsPendingActivation,
-    needsComparisonCharges,
-    setViewMode,
-  ]);
+  }, [form.formState.isValid, isDefaultViewUrlSynced, isVsPendingActivation, needsComparisonCharges, setViewMode]);
 
   const handleVsToggle = (checked: boolean) => {
     if (!checked) {

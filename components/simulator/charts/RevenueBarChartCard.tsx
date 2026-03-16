@@ -1,24 +1,9 @@
 "use client";
 
 import { BarChart3 } from "lucide-react";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@components/ui/card";
 import {
   chartTooltipItemStyle,
   chartTooltipLabelStyle,
@@ -33,10 +18,7 @@ import { formatEuro } from "@lib/simulator/formatters";
 const PRINT_BAR_CHART_WIDTH = 620;
 const PRINT_BAR_CHART_HEIGHT = 320;
 
-export function RevenueBarChartCard({
-  isPrinting,
-  result,
-}: RevenueBarChartCardProps) {
+export function RevenueBarChartCard({ isPrinting, result }: RevenueBarChartCardProps) {
   const barData = getBarChartData(result);
   const chartContent = (
     <>
@@ -45,12 +27,7 @@ export function RevenueBarChartCard({
         strokeDasharray="4 4"
         vertical={false}
       />
-      <XAxis
-        axisLine={false}
-        dataKey="label"
-        tick={{ fill: "currentColor", fontSize: 12 }}
-        tickLine={false}
-      />
+      <XAxis axisLine={false} dataKey="label" tick={{ fill: "currentColor", fontSize: 12 }} tickLine={false} />
       <YAxis
         axisLine={false}
         tick={{ fill: "currentColor", fontSize: 12 }}
@@ -65,11 +42,7 @@ export function RevenueBarChartCard({
         itemStyle={chartTooltipItemStyle}
         labelStyle={chartTooltipLabelStyle}
       />
-      <Bar
-        dataKey="value"
-        isAnimationActive={!isPrinting}
-        radius={[8, 8, 0, 0]}
-      >
+      <Bar dataKey="value" isAnimationActive={!isPrinting} radius={[8, 8, 0, 0]}>
         {barData.map((entry) => (
           <Cell key={entry.id} fill={entry.fill} />
         ))}
@@ -108,11 +81,7 @@ export function RevenueBarChartCard({
             </div>
           ) : (
             <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-              <BarChart
-                barCategoryGap={14}
-                data={barData}
-                margin={{ top: 10, right: 16, bottom: 0, left: 0 }}
-              >
+              <BarChart barCategoryGap={14} data={barData} margin={{ top: 10, right: 16, bottom: 0, left: 0 }}>
                 {chartContent}
               </BarChart>
             </ResponsiveContainer>

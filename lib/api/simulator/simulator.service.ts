@@ -10,16 +10,10 @@ export const simulatorService = {
   runSimulation(input: SimulationInput, requestOptions?: ApiRequestOptions) {
     return simulatorApi.simulate(input, requestOptions);
   },
-  runSimulationComparison(
-    input: SimulationInput,
-    requestOptions?: ApiRequestOptions
-  ) {
+  runSimulationComparison(input: SimulationInput, requestOptions?: ApiRequestOptions) {
     return simulatorApi.simulateComparison(input, requestOptions);
   },
-  runSimulationCurve(
-    input: IncomeCurveRequest,
-    requestOptions?: ApiRequestOptions
-  ) {
+  runSimulationCurve(input: IncomeCurveRequest, requestOptions?: ApiRequestOptions) {
     return simulatorApi.simulateCurve(input, requestOptions);
   },
 };

@@ -14,40 +14,25 @@ import type { SimulationResult } from "@lib/simulator/interfaces/SimulationResul
 
 export const simulatorApi = {
   getRates(requestOptions?: ApiRequestOptions) {
-    return httpClient.get<RatesResponse>(
-      "/api/rates",
-      requestOptions,
-      ratesResponseSchema
-    );
+    return httpClient.get<RatesResponse>("/api/rates", requestOptions, ratesResponseSchema);
   },
   simulate(input: SimulationInput, requestOptions?: ApiRequestOptions) {
-    return httpClient.post<SimulationResult>(
-      "/api/simulate",
-      input,
-      requestOptions,
-      simulationResultSchema
-    );
+    return httpClient.post<SimulationResult>("/api/simulate", input, requestOptions, simulationResultSchema);
   },
-  simulateComparison(
-    input: SimulationInput,
-    requestOptions?: ApiRequestOptions
-  ) {
+  simulateComparison(input: SimulationInput, requestOptions?: ApiRequestOptions) {
     return httpClient.post<SimulationComparisonResult>(
       "/api/simulate-comparison",
       input,
       requestOptions,
-      simulationComparisonResultSchema
+      simulationComparisonResultSchema,
     );
   },
-  simulateCurve(
-    input: IncomeCurveRequest,
-    requestOptions?: ApiRequestOptions
-  ) {
+  simulateCurve(input: IncomeCurveRequest, requestOptions?: ApiRequestOptions) {
     return httpClient.post<IncomeCurveResponse>(
       "/api/simulate-curve",
       input,
       requestOptions,
-      incomeCurveResponseSchema
+      incomeCurveResponseSchema,
     );
   },
 };

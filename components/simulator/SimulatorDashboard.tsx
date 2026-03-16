@@ -99,10 +99,7 @@ export function SimulatorDashboard() {
             <p className="text-sm font-medium uppercase tracking-[0.24em] text-primary/70">
               {simulatorFormTexts.eyebrow}
             </p>
-            <CardTitle
-              id={simulationFormTitleId}
-              className="text-2xl font-semibold tracking-tight"
-            >
+            <CardTitle id={simulationFormTitleId} className="text-2xl font-semibold tracking-tight">
               {simulatorFormTexts.title}
             </CardTitle>
           </CardHeader>
@@ -138,15 +135,9 @@ export function SimulatorDashboard() {
 
           <div ref={printableRef} className="print-surface space-y-6">
             <div className="print-only space-y-2 border-b border-border/70 pb-4">
-              <p className="text-xs font-medium uppercase tracking-[0.24em] text-primary/70">
-                Hiway
-              </p>
-              <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-                {exportTexts.title}
-              </h1>
-              <p className="max-w-3xl text-sm text-muted-foreground">
-                {exportTexts.description}
-              </p>
+              <p className="text-xs font-medium uppercase tracking-[0.24em] text-primary/70">Hiway</p>
+              <h1 className="text-2xl font-semibold tracking-tight text-foreground">{exportTexts.title}</h1>
+              <p className="max-w-3xl text-sm text-muted-foreground">{exportTexts.description}</p>
             </div>
 
             <ResultsViewSwap
@@ -164,9 +155,7 @@ export function SimulatorDashboard() {
               viewMode={normalizedViewMode}
               vsContent={
                 simulationComparisonQuery.data ? (
-                  <SimulatorComparisonResults
-                    comparison={simulationComparisonQuery.data}
-                  />
+                  <SimulatorComparisonResults comparison={simulationComparisonQuery.data} />
                 ) : (
                   <SimulatorComparisonResultsSkeleton />
                 )

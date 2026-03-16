@@ -18,9 +18,7 @@ const linearRates: RatesResponse = {
   ],
 };
 
-function createRequest(
-  overrides: Partial<IncomeCurveRequest> = {}
-): IncomeCurveRequest {
+function createRequest(overrides: Partial<IncomeCurveRequest> = {}): IncomeCurveRequest {
   return {
     regime: "reel",
     honoraires: 0,
@@ -38,21 +36,21 @@ describe("calculateIncomeCurve", () => {
         honoraires: 80_000,
         rangePreset: "focused",
       }),
-      linearRates
+      linearRates,
     );
     const standard = calculateIncomeCurve(
       createRequest({
         honoraires: 80_000,
         rangePreset: "standard",
       }),
-      linearRates
+      linearRates,
     );
     const wide = calculateIncomeCurve(
       createRequest({
         honoraires: 80_000,
         rangePreset: "wide",
       }),
-      linearRates
+      linearRates,
     );
 
     expect(focused.minHonoraires).toBe(40_000);
@@ -69,7 +67,7 @@ describe("calculateIncomeCurve", () => {
         honoraires: 0,
         rangePreset: "focused",
       }),
-      linearRates
+      linearRates,
     );
 
     expect(result.currentHonoraires).toBe(0);
@@ -95,15 +93,14 @@ describe("calculateIncomeCurve", () => {
         charges: 1_000,
         rangePreset: "standard",
       }),
-      linearRates
+      linearRates,
     );
 
     expect(result.minHonoraires).toBe(0);
     expect(result.maxHonoraires).toBe(25_000);
     expect(result.points.map((point) => point.honoraires)).toEqual([
-      0, 1_000, 3_000, 4_000, 5_000, 6_000, 8_000, 9_000, 10_000, 11_000,
-      12_345, 13_000, 14_000, 15_000, 16_000, 18_000, 19_000, 20_000, 21_000,
-      23_000, 24_000, 25_000,
+      0, 1_000, 3_000, 4_000, 5_000, 6_000, 8_000, 9_000, 10_000, 11_000, 12_345, 13_000, 14_000, 15_000, 16_000,
+      18_000, 19_000, 20_000, 21_000, 23_000, 24_000, 25_000,
     ]);
 
     const currentPoints = result.points.filter((point) => point.isCurrentScenario);
@@ -121,7 +118,7 @@ describe("calculateIncomeCurve", () => {
         honoraires: 100,
         rangePreset: "focused",
       }),
-      linearRates
+      linearRates,
     );
 
     expect(result.minHonoraires).toBe(0);
@@ -173,9 +170,7 @@ describe("calculateIncomeCurve", () => {
       rangePreset: "standard",
     });
     const result = calculateIncomeCurve(request, referenceRates);
-    const pointsByHonoraires = new Map(
-      result.points.map((point) => [point.honoraires, point])
-    );
+    const pointsByHonoraires = new Map(result.points.map((point) => [point.honoraires, point]));
 
     expect(result.currentHonoraires).toBe(123_456);
     expect(result.minHonoraires).toBe(0);
@@ -190,8 +185,8 @@ describe("calculateIncomeCurve", () => {
             ...request,
             honoraires,
           },
-          referenceRates
-        ).revenuNetAnnuel
+          referenceRates,
+        ).revenuNetAnnuel,
       );
     }
   });

@@ -1,8 +1,4 @@
-import {
-  expect,
-  type Locator,
-  type Page,
-} from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 
 export const simulatorHeading = /Simulateur de revenu net pour médecin libéral/i;
 
@@ -59,20 +55,14 @@ export const validationMessages = {
 } as const;
 
 export function cardByHeading(page: Page, heading: string): Locator {
-  return page
-    .getByRole("heading", { name: heading })
-    .locator('xpath=ancestor::div[@data-slot="card"][1]');
+  return page.getByRole("heading", { name: heading }).locator('xpath=ancestor::div[@data-slot="card"][1]');
 }
 
 export async function gotoSimulator(page: Page, path = "/") {
   await page.goto(path);
 
-  await expect(
-    page.getByRole("heading", { name: simulatorHeading })
-  ).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "Exporter en PDF" })
-  ).toBeEnabled();
+  await expect(page.getByRole("heading", { name: simulatorHeading })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Exporter en PDF" })).toBeEnabled();
 }
 
 export async function setNumberField(page: Page, label: string, value: number) {
@@ -83,10 +73,7 @@ export async function clearNumberField(page: Page, label: string) {
   await page.getByLabel(label).fill("");
 }
 
-export async function selectRegime(
-  page: Page,
-  regimeLabel: "Micro-BNC" | "Regime reel"
-) {
+export async function selectRegime(page: Page, regimeLabel: "Micro-BNC" | "Regime reel") {
   await page.getByLabel("Regime fiscal").click();
   await page.getByRole("option", { name: regimeLabel }).click();
 }
@@ -97,7 +84,7 @@ export async function expectValidationError(
     errorId: string;
     label: string;
     message: string;
-  }
+  },
 ) {
   const field = page.getByLabel(options.label);
   const error = page.locator(`#${options.errorId}`);

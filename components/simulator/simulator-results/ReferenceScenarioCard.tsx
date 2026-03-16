@@ -1,26 +1,12 @@
-import {
-  BadgeEuro,
-  FileText,
-  HandCoins,
-  Landmark,
-  TrendingUp,
-} from "lucide-react";
+import { BadgeEuro, FileText, HandCoins, Landmark, TrendingUp } from "lucide-react";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@components/ui/card";
 import { MetricCard } from "@components/simulator/MetricCard";
 import type { ReferenceScenarioCardProps } from "@components/simulator/simulator-results/interfaces/ReferenceScenarioCardProps";
 import { simulatorResultsTexts } from "@components/simulator/simulator-results/texts";
 import { formatEuro } from "@lib/simulator/formatters";
 
-export function ReferenceScenarioCard({
-  result,
-}: ReferenceScenarioCardProps) {
+export function ReferenceScenarioCard({ result }: ReferenceScenarioCardProps) {
   const { metrics, ...texts } = simulatorResultsTexts.referenceScenarioCard;
 
   return (
