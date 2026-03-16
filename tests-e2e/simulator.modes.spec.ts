@@ -8,6 +8,7 @@ import {
   scenarios,
   selectRegime,
   setNumberField,
+  simulatorHeading,
 } from "./helpers/simulator";
 
 test.beforeEach(async ({ page }) => {
@@ -78,4 +79,20 @@ test("bascule en micro-BNC et masque les charges saisies", async ({ page }) => {
     formatEuro(scenarios.micro.totalContributions)
   );
   await expect(financialCard).toContainText(formatEuro(scenarios.micro.tax));
+});
+
+test("restaure l'état depuis les paramètres URL au chargement de la page", async ({
+  page,
+}) => {
+  const ex = scenarios.verificationExample;
+  const url = `/?honoraires=${ex.honoraires}&charges=${ex.charges}&partsFiscales=${ex.partsFiscales}&regime=reel`;
+
+  await page.goto(url);
+  await expect(page.getByRole("heading", { name: simulatorHeading })).toBeVisible();
+
+  await expect(page.getByLabel("Honoraires annuels")).toHaveValue(String(ex.honoraires));
+  await expect(page.getByLabel("Charges annuelles")).toHaveValue(String(ex.charges));
+  await expect(page.getByLabel("Parts fiscales")).toHaveValue(String(ex.partsFiscales));
+  await expect(page).toHaveURL(/honoraires=120000/);
+  await expect(page).toHaveURL(/regime=reel/);
 });
