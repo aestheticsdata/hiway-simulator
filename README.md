@@ -33,6 +33,8 @@ Useful commands:
 ```bash
 pnpm lint
 pnpm build
+pnpm test:e2e
+pnpm test:e2e:headed
 pnpm test:unit
 pnpm test:unit:coverage
 ```
@@ -75,6 +77,50 @@ Current exclusions:
 
 - `POST /api/simulate` route handler is not unit-tested yet;
 - `POST /api/simulate-curve` route handler is not unit-tested yet.
+
+## End-to-end tests
+
+The project also includes a Playwright e2e suite under `tests-e2e`.
+
+Current scope:
+
+- `tests-e2e/simulator.form.spec.ts`
+  - validates required and minimum-value errors;
+  - covers `reel` and `micro-BNC` form behavior;
+  - verifies that the `charges` validation state survives regime switches.
+- `tests-e2e/simulator.modes.spec.ts`
+  - covers the default `reel` simulation flow;
+  - verifies the `micro-BNC` toggle and `charges` field hiding;
+  - restores simulator state from URL search params on page load.
+- `tests-e2e/simulator.comparison.spec.ts`
+  - covers the `Mode comparaison` / `view=vs` flow;
+  - verifies the optimal-regime summary and displayed gains;
+  - checks that comparison mode waits for real-world `charges` when needed.
+
+Run the full e2e suite:
+
+```bash
+pnpm test:e2e
+```
+
+Run the same suite in headed mode with Chromium:
+
+```bash
+pnpm test:e2e:headed
+```
+
+Playwright starts the local Next.js server automatically on
+`http://127.0.0.1:3000` through `playwright.config.ts`.
+
+If Playwright browsers are not installed yet on the machine, install Chromium
+once before the first run:
+
+```bash
+pnpm exec playwright install chromium
+```
+
+The suite currently runs on the `chromium` project only and uses the HTML
+reporter.
 
 ## Runtime ports
 
