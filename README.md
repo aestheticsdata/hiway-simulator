@@ -168,15 +168,25 @@ The page shell is rendered through the App Router:
 The simulator UI is split into focused components:
 
 - `components/simulator/SimulatorDashboard.tsx`
-  - owns the form state;
+  - orchestrates the left-panel form card and the right-panel results pane;
+  - delegates state management, URL sync, and API queries to `useSimulatorState`;
+  - delegates desktop scroll forwarding to `useScrollForwarding`;
+  - owns the print workflow through `useReactToPrint`.
+- `components/simulator/hooks/useSimulatorState.ts`
+  - owns the form state (`react-hook-form` + `zodResolver`);
   - debounces the input;
-  - triggers API queries;
-  - switches the right pane between the default result view and the simplified `VS` comparison view;
-  - keeps the desktop scroll behavior where only the right pane scrolls.
+  - triggers the default and comparison API queries;
+  - synchronizes form state with `nuqs` URL search params;
+  - manages `VS` pending activation when real-world `charges` are missing.
+- `components/simulator/hooks/useScrollForwarding.ts`
+  - forwards wheel events from outside the results pane into it so only the
+    right column scrolls on desktop.
+- `components/simulator/ComparisonModeToggle.tsx`
+  - renders the `Mode comparaison` switch and the pending-activation alert;
+  - receives toggle state and callbacks from `useSimulatorState`.
 - `components/simulator/SimulatorForm.tsx`
   - renders the form fields;
   - uses `react-hook-form` + `zodResolver`;
-  - renders the `Mode VS` switch below the form;
   - disables the `regime` select while the `VS` comparison is active;
   - can force the `charges` field visible when `VS` is requested from a `micro` scenario without stored real-world charges.
 - `components/simulator/simulator-results/*`
@@ -273,7 +283,7 @@ That choice is deliberate because:
 The `nuqs` integration lives in:
 
 - `components/providers/AppProviders.tsx`
-- `components/simulator/SimulatorDashboard.tsx`
+- `components/simulator/hooks/useSimulatorState.ts`
 - `lib/simulator/searchParams.ts`
 
 #### Search params used by the simulator
