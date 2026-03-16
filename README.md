@@ -1,6 +1,6 @@
 # Hiway Simulator
 
-Net income simulator for a self-employed doctor, built with Next.js 16, React 19, TypeScript, Zod, React Hook Form, TanStack Query, Axios, Recharts, Tailwind CSS v4, and shadcn/ui.
+Net income simulator for a self-employed doctor, built as a full-stack Next.js application.
 
 This repository currently includes:
 
@@ -11,6 +11,16 @@ This repository currently includes:
 - a frontend HTTP facade over Axios;
 - chart adapters derived from domain results;
 - error propagation to Next.js `error.tsx`.
+
+## Tech stack
+
+- **Framework and language**: Next.js 16 (App Router + Route Handlers), React 19, TypeScript 5, `pnpm`.
+- **Validation and forms**: Zod 4, React Hook Form, `@hookform/resolvers`.
+- **Data fetching and URL state**: TanStack Query v5, Axios, `nuqs`.
+- **UI system**: Tailwind CSS v4, shadcn/ui (`radix-maia` style), Radix UI, `next-themes`, Hugeicons.
+- **Data visualization and export**: Recharts, `react-to-print`.
+- **Quality and testing**: ESLint 9 (`eslint-config-next`), Vitest 4, Playwright.
+- **Deployment/runtime**: Next.js app served behind PM2 and Nginx in production.
 
 ## Getting started
 
